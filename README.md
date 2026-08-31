@@ -1,4 +1,4 @@
-﻿# MarineDebris-Sonar-AI
+# MarineDebris-Sonar-AI
 
 **Competition / Problem Statement:** SIH 2026 — PS26057  
 **Topic:** AI-Powered Automated Underwater Marine Debris and Anomaly Detection System using Side-Scan Sonar Imagery  
