@@ -41,7 +41,10 @@ async def get_health(
         pong = await r.ping()
         if pong:
             redis_status = "connected"
-        await r.close()
+        if hasattr(r, "aclose"):
+            await r.aclose()
+        else:
+            await r.close()
     except Exception:
         redis_status = "disconnected"
 
