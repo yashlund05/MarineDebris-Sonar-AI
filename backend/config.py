@@ -33,11 +33,15 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:8000",
+        "http://localhost:2671",
+        "http://localhost:5039",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:5173",
         "http://127.0.0.1:8000",
+        "http://127.0.0.1:2671",
+        "http://127.0.0.1:5039",
     ]
-    API_CORS_ORIGINS: str = "http://localhost:5173"
+    API_CORS_ORIGINS: str = "http://localhost:2671"
 
     # File uploads & Storage — ARCHITECTURAL_BLUEPRINT.md §10
     MAX_UPLOAD_SIZE_MB: int = 2048

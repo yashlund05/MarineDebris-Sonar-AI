@@ -18,13 +18,42 @@ from backend.api.routers import (
     system,
     ws,
 )
+from contextlib import asynccontextmanager
+
 from backend.config import get_settings
 from backend.exceptions import AppException
 from backend.logging_config import get_logger, setup_logging
+from backend.database.session import async_engine
+from backend.database.models import Base
 
 settings = get_settings()
 setup_logging(debug=settings.DEBUG)
 logger = get_logger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application startup and shutdown lifecycle management."""
+    # Ensure storage and data directories exist
+    import os
+    os.makedirs(settings.storage_root_path, exist_ok=True)
+    os.makedirs("./data", exist_ok=True)
+
+    # Initialize database tables automatically if not already present
+    try:
+        async with async_engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        logger.info("Database tables initialized successfully.")
+    except Exception as e:
+        logger.warning("Database table auto-creation skipped or deferred: %s", str(e))
+
+    yield
+
+    # Clean up on shutdown
+    try:
+        await async_engine.dispose()
+    except Exception:
+        pass
 
 
 def create_app() -> FastAPI:
@@ -36,6 +65,7 @@ def create_app() -> FastAPI:
         openapi_url=f"{settings.API_V1_STR}/openapi.json",
         docs_url="/docs",
         redoc_url="/redoc",
+        lifespan=lifespan,
     )
 
     # CORS Middleware
