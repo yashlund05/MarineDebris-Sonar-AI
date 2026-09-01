@@ -1,8 +1,7 @@
 """Application configuration settings module using Pydantic Settings."""
 
 from functools import lru_cache
-from typing import List, Union
-from pydantic import AnyHttpUrl, field_validator
+from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,9 +26,10 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = False
     SECRET_KEY: str = "insecure-dev-secret-key-change-in-production"
+    LOG_LEVEL: str = "INFO"
 
-    # CORS
-    BACKEND_CORS_ORIGINS: List[str] = [
+    # CORS — ARCHITECTURAL_BLUEPRINT.md §10
+    BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:3000",
         "http://localhost:5173",
         "http://localhost:8000",
@@ -37,11 +37,21 @@ class Settings(BaseSettings):
         "http://127.0.0.1:5173",
         "http://127.0.0.1:8000",
     ]
+    API_CORS_ORIGINS: str = "http://localhost:5173"
 
-    # File uploads & Storage
+    # File uploads & Storage — ARCHITECTURAL_BLUEPRINT.md §10
     MAX_UPLOAD_SIZE_MB: int = 2048
     STORAGE_TYPE: str = "local"  # "local" or "minio"
+    STORAGE_BACKEND: str = "local"  # alias for STORAGE_TYPE
     STORAGE_LOCAL_ROOT: str = "./data/storage"
+    STORAGE_ROOT: str = "./data/storage"
+
+    # MinIO / S3-compatible storage
+    MINIO_ENDPOINT: str = "localhost:9000"
+    MINIO_ACCESS_KEY: str = ""
+    MINIO_SECRET_KEY: str = ""
+    MINIO_BUCKET: str = "marine-debris"
+    MINIO_SECURE: bool = False
 
     # PostgreSQL Database
     POSTGRES_HOST: str = "localhost"
@@ -63,15 +73,25 @@ class Settings(BaseSettings):
     CELERY_RESULT_BACKEND: str = ""
     CELERY_TASK_ALWAYS_EAGER: bool = False
 
-    # Detection & Preprocessing defaults
+    # Detection & Preprocessing defaults — ARCHITECTURAL_BLUEPRINT.md §10
     DETECTION_CONF_THRESHOLD: float = 0.35
     NMS_IOU_THRESHOLD: float = 0.45
     TILE_SIZE: int = 640
     TILE_OVERLAP: float = 0.2
+    CALIBRATION_TEMPERATURE: float = 1.4
 
-    # Model registry default paths
+    # Processing — ARCHITECTURAL_BLUEPRINT.md §5, §10
+    CHUNK_SIZE_PINGS: int = 2000
+    DEVICE: str = "cuda"  # "cuda" or "cpu"
+
+    # Model paths — ARCHITECTURAL_BLUEPRINT.md §9, §10
+    DETECTION_MODEL_PATH: str = "models/detection/sonar_yolov8m_ghostpot_v1.pt"
+    SEGMENTATION_MODEL_PATH: str = "models/segmentation/unet_shipwreck_v1.pt"
     DEFAULT_DETECTION_MODEL: str = "sonar_yolov8m_ghostpot_v1"
     DEFAULT_DETECTION_MODEL_VERSION: str = "1.0.0"
+
+    # Preprocessing version tag
+    PREPROCESSING_VERSION: str = "v1.0"
 
     @property
     def async_database_url(self) -> str:
@@ -89,6 +109,8 @@ class Settings(BaseSettings):
         if self.DATABASE_URL:
             if self.DATABASE_URL.startswith("postgresql+asyncpg://"):
                 return self.DATABASE_URL.replace("postgresql+asyncpg://", "postgresql+psycopg2://", 1)
+            if self.DATABASE_URL.startswith("sqlite+aiosqlite://"):
+                return self.DATABASE_URL.replace("sqlite+aiosqlite://", "sqlite://", 1)
             return self.DATABASE_URL
         password = f":{self.POSTGRES_PASSWORD}" if self.POSTGRES_PASSWORD else ""
         return f"postgresql+psycopg2://{self.POSTGRES_USER}{password}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
@@ -114,6 +136,16 @@ class Settings(BaseSettings):
         if self.CELERY_RESULT_BACKEND:
             return self.CELERY_RESULT_BACKEND
         return self.redis_connection_url
+
+    @property
+    def storage_root_path(self) -> str:
+        """Return resolved storage root path."""
+        return self.STORAGE_LOCAL_ROOT or self.STORAGE_ROOT
+
+    @property
+    def max_upload_size_bytes(self) -> int:
+        """Return max upload size in bytes."""
+        return self.MAX_UPLOAD_SIZE_MB * 1024 * 1024
 
 
 @lru_cache()
