@@ -12,14 +12,15 @@ export default defineConfig({
   },
   server: {
     port: 2671,
-    host: true,
+    strictPort: true,
+    host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: process.env.VITE_BACKEND_URL || "http://localhost:5039",
+        target: process.env.VITE_BACKEND_URL || "http://127.0.0.1:5039",
         changeOrigin: true,
       },
       "/ws": {
-        target: process.env.VITE_WS_BACKEND_URL || "ws://localhost:5039",
+        target: process.env.VITE_WS_BACKEND_URL || "ws://127.0.0.1:5039",
         ws: true,
       },
     },

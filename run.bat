@@ -152,14 +152,14 @@ echo ===========================================================================
 echo.
 
 :: Launch Backend on Port 5039 in a new window
-start "MarineDebris-Sonar-AI Backend" cmd /k "%RUN_PYTHON% -m uvicorn backend.api.main:app --host 0.0.0.0 --port 5039 --reload"
+start "MarineDebris-Sonar-AI Backend" /d "%~dp0" cmd /k "%RUN_PYTHON% -m uvicorn backend.api.main:app --host 0.0.0.0 --port 5039 --reload"
 
 :: Launch Frontend on Port 2671 in a new window
-start "MarineDebris-Sonar-AI Frontend" cmd /k "cd frontend && npm run dev -- --port 2671 --host"
+start "MarineDebris-Sonar-AI Frontend" /d "%~dp0frontend" cmd /k "call npm run dev"
 
-:: Wait for services to initialize
-echo Waiting for servers to initialize...
-ping -n 5 127.0.0.1 >nul
+:: Wait for services to be actively listening
+echo [*] Waiting for Frontend web server to become ready on http://localhost:2671...
+"%RUN_PYTHON%" "%~dp0scripts\wait_for_server.py" http://localhost:2671 25
 
 :: Launch default web browser to the Frontend UI
 echo [*] Opening application in browser: http://localhost:2671
