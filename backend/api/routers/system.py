@@ -34,28 +34,44 @@ async def get_health(
     except Exception:
         db_status = "disconnected"
 
-    # Check Redis connectivity
+    # Check Redis connectivity (non-blocking)
     redis_status = "disconnected"
-    try:
-        r = aioredis.from_url(settings.redis_connection_url, socket_timeout=1.0)
-        pong = await r.ping()
-        if pong:
-            redis_status = "connected"
-        if hasattr(r, "aclose"):
-            await r.aclose()
-        else:
-            await r.close()
-    except Exception:
-        redis_status = "disconnected"
+    if settings.CELERY_TASK_ALWAYS_EAGER:
+        redis_status = "in-memory (standalone)"
+    else:
+        try:
+            import asyncio
+            r = aioredis.from_url(
+                settings.redis_connection_url,
+                protocol=2,
+                socket_timeout=0.2,
+                socket_connect_timeout=0.2,
+            )
+            pong = await asyncio.wait_for(r.ping(), timeout=0.3)
+            if pong:
+                redis_status = "connected"
+            if hasattr(r, "aclose"):
+                await r.aclose()
+            else:
+                await r.close()
+        except Exception:
+            redis_status = "disconnected"
 
     # Worker status
-    worker_status = "running" if settings.CELERY_TASK_ALWAYS_EAGER or redis_status == "connected" else "unknown"
+    if settings.CELERY_TASK_ALWAYS_EAGER:
+        worker_status = "active (in-process)"
+    elif redis_status == "connected":
+        worker_status = "running"
+    else:
+        worker_status = "offline"
 
     device = detect_device()
     active_model = f"{settings.DEFAULT_DETECTION_MODEL} v{settings.DEFAULT_DETECTION_MODEL_VERSION}"
 
+    is_healthy = db_status == "connected" and (redis_status in ("connected", "in-memory (standalone)"))
+
     return {
-        "status": "ok" if (db_status == "connected" or settings.ENVIRONMENT == "test") else "degraded",
+        "status": "ok" if (is_healthy or settings.ENVIRONMENT == "test") else "degraded",
         "database": db_status,
         "redis": redis_status,
         "worker": worker_status,

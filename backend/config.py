@@ -64,6 +64,7 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "postgres"
     POSTGRES_DB: str = "marine_debris_sonar"
     DATABASE_URL: str = ""
+    AUTO_CREATE_TABLES: bool = False
 
     # Redis
     REDIS_HOST: str = "localhost"

@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 
-from fastapi import APIRouter, Depends, Query, Request, status
+from fastapi import APIRouter, Depends, Query, Request, status, HTTPException
 from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,31 +14,6 @@ from backend.storage.storage import get_storage
 
 router = APIRouter(tags=["Detections"])
 
-class DetectionResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
-
-    id: uuid.UUID
-    survey_id: uuid.UUID
-    job_id: uuid.UUID
-    detection_code: str
-    class_name: str
-    confidence: float
-    confidence_calibrated: Optional[float]
-    bbox_x: int
-    bbox_y: int
-    bbox_w: int
-    bbox_h: int
-    estimated_length_m: Optional[float]
-    estimated_width_m: Optional[float]
-    geotagging_available: bool
-    latitude: Optional[float]
-    longitude: Optional[float]
-    ping_number: Optional[int]
-    ping_timestamp: Optional[float]
-    is_filtered: bool
-    filtered_reason: Optional[str]
-    source_tile_url: Optional[str]
-    created_at: datetime
 
 @router.get("/surveys/{survey_id}/detections")
 async def get_survey_detections(
@@ -52,14 +27,14 @@ async def get_survey_detections(
     offset: int = Query(0, ge=0),
     db: AsyncSession = Depends(get_db),
 ):
-    """List detections for a given survey."""
+    """List detections for a given survey with both backward-compatible flat fields and structured ML metadata."""
     # Check survey exists
     survey_result = await db.execute(select(Survey).where(Survey.id == survey_id))
     if not survey_result.scalar_one_or_none():
         raise SurveyNotFoundError(survey_id)
-        
+
     query = select(Detection).where(Detection.survey_id == survey_id)
-    
+
     if job_id:
         query = query.where(Detection.job_id == job_id)
     if class_name:
@@ -68,20 +43,21 @@ async def get_survey_detections(
         query = query.where(Detection.confidence >= min_confidence)
     if not include_filtered:
         query = query.where(Detection.is_filtered == False)
-        
+
     # Count total matching query
     count_query = select(func.count(Detection.id)).select_from(query.subquery())
     count_result = await db.execute(count_query)
     total_count = count_result.scalar() or 0
-    
+
     # Get paginated results
     query = query.order_by(desc(Detection.confidence)).limit(limit).offset(offset)
     result = await db.execute(query)
     detections = result.scalars().all()
-    
+
     data = []
     settings = get_settings()
     for det in detections:
+        source_tile_url = f"{settings.API_V1_STR}/detections/{det.id}/tile" if det.source_tile_path else None
         det_dict = {
             "id": det.id,
             "survey_id": det.survey_id,
@@ -94,6 +70,33 @@ async def get_survey_detections(
             "bbox_y": det.bbox_y,
             "bbox_w": det.bbox_w,
             "bbox_h": det.bbox_h,
+            "bbox": {
+                "x": det.bbox_x,
+                "y": det.bbox_y,
+                "width": det.bbox_w,
+                "height": det.bbox_h,
+            },
+            "segmentation": {
+                "status": getattr(det, "segmentation_status", "unavailable") or "unavailable",
+                "confidence": getattr(det, "segmentation_confidence", None),
+                "mask_area": getattr(det, "mask_area", None),
+                "mask_rle": det.mask_rle,
+            },
+            "classification": {
+                "status": getattr(det, "classification_status", "unavailable") or "unavailable",
+                "model": getattr(det, "classifier_name", None),
+                "class_name": getattr(det, "classifier_class", None),
+                "confidence": getattr(det, "classifier_confidence", None),
+                "agreement": getattr(det, "classification_agreement", None),
+            },
+            "geolocation": {
+                "latitude": det.latitude,
+                "longitude": det.longitude,
+            },
+            "dimensions": {
+                "length_m": det.estimated_length_m,
+                "width_m": det.estimated_width_m,
+            },
             "estimated_length_m": det.estimated_length_m,
             "estimated_width_m": det.estimated_width_m,
             "geotagging_available": det.geotagging_available,
@@ -104,7 +107,7 @@ async def get_survey_detections(
             "is_filtered": det.is_filtered,
             "filtered_reason": det.filtered_reason,
             "created_at": det.created_at,
-            "source_tile_url": f"{settings.API_V1_STR}/detections/{det.id}/tile" if det.source_tile_path else None
+            "source_tile_url": source_tile_url,
         }
         data.append(det_dict)
 
@@ -117,9 +120,10 @@ async def get_survey_detections(
             "limit": limit,
             "offset": offset,
             "total_count": total_count,
-            "filtered_count": total_count  # In context, how many matched the filter
-        }
+            "filtered_count": total_count,
+        },
     }
+
 
 @router.get("/detections/{detection_id}")
 async def get_detection(
@@ -127,17 +131,17 @@ async def get_detection(
     request: Request,
     db: AsyncSession = Depends(get_db),
 ):
-    """Get single detection detail."""
+    """Get single detection detail with structured segmentation and classification blocks."""
     query = select(Detection).where(Detection.id == detection_id)
     result = await db.execute(query)
     det = result.scalar_one_or_none()
-    
+
     if not det:
         raise DetectionNotFoundError(detection_id)
-        
+
     settings = get_settings()
     source_tile_url = f"{settings.API_V1_STR}/detections/{det.id}/tile" if det.source_tile_path else None
-    
+
     data = {
         "id": det.id,
         "survey_id": det.survey_id,
@@ -150,6 +154,34 @@ async def get_detection(
         "bbox_y": det.bbox_y,
         "bbox_w": det.bbox_w,
         "bbox_h": det.bbox_h,
+        "bbox": {
+            "x": det.bbox_x,
+            "y": det.bbox_y,
+            "width": det.bbox_w,
+            "height": det.bbox_h,
+        },
+        "segmentation": {
+            "status": getattr(det, "segmentation_status", "unavailable") or "unavailable",
+            "confidence": getattr(det, "segmentation_confidence", None),
+            "mask_area": getattr(det, "mask_area", None),
+            "mask_rle": det.mask_rle,
+            "mask_geometry": getattr(det, "mask_geometry", None),
+        },
+        "classification": {
+            "status": getattr(det, "classification_status", "unavailable") or "unavailable",
+            "model": getattr(det, "classifier_name", None),
+            "class_name": getattr(det, "classifier_class", None),
+            "confidence": getattr(det, "classifier_confidence", None),
+            "agreement": getattr(det, "classification_agreement", None),
+        },
+        "geolocation": {
+            "latitude": det.latitude,
+            "longitude": det.longitude,
+        },
+        "dimensions": {
+            "length_m": det.estimated_length_m,
+            "width_m": det.estimated_width_m,
+        },
         "mask_rle": det.mask_rle,
         "estimated_length_m": det.estimated_length_m,
         "estimated_width_m": det.estimated_width_m,
@@ -162,7 +194,7 @@ async def get_detection(
         "filtered_reason": det.filtered_reason,
         "extra_metadata": det.extra_metadata,
         "created_at": det.created_at,
-        "source_tile_url": source_tile_url
+        "source_tile_url": source_tile_url,
     }
 
     return {
@@ -170,6 +202,88 @@ async def get_detection(
         "data": data,
         "meta": {
             "request_id": getattr(request.state, "request_id", ""),
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
+
+@router.get("/surveys/{survey_id}/detections/{detection_id}")
+async def get_survey_detection_detail(
+    survey_id: uuid.UUID,
+    detection_id: uuid.UUID,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """Scoped endpoint to fetch a single detection for a survey."""
+    query = select(Detection).where(Detection.id == detection_id, Detection.survey_id == survey_id)
+    result = await db.execute(query)
+    det = result.scalar_one_or_none()
+    if not det:
+        raise DetectionNotFoundError(detection_id)
+    return await get_detection(detection_id=detection_id, request=request, db=db)
+
+
+@router.get("/surveys/{survey_id}/detections/{detection_id}/segmentation")
+async def get_detection_segmentation(
+    survey_id: uuid.UUID,
+    detection_id: uuid.UUID,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get segmentation mask and boundary contour for a specific detection."""
+    query = select(Detection).where(Detection.id == detection_id, Detection.survey_id == survey_id)
+    result = await db.execute(query)
+    det = result.scalar_one_or_none()
+    if not det:
+        raise DetectionNotFoundError(detection_id)
+
+    seg_status = getattr(det, "segmentation_status", "unavailable") or "unavailable"
+    return {
+        "success": True,
+        "data": {
+            "detection_id": det.id,
+            "status": seg_status,
+            "is_available": seg_status == "available",
+            "confidence": getattr(det, "segmentation_confidence", None),
+            "mask_area": getattr(det, "mask_area", None),
+            "mask_rle": det.mask_rle,
+            "mask_geometry": getattr(det, "mask_geometry", None),
+        },
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
+
+@router.get("/surveys/{survey_id}/detections/{detection_id}/classification")
+async def get_detection_classification(
+    survey_id: uuid.UUID,
+    detection_id: uuid.UUID,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """Get secondary classification results and agreement status for a detection."""
+    query = select(Detection).where(Detection.id == detection_id, Detection.survey_id == survey_id)
+    result = await db.execute(query)
+    det = result.scalar_one_or_none()
+    if not det:
+        raise DetectionNotFoundError(detection_id)
+
+    classif_status = getattr(det, "classification_status", "unavailable") or "unavailable"
+    return {
+        "success": True,
+        "data": {
+            "detection_id": det.id,
+            "status": classif_status,
+            "is_available": classif_status == "available",
+            "classifier_model": getattr(det, "classifier_name", None),
+            "predicted_class": getattr(det, "classifier_class", None),
+            "confidence": getattr(det, "classifier_confidence", None),
+            "agreement": getattr(det, "classification_agreement", None),
+        },
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
     }

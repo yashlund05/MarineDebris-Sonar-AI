@@ -107,3 +107,15 @@ def convert_voc_xml_to_yolo(
         f.write("\n".join(lines) + ("\n" if lines else ""))
 
     return True
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Convert Pascal VOC XML annotation to YOLO format")
+    parser.add_argument("--xml-path", required=True, help="Path to VOC XML file")
+    parser.add_argument("--output-dir", required=True, help="Target directory for YOLO .txt label files")
+    args = parser.parse_args()
+
+    success = convert_voc_xml_to_yolo(args.xml_path, args.output_dir)
+    print(f"VOC conversion status: {success}")

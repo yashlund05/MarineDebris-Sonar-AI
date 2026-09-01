@@ -10,13 +10,20 @@ import { DetectionDetail } from "../components/detections/DetectionDetail";
 import { JobStatusBar } from "../components/jobs/JobStatusBar";
 import { FilterBar } from "../components/ui/FilterBar";
 import { ReportDownloader } from "../components/reports/ReportDownloader";
-import { LoadingState } from "../components/ui/LoadingState";
 import { ErrorState } from "../components/ui/ErrorState";
-import { ArrowLeft, Waves, Map, Eye, Calendar, HardDrive, Radio } from "lucide-react";
+import {
+  ArrowLeft,
+  Waves,
+  Map,
+  Eye,
+  Calendar,
+  HardDrive,
+  Radio,
+} from "lucide-react";
 
 export const SurveyDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeView, setActiveView] = useState<"viewer" | "map" | "split">("split");
+  const [activeView, setActiveView] = useState<"viewer" | "map" | "split">("viewer");
 
   // Fetch survey metadata
   const {
@@ -28,7 +35,6 @@ export const SurveyDetailPage: React.FC = () => {
     queryFn: () => surveysApi.getSurvey(id!),
     enabled: !!id,
     refetchInterval: (query) => {
-      // Poll faster if job is not yet complete
       const status = query.state.data?.data?.status;
       return status === "complete" || status === "failed" ? false : 3000;
     },
@@ -42,14 +48,28 @@ export const SurveyDetailPage: React.FC = () => {
   });
 
   if (isSurveyLoading) {
-    return <LoadingState message="Loading acoustic survey session..." />;
+    return (
+      <div className="space-y-6 max-w-7xl mx-auto">
+        <div className="flex items-center gap-3">
+          <div className="h-6 w-32 bg-slate-200 animate-pulse rounded" />
+        </div>
+        <div className="h-[600px] bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-card flex items-center justify-center">
+          <div className="text-center space-y-2">
+            <Waves className="w-8 h-8 text-accent animate-pulse mx-auto" />
+            <p className="text-xs text-text-muted font-mono">Streaming acoustic sonar session...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (surveyError || !surveyData?.data) {
     return (
       <ErrorState
-        title="Survey Not Found"
-        message="The requested sonar survey session could not be retrieved."
+        title="Acoustic Survey Not Found"
+        message="The requested sonar survey session could not be retrieved from the catalog."
+        actionLabel="Return to Surveys"
+        actionHref="/surveys"
       />
     );
   }
@@ -59,52 +79,56 @@ export const SurveyDetailPage: React.FC = () => {
   const latestJob = (survey as any).latest_job;
 
   return (
-    <div className="space-y-6 flex flex-col h-[calc(100vh-5rem)]">
+    <div className="space-y-4 flex flex-col h-[calc(100vh-6rem)]">
       {/* Top Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 flex-shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-4 flex-shrink-0 bg-bg-surface p-4 rounded-2xl border border-border-subtle shadow-card">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Link
               to="/surveys"
-              className="p-1 text-text-secondary hover:text-text-primary rounded-lg hover:bg-bg-surface transition-all"
+              className="p-1 text-text-muted hover:text-text-primary rounded-lg hover:bg-slate-100 transition-all"
+              title="Back to Surveys"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
-            <h1 className="text-xl font-bold text-text-primary flex items-center gap-2.5">
-              <Waves className="w-5 h-5 text-accent" />
+            <h1 className="text-lg font-bold text-text-primary flex items-center gap-2">
+              <Waves className="w-4 h-4 text-accent" />
               {survey.source_filename}
             </h1>
+            <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
+              #{survey.id.slice(0, 8)}
+            </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-text-secondary">
+          <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-text-muted">
             <span className="flex items-center gap-1">
-              <HardDrive className="w-3.5 h-3.5 text-text-muted" />
+              <HardDrive className="w-3 h-3" />
               {(survey.file_size_bytes / (1024 * 1024)).toFixed(2)} MB
             </span>
             <span>•</span>
-            <span className="uppercase font-semibold text-accent">{survey.file_type}</span>
+            <span className="uppercase font-bold text-accent">{survey.file_type}</span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <Radio className="w-3.5 h-3.5 text-text-muted" />
+              <Radio className="w-3 h-3" />
               Swath: {survey.channel || "starboard"}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5 text-text-muted" />
+              <Calendar className="w-3 h-3" />
               {new Date(survey.created_at).toLocaleString()}
             </span>
           </div>
         </div>
 
-        {/* View Mode Switcher and Export */}
+        {/* View Mode Switcher and Actions */}
         <div className="flex items-center gap-3">
-          <div className="flex bg-bg-surface border border-border-subtle p-1 rounded-xl text-xs font-medium">
+          <div className="flex bg-slate-100 border border-border-subtle p-0.5 rounded-xl text-xs font-medium">
             <button
               type="button"
               onClick={() => setActiveView("viewer")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all text-xs ${
                 activeView === "viewer"
-                  ? "bg-accent text-white font-semibold shadow-sm"
+                  ? "bg-bg-surface text-text-primary font-bold shadow-xs"
                   : "text-text-secondary hover:text-text-primary"
               }`}
             >
@@ -114,9 +138,9 @@ export const SurveyDetailPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveView("split")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all text-xs ${
                 activeView === "split"
-                  ? "bg-accent text-white font-semibold shadow-sm"
+                  ? "bg-bg-surface text-text-primary font-bold shadow-xs"
                   : "text-text-secondary hover:text-text-primary"
               }`}
             >
@@ -125,9 +149,9 @@ export const SurveyDetailPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveView("map")}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all text-xs ${
                 activeView === "map"
-                  ? "bg-accent text-white font-semibold shadow-sm"
+                  ? "bg-bg-surface text-text-primary font-bold shadow-xs"
                   : "text-text-secondary hover:text-text-primary"
               }`}
             >
@@ -157,10 +181,10 @@ export const SurveyDetailPage: React.FC = () => {
         <FilterBar />
       </div>
 
-      {/* Main Content Workspace (Viewer + Panel + Map) */}
+      {/* Main Content Workspace (Sonar Viewer + Detections Panel) */}
       <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Visualizers Area (Sonar Viewer / Map) */}
-        <div className="lg:col-span-8 flex flex-col min-h-0 gap-4">
+        {/* Sonar Imaging Workstation */}
+        <div className="lg:col-span-8 flex flex-col min-h-0">
           {activeView === "viewer" && (
             <div className="flex-1 min-h-0">
               <SonarViewer surveyId={survey.id} detections={detections} />
@@ -181,7 +205,7 @@ export const SurveyDetailPage: React.FC = () => {
           )}
         </div>
 
-        {/* Right Sidebar: Detections Panel */}
+        {/* Right Inspection Panel: Detections Summary */}
         <div className="lg:col-span-4 flex flex-col min-h-0">
           <DetectionPanel detections={detections} />
         </div>

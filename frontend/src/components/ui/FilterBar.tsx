@@ -24,10 +24,10 @@ export const FilterBar: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4 p-3.5 bg-bg-surface border border-border-subtle rounded-xl">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center text-xs font-semibold text-text-secondary mr-1">
-          <Filter className="w-3.5 h-3.5 mr-1" />
+    <div className="flex flex-wrap items-center justify-between gap-4 p-3 bg-bg-surface border border-border-subtle rounded-xl shadow-subtle">
+      <div className="flex flex-wrap items-center gap-1.5">
+        <div className="flex items-center text-xs font-semibold text-text-muted mr-1 font-mono text-[11px]">
+          <Filter className="w-3.5 h-3.5 mr-1 text-accent" />
           Filter:
         </div>
         {classList.map((item) => {
@@ -35,11 +35,12 @@ export const FilterBar: React.FC = () => {
           return (
             <button
               key={item.id}
+              type="button"
               onClick={() => setSelectedClass(item.id)}
-              className={`px-2.5 py-1 text-xs rounded-lg transition-all font-medium ${
+              className={`px-2.5 py-1 text-xs rounded-lg transition-all font-medium border cursor-pointer ${
                 isSelected
-                  ? "bg-accent text-white shadow-sm"
-                  : "bg-bg-elevated text-text-secondary hover:text-text-primary hover:bg-bg-elevated/80"
+                  ? "bg-accent text-white border-accent shadow-xs font-semibold"
+                  : "bg-slate-50 text-text-secondary border-border-subtle hover:bg-slate-100 hover:text-text-primary"
               }`}
             >
               {item.label}
@@ -50,8 +51,8 @@ export const FilterBar: React.FC = () => {
 
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-text-secondary flex items-center">
-            <SlidersHorizontal className="w-3.5 h-3.5 mr-1" />
+          <span className="text-xs text-text-secondary flex items-center font-mono text-[11px]">
+            <SlidersHorizontal className="w-3.5 h-3.5 mr-1 text-accent" />
             Min Conf:
           </span>
           <input
@@ -61,19 +62,19 @@ export const FilterBar: React.FC = () => {
             step="0.05"
             value={minConfidence}
             onChange={(e) => setMinConfidence(parseFloat(e.target.value))}
-            className="w-24 h-1.5 bg-bg-elevated rounded-lg appearance-none cursor-pointer accent-accent"
+            className="w-24 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-accent"
           />
-          <span className="font-mono text-xs text-text-primary w-8">
+          <span className="font-mono text-xs font-bold text-text-primary w-8">
             {Math.round(minConfidence * 100)}%
           </span>
         </div>
 
-        <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-text-primary">
+        <label className="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-text-primary font-medium select-none">
           <input
             type="checkbox"
             checked={includeFiltered}
             onChange={(e) => setIncludeFiltered(e.target.checked)}
-            className="rounded border-border-subtle bg-bg-elevated text-accent focus:ring-accent"
+            className="rounded border-border-default text-accent focus:ring-accent w-3.5 h-3.5"
           />
           Show Filtered
         </label>
@@ -81,3 +82,5 @@ export const FilterBar: React.FC = () => {
     </div>
   );
 };
+
+export default FilterBar;

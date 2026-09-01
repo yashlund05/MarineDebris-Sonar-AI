@@ -20,6 +20,11 @@ export const DetectionOverlay: React.FC<DetectionOverlayProps> = ({
     selectedClass,
     minConfidence,
     includeFiltered,
+    showDetections,
+    showSegmentation,
+    showClassification,
+    showConfidence,
+    showGeolocation,
   } = useAppStore();
 
   const filteredDetections = detections.filter((d) => {
@@ -39,55 +44,96 @@ export const DetectionOverlay: React.FC<DetectionOverlayProps> = ({
         const meta = getClassColor(det.class_name);
         const isSelected = selectedDetection?.id === det.id;
 
+        const hasSeg = det.segmentation?.status === "available";
+        const hasClassif = det.classification?.status === "available";
+
+        // Label text construction
+        let tagText = meta.label;
+        if (showConfidence) {
+          tagText += ` ${formatConfidence(det.confidence_calibrated || det.confidence)}`;
+        }
+        if (showClassification && hasClassif) {
+          tagText += ` • ${det.classification?.model || "Clf"}:${det.classification?.agreement ? "✓" : "⚠"}`;
+        }
+        if (showGeolocation && det.latitude && det.longitude) {
+          tagText += ` • [${det.latitude.toFixed(3)}, ${det.longitude.toFixed(3)}]`;
+        }
+
         return (
           <g
             key={det.id}
-            className="cursor-pointer pointer-events-auto group"
+            className="cursor-pointer pointer-events-auto"
             onClick={(e) => {
               e.stopPropagation();
               setSelectedDetection(det);
             }}
           >
-            {/* Detection Bounding Box */}
-            <rect
-              x={det.bbox_x}
-              y={det.bbox_y}
-              width={det.bbox_w}
-              height={det.bbox_h}
-              fill={isSelected ? `${meta.color}30` : `${meta.color}15`}
-              stroke={isSelected ? "#FFFFFF" : meta.color}
-              strokeWidth={isSelected ? 3 : 2}
-              strokeDasharray={det.is_filtered ? "4 2" : "none"}
-              className="transition-all duration-150"
-            />
+            {/* Detection Bounding Box - Thin professional outline */}
+            {showDetections && (
+              <rect
+                x={det.bbox_x}
+                y={det.bbox_y}
+                width={det.bbox_w}
+                height={det.bbox_h}
+                fill={isSelected ? `${meta.color}25` : `${meta.color}08`}
+                stroke={isSelected ? "#FFFFFF" : meta.color}
+                strokeWidth={isSelected ? 2.5 : 1.5}
+                strokeDasharray={det.is_filtered ? "4 3" : "none"}
+                rx={2}
+              />
+            )}
 
-            {/* Label tag */}
+            {/* Corner Indicators for Selected Target */}
+            {isSelected && showDetections && (
+              <g stroke="#FFFFFF" strokeWidth={2} fill="none">
+                <path d={`M ${det.bbox_x - 3} ${det.bbox_y + 6} L ${det.bbox_x - 3} ${det.bbox_y - 3} L ${det.bbox_x + 6} ${det.bbox_y - 3}`} />
+                <path d={`M ${det.bbox_x + det.bbox_w + 3} ${det.bbox_y + 6} L ${det.bbox_x + det.bbox_w + 3} ${det.bbox_y - 3} L ${det.bbox_x + det.bbox_w - 6} ${det.bbox_y - 3}`} />
+                <path d={`M ${det.bbox_x - 3} ${det.bbox_y + det.bbox_h - 6} L ${det.bbox_x - 3} ${det.bbox_y + det.bbox_h + 3} L ${det.bbox_x + 6} ${det.bbox_y + det.bbox_h + 3}`} />
+                <path d={`M ${det.bbox_x + det.bbox_w + 3} ${det.bbox_y + det.bbox_h - 6} L ${det.bbox_x + det.bbox_w + 3} ${det.bbox_y + det.bbox_h + 3} L ${det.bbox_x + det.bbox_w - 6} ${det.bbox_y + det.bbox_h + 3}`} />
+              </g>
+            )}
+
+            {/* Segmentation Mask Overlay */}
+            {showSegmentation && hasSeg && (
+              <rect
+                x={det.bbox_x + 2}
+                y={det.bbox_y + 2}
+                width={Math.max(0, det.bbox_w - 4)}
+                height={Math.max(0, det.bbox_h - 4)}
+                fill="#9333EA25"
+                stroke="#A855F7"
+                strokeWidth={1.5}
+                rx={3}
+              />
+            )}
+
+            {/* Label tag - Clean small solid badge */}
             <g
               transform={`translate(${det.bbox_x}, ${Math.max(
-                det.bbox_y - 20,
+                det.bbox_y - 18,
                 0
               )})`}
             >
               <rect
                 x={0}
                 y={0}
-                width={Math.max(det.bbox_w, 100)}
-                height={18}
-                fill="#0A0E14"
-                stroke={meta.color}
+                width={Math.max(det.bbox_w, tagText.length * 6.2 + 10)}
+                height={16}
+                fill="#0F172A"
+                stroke={isSelected ? "#FFFFFF" : meta.color}
                 strokeWidth={1}
                 rx={3}
-                opacity={0.9}
+                opacity={0.92}
               />
               <text
                 x={4}
-                y={13}
-                fill={meta.text}
-                fontSize={10}
+                y={11.5}
+                fill="#F8FAFC"
+                fontSize={9.5}
                 fontFamily="JetBrains Mono, monospace"
-                fontWeight="bold"
+                fontWeight="600"
               >
-                {meta.label.slice(0, 14)} {formatConfidence(det.confidence_calibrated || det.confidence)}
+                {tagText}
               </text>
             </g>
           </g>
@@ -96,3 +142,5 @@ export const DetectionOverlay: React.FC<DetectionOverlayProps> = ({
     </svg>
   );
 };
+
+export default DetectionOverlay;

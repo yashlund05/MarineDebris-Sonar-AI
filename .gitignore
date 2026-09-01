@@ -40,9 +40,16 @@ dist/
 build/
 .next/
 out/
+.vite/
+
+# Local databases
+*.db
+*.sqlite3
+*.sqlite
 
 # Machine Learning, Datasets & Model Weights
-data/
+data/*
+!data/test_sonar_images/
 datasets/
 raw_data/
 processed_data/

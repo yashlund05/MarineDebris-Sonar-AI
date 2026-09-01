@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, File, Form, Query, Request, Response, UploadFile, status
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -29,9 +29,19 @@ router = APIRouter(tags=["Surveys"], prefix="/surveys")
 # --- Pydantic Models ---
 
 class ReprocessRequest(BaseModel):
-    detection_conf_threshold: float = 0.35
-    nms_iou_threshold: float = 0.45
-    run_segmentation: bool = True
+    detection_conf_threshold: float = Field(default=0.35, ge=0.0, le=1.0)
+    nms_iou_threshold: float = Field(default=0.45, ge=0.0, le=1.0)
+    run_segmentation: bool = Field(default=False)
+
+
+class ReanalyzeRequest(BaseModel):
+    detection_conf_threshold: float = Field(default=0.35, ge=0.0, le=1.0)
+    nms_iou_threshold: float = Field(default=0.45, ge=0.0, le=1.0)
+    enable_segmentation: bool = Field(default=True)
+    enable_classification: bool = Field(default=False)
+    detector_model: Optional[str] = None
+    segmentation_model: Optional[str] = None
+    classifier_model: Optional[str] = None
 
 class SurveyResponse(BaseModel):
     survey_id: uuid.UUID
@@ -357,6 +367,67 @@ async def reprocess_survey(
         "data": {
             "job_id": job.id,
             "status": job.status,
+        },
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
+
+@router.post("/{survey_id}/reanalyze", status_code=status.HTTP_201_CREATED)
+async def reanalyze_survey(
+    survey_id: uuid.UUID,
+    request: Request,
+    payload: ReanalyzeRequest,
+    db: AsyncSession = Depends(get_db),
+    settings: Settings = Depends(get_settings),
+):
+    """Reanalyze survey with customizable ML detector, segmenter, and classifier options."""
+    survey_query = select(Survey).where(Survey.id == survey_id)
+    result = await db.execute(survey_query)
+    survey = result.scalar_one_or_none()
+
+    if not survey:
+        raise SurveyNotFoundError(survey_id)
+
+    job = ProcessingJob(
+        id=uuid.uuid4(),
+        survey_id=survey.id,
+        status="pending",
+        progress_pct=0,
+        current_stage="queued",
+        detection_conf_threshold=payload.detection_conf_threshold,
+        nms_iou_threshold=payload.nms_iou_threshold,
+        detection_model=payload.detector_model or "sonar_yolov8m_ghostpot_v1",
+        segmentation_model=payload.segmentation_model if payload.enable_segmentation else None,
+        tile_size=settings.TILE_SIZE,
+        tile_overlap=settings.TILE_OVERLAP,
+    )
+    db.add(job)
+    survey.status = "queued"
+    await db.commit()
+    await db.refresh(job)
+
+    try:
+        from backend.tasks import process_survey
+        task = process_survey.delay(str(survey.id), str(job.id))
+        job.celery_task_id = str(task.id)
+        job.status = "running"
+        await db.commit()
+    except Exception as e:
+        logger.warning("Could not enqueue Celery task: %s", str(e))
+
+    return {
+        "success": True,
+        "data": {
+            "job_id": job.id,
+            "status": job.status,
+            "models_configured": {
+                "detector": payload.detector_model or "sonar_yolov8m_ghostpot_v1",
+                "segmentation": payload.segmentation_model if payload.enable_segmentation else "disabled",
+                "classification": payload.classifier_model if payload.enable_classification else "disabled",
+            },
         },
         "meta": {
             "request_id": getattr(request.state, "request_id", ""),

@@ -9,11 +9,11 @@ export const ConfidenceBadge: React.FC<ConfidenceBadgeProps> = ({ confidence, ca
   const score = calibrated !== undefined && calibrated !== null ? calibrated : confidence;
   const pct = Math.round(score * 100);
 
-  let color = "text-emerald-400 border-emerald-500/30 bg-emerald-500/10";
+  let color = "text-emerald-700 border-emerald-200 bg-emerald-50";
   if (pct < 50) {
-    color = "text-red-400 border-red-500/30 bg-red-500/10";
+    color = "text-rose-700 border-rose-200 bg-rose-50";
   } else if (pct < 75) {
-    color = "text-amber-400 border-amber-500/30 bg-amber-500/10";
+    color = "text-amber-800 border-amber-200 bg-amber-50";
   }
 
   return (
@@ -22,7 +22,7 @@ export const ConfidenceBadge: React.FC<ConfidenceBadgeProps> = ({ confidence, ca
         {pct}%
       </span>
       {calibrated !== undefined && calibrated !== null && (
-        <span className="text-[10px] text-text-secondary" title="Calibrated with Platt/Temperature scaling">
+        <span className="text-[10px] text-text-muted" title="Calibrated with temperature scaling">
           (cal)
         </span>
       )}

@@ -306,6 +306,15 @@ class Detection(Base):
     filtered_reason: Mapped[Optional[str]] = mapped_column(String(256), nullable=True)
     source_tile_path: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
     extra_metadata: Mapped[Optional[Dict[str, Any]]] = mapped_column(JsonType, nullable=True)
+    segmentation_status: Mapped[Optional[str]] = mapped_column(String(32), nullable=True, default="unavailable")
+    segmentation_confidence: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    mask_area: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    mask_geometry: Mapped[Optional[Dict[str, Any]]] = mapped_column(JsonType, nullable=True)
+    classification_status: Mapped[Optional[str]] = mapped_column(String(32), nullable=True, default="unavailable")
+    classifier_name: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    classifier_class: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    classifier_confidence: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    classification_agreement: Mapped[Optional[bool]] = mapped_column(Boolean, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         nullable=False,
         default=datetime.utcnow,
@@ -396,7 +405,12 @@ class ModelRegistry(Base):
     version: Mapped[str] = mapped_column(String(64), nullable=False)
     task: Mapped[str] = mapped_column(String(32), nullable=False)
     architecture: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
+    framework: Mapped[Optional[str]] = mapped_column(String(128), nullable=True)
     training_dataset: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    dataset_version: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)
+    status: Mapped[Optional[str]] = mapped_column(String(32), nullable=True, default="MISSING_WEIGHTS")
+    supported_classes: Mapped[Optional[List[str]]] = mapped_column(JsonType, nullable=True)
+    metrics: Mapped[Optional[Dict[str, Any]]] = mapped_column(JsonType, nullable=True)
     map50: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     map50_95: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     dice_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
@@ -418,7 +432,7 @@ class ModelRegistry(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "task IN ('detection', 'segmentation', 'edge_detection')",
+            "task IN ('detection', 'segmentation', 'edge_detection', 'classification')",
             name="ck_model_registry_task",
         ),
         UniqueConstraint("model_name", "version", "task", name="uq_model_version"),

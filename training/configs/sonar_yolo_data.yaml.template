@@ -1,0 +1,25 @@
+# MarineDebris-Sonar-AI: Ultralytics YOLOv8 Dataset Configuration Template
+# Standard Dataset Config for Sidescan Sonar Acoustic Patch Detection (640x640)
+
+# Dataset Root Directory
+path: ../datasets/sonar_debris
+
+# Relative paths to image directories
+train: images/train
+val: images/val
+test: images/test
+
+# Canonical Class Taxonomy (5 target classes)
+names:
+  0: derelict_fishing_gear
+  1: general_marine_debris
+  2: shipwreck
+  3: pipe_or_cylinder
+  4: other_man_made_target
+
+# Recommended Sonar Augmentations:
+# - mosaic: 1.0 (synthesizes varied acoustic seabed textures)
+# - mixup: 0.1
+# - fliplr: 0.5 (horizontal flip along across-track direction)
+# - flipud: 0.0 (disable vertical flip if towfish directionality matters)
+# - degrees: 0.0 (disable arbitrary rotation to preserve acoustic shadow orientation)

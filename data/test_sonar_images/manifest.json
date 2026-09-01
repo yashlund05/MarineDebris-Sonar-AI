@@ -1,0 +1,44 @@
+[
+  {
+    "filename": "marine-debris-aris3k-64.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-64.png",
+    "description": "Acoustic debris (beverage can) and submerged tire target",
+    "size_kb": 291.2,
+    "ground_truth": "4 0.627604 0.445833 0.158333 0.312500\n1 0.411979 0.748958 0.081250 0.131250"
+  },
+  {
+    "filename": "marine-debris-aris3k-66.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-66.png",
+    "description": "Dual submerged marine debris targets on gravel seabed",
+    "size_kb": 263.6,
+    "ground_truth": "1 0.478646 0.351042 0.139583 0.089583\n1 0.447396 0.550000 0.118750 0.112500"
+  },
+  {
+    "filename": "marine-debris-aris3k-69.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-69.png",
+    "description": "Submerged metal chain target with distinct acoustic shadow",
+    "size_kb": 271.0,
+    "ground_truth": "4 0.479687 0.396875 0.125000 0.102083"
+  },
+  {
+    "filename": "marine-debris-aris3k-70.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-70.png",
+    "description": "Large man-made acoustic target with prominent shadow zone",
+    "size_kb": 298.8,
+    "ground_truth": "4 0.542188 0.338542 0.466667 0.460417"
+  },
+  {
+    "filename": "marine-debris-aris3k-72.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-72.png",
+    "description": "Multi-object debris cluster (plastic bottle + can)",
+    "size_kb": 261.2,
+    "ground_truth": "1 0.477604 0.425000 0.125000 0.112500\n1 0.484896 0.623958 0.135417 0.118750"
+  },
+  {
+    "filename": "marine-debris-aris3k-7.png",
+    "relative_path": "data/test_sonar_images/marine-debris-aris3k-7.png",
+    "description": "Single acoustic debris target with high reflectivity",
+    "size_kb": 271.8,
+    "ground_truth": "1 0.633854 0.413542 0.083333 0.193750"
+  }
+]

@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ZoomIn, ZoomOut, RotateCcw, Crosshair, AlertCircle } from "lucide-react";
+import {
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Crosshair,
+  AlertCircle,
+  Maximize2,
+  Minimize2,
+  Scan,
+} from "lucide-react";
 import { Detection } from "../../types";
 import { useAppStore } from "../../store/useAppStore";
 import { useSonarViewer } from "../../hooks/useSonarViewer";
@@ -13,12 +22,14 @@ interface SonarViewerProps {
 }
 
 export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }) => {
-  const { sonarMode, sonarChannel, showOverlay } = useAppStore();
+  const { sonarMode, sonarChannel } = useAppStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   const {
     zoom,
@@ -59,17 +70,13 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Set canvas dimensions to match container or image
     canvas.width = image.naturalWidth || 1024;
     canvas.height = image.naturalHeight || 600;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-
-    // High quality image smoothing for sonar acoustic textures
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
-
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     ctx.restore();
   }, [image, imageLoaded]);
@@ -77,21 +84,44 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
   const imgWidth = image?.naturalWidth || 1024;
   const imgHeight = image?.naturalHeight || 600;
 
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(() => {});
+      setIsFullscreen(false);
+    }
+  };
+
+  const fitToScreen = () => {
+    if (!containerRef.current || !imgWidth || !imgHeight) return;
+    const { clientWidth, clientHeight } = containerRef.current;
+    const scaleX = (clientWidth - 40) / imgWidth;
+    const scaleY = (clientHeight - 40) / imgHeight;
+    const fitScale = Math.min(scaleX, scaleY, 1.0);
+    setZoom(fitScale > 0 ? fitScale : 1.0);
+  };
+
   return (
-    <div className="flex flex-col h-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden shadow-lg">
-      {/* Top Viewer Toolbar */}
-      <div className="p-3 border-b border-border-subtle bg-bg-surface flex flex-wrap items-center justify-between gap-3">
+    <div
+      ref={containerRef}
+      className="flex flex-col h-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden shadow-card"
+    >
+      {/* Top Floating/Integrated Toolbar */}
+      <div className="p-2.5 border-b border-border-subtle bg-slate-50/80 flex flex-wrap items-center justify-between gap-3">
         <SonarToggle />
 
-        {/* Zoom & Reset Controls */}
-        <div className="flex items-center gap-1 bg-bg-elevated p-1 rounded-xl text-xs">
+        {/* Viewport Action Controls */}
+        <div className="flex items-center gap-1 bg-bg-surface border border-border-subtle p-1 rounded-xl text-xs shadow-subtle">
           <button
             type="button"
             onClick={() => setZoom((z) => Math.min(z * 1.25, 8.0))}
-            className="p-1.5 hover:bg-bg-surface rounded-lg text-text-secondary hover:text-text-primary transition-all"
-            title="Zoom In"
+            className="p-1.5 hover:bg-slate-100 rounded-lg text-text-secondary hover:text-text-primary transition-all"
+            title="Zoom In (+)"
           >
-            <ZoomIn className="w-4 h-4" />
+            <ZoomIn className="w-3.5 h-3.5" />
           </button>
           <span className="font-mono text-xs text-text-primary px-2 font-medium">
             {Math.round(zoom * 100)}%
@@ -99,26 +129,43 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
           <button
             type="button"
             onClick={() => setZoom((z) => Math.max(z * 0.8, 0.25))}
-            className="p-1.5 hover:bg-bg-surface rounded-lg text-text-secondary hover:text-text-primary transition-all"
-            title="Zoom Out"
+            className="p-1.5 hover:bg-slate-100 rounded-lg text-text-secondary hover:text-text-primary transition-all"
+            title="Zoom Out (-)"
           >
-            <ZoomOut className="w-4 h-4" />
+            <ZoomOut className="w-3.5 h-3.5" />
           </button>
-          <div className="h-4 w-px bg-border-subtle mx-1" />
+          <div className="h-3.5 w-px bg-border-subtle mx-0.5" />
+          <button
+            type="button"
+            onClick={fitToScreen}
+            className="p-1.5 hover:bg-slate-100 rounded-lg text-text-secondary hover:text-text-primary transition-all"
+            title="Fit to Screen"
+          >
+            <Scan className="w-3.5 h-3.5" />
+          </button>
           <button
             type="button"
             onClick={resetView}
-            className="p-1.5 hover:bg-bg-surface rounded-lg text-text-secondary hover:text-text-primary transition-all"
+            className="p-1.5 hover:bg-slate-100 rounded-lg text-text-secondary hover:text-text-primary transition-all"
             title="Reset Pan & Zoom"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-3.5 h-3.5" />
+          </button>
+          <div className="h-3.5 w-px bg-border-subtle mx-0.5" />
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            className="p-1.5 hover:bg-slate-100 rounded-lg text-text-secondary hover:text-text-primary transition-all"
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Workstation"}
+          >
+            {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
 
-      {/* Main Interactive Canvas Area */}
+      {/* Main Interactive Sonar Viewport */}
       <div
-        className={`relative flex-1 bg-bg-primary overflow-hidden cursor-crosshair select-none flex items-center justify-center ${
+        className={`relative flex-1 bg-slate-900 overflow-hidden cursor-crosshair select-none flex items-center justify-center ${
           isPanning ? "cursor-grabbing" : "cursor-grab"
         }`}
         onMouseDown={handleMouseDown}
@@ -127,13 +174,13 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
         onWheel={handleWheel}
       >
         {imageError ? (
-          <div className="flex flex-col items-center justify-center p-8 text-center space-y-3 text-text-muted">
-            <AlertCircle className="w-8 h-8 text-amber-500/80" />
-            <p className="text-sm font-medium text-text-primary">
-              Sonar Image Not Available
+          <div className="flex flex-col items-center justify-center p-8 text-center space-y-3 text-slate-400">
+            <AlertCircle className="w-8 h-8 text-amber-400" />
+            <p className="text-sm font-semibold text-slate-200">
+              Acoustic Sonar Strip Not Available
             </p>
-            <p className="text-xs max-w-sm">
-              The acoustic sonar waterfall strip has not yet been rendered by the processing pipeline.
+            <p className="text-xs max-w-sm text-slate-400">
+              The acoustic waterfall swath has not yet been parsed or preprocessed for this survey session.
             </p>
           </div>
         ) : (
@@ -152,8 +199,8 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
               }}
             />
 
-            {/* SVG Detection Overlay */}
-            {showOverlay && imageLoaded && (
+            {/* SVG Detection & Segmentation Overlay */}
+            {imageLoaded && (
               <DetectionOverlay
                 detections={detections}
                 imageWidth={imgWidth}
@@ -163,14 +210,16 @@ export const SonarViewer: React.FC<SonarViewerProps> = ({ surveyId, detections }
           </div>
         )}
 
-        {/* Viewport Info Overlay */}
-        <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-bg-primary/80 backdrop-blur border border-border-subtle rounded-lg text-[11px] font-mono text-text-secondary pointer-events-none flex items-center gap-2">
-          <Crosshair className="w-3 h-3 text-accent" />
-          <span>{imgWidth}x{imgHeight} px</span>
+        {/* Viewport Technical Overlay */}
+        <div className="absolute bottom-3 right-3 px-3 py-1 bg-slate-900/85 backdrop-blur border border-slate-700 rounded-lg text-[11px] font-mono text-slate-300 pointer-events-none flex items-center gap-2 shadow-lg">
+          <Crosshair className="w-3.5 h-3.5 text-sky-400" />
+          <span>{imgWidth}×{imgHeight} px</span>
           <span>•</span>
-          <span>{detections.length} detections</span>
+          <span>{detections.length} acoustic targets</span>
         </div>
       </div>
     </div>
   );
 };
+
+export default SonarViewer;

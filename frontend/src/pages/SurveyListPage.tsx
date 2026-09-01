@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { surveysApi } from "../api/surveys";
-import { LoadingState } from "../components/ui/LoadingState";
+import { TableSkeleton } from "../components/ui/Skeleton";
 import { ErrorState } from "../components/ui/ErrorState";
+import { EmptyState } from "../components/ui/EmptyState";
 import {
   Database,
-  ArrowRight,
   Trash2,
-  HardDrive,
-  Calendar,
-  Layers,
   UploadCloud,
+  Search,
+  Filter,
+  Eye,
+  ArrowUpDown,
 } from "lucide-react";
 import { Survey } from "../types";
 
 export const SurveyListPage: React.FC = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [sortField, setSortField] = useState<"created_at" | "source_filename">("created_at");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const {
     data: surveysResponse,
@@ -24,7 +31,7 @@ export const SurveyListPage: React.FC = () => {
     error,
   } = useQuery({
     queryKey: ["surveys"],
-    queryFn: () => surveysApi.getSurveys({ limit: 50 }),
+    queryFn: () => surveysApi.getSurveys({ limit: 100 }),
   });
 
   const deleteMutation = useMutation({
@@ -34,28 +41,65 @@ export const SurveyListPage: React.FC = () => {
     },
   });
 
+  const surveys: Survey[] = surveysResponse?.data || [];
+
+  const filteredSurveys = useMemo(() => {
+    return surveys
+      .filter((s) => {
+        if (statusFilter !== "all" && s.status !== statusFilter) return false;
+        if (
+          searchTerm &&
+          !s.source_filename.toLowerCase().includes(searchTerm.toLowerCase()) &&
+          !s.id.toLowerCase().includes(searchTerm.toLowerCase())
+        ) {
+          return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortField === "created_at") {
+          const dateA = new Date(a.created_at).getTime();
+          const dateB = new Date(b.created_at).getTime();
+          return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+        }
+        return sortOrder === "asc"
+          ? a.source_filename.localeCompare(b.source_filename)
+          : b.source_filename.localeCompare(a.source_filename);
+      });
+  }, [surveys, searchTerm, statusFilter, sortField, sortOrder]);
+
   if (isLoading) {
-    return <LoadingState message="Fetching survey catalog from database..." />;
+    return (
+      <div className="space-y-6 max-w-7xl mx-auto">
+        <div>
+          <h1 className="text-2xl font-bold text-text-primary">Surveys Archive</h1>
+          <p className="text-xs text-text-secondary">Loading acoustic catalog...</p>
+        </div>
+        <div className="bg-bg-surface border border-border-subtle rounded-2xl shadow-card">
+          <TableSkeleton rows={6} cols={6} />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
     return (
       <ErrorState
-        title="Failed to Load Surveys"
-        message="Unable to communicate with the survey archive service."
+        title="Failed to Load Surveys Archive"
+        message="Unable to communicate with the survey catalog service."
+        onRetry={() => queryClient.invalidateQueries({ queryKey: ["surveys"] })}
       />
     );
   }
 
-  const surveys = surveysResponse?.data || [];
-
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      {/* Top Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-text-primary flex items-center gap-2">
             <Database className="w-6 h-6 text-accent" />
-            Survey Archive
+            Surveys Archive
           </h1>
           <p className="text-sm text-text-secondary mt-1">
             Historical acoustic sessions, automated anomaly results, and telemetry records.
@@ -64,118 +108,162 @@ export const SurveyListPage: React.FC = () => {
 
         <Link
           to="/upload"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-white text-xs font-semibold rounded-xl transition-all shadow-md"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-accent-hover text-white text-xs font-semibold rounded-xl transition-all shadow-sm"
         >
           <UploadCloud className="w-4 h-4" />
-          Upload New Record
+          Ingest New Survey
         </Link>
       </div>
 
-      {surveys.length === 0 ? (
-        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-12 text-center max-w-lg mx-auto space-y-4 shadow-lg">
-          <div className="p-4 bg-bg-elevated rounded-full w-16 h-16 mx-auto flex items-center justify-center text-text-muted">
-            <Database className="w-8 h-8" />
+      {/* Filter and Search Bar */}
+      <div className="bg-bg-surface border border-border-subtle rounded-2xl p-4 shadow-card flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center gap-3 flex-1 min-w-[240px] max-w-md">
+          <div className="relative w-full">
+            <Search className="w-4 h-4 text-text-muted absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by survey filename or ID..."
+              className="w-full pl-9 pr-3 py-1.5 bg-bg-elevated border border-border-subtle rounded-xl text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-accent"
+            />
           </div>
-          <div className="space-y-1">
-            <h3 className="text-base font-semibold text-text-primary">No Surveys Stored</h3>
-            <p className="text-xs text-text-secondary leading-relaxed">
-              No side-scan sonar files have been uploaded to the system yet.
-            </p>
-          </div>
-          <Link
-            to="/upload"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent-hover text-white text-xs font-semibold rounded-xl transition-all shadow-md"
-          >
-            Upload First Survey
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
+
+        <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-1.5 text-text-secondary">
+            <Filter className="w-3.5 h-3.5" />
+            <span>Status:</span>
+          </div>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="bg-bg-elevated border border-border-subtle rounded-lg px-2.5 py-1 text-xs text-text-primary font-medium focus:outline-none"
+          >
+            <option value="all">All Statuses ({surveys.length})</option>
+            <option value="complete">Complete</option>
+            <option value="queued">Queued / Processing</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Main Surveys Data Table */}
+      {filteredSurveys.length === 0 ? (
+        <EmptyState
+          icon={Database}
+          title="No Sonar Surveys Found"
+          description="Upload your first Forward-Looking Sonar or sidescan sonar file to begin acoustic analysis."
+          actionLabel="Ingest New Survey"
+          actionHref="/upload"
+        />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {surveys.map((survey: Survey) => {
-            const statusColors: Record<string, string> = {
-              complete: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
-              failed: "text-red-400 bg-red-500/10 border-red-500/30",
-              uploaded: "text-blue-400 bg-blue-500/10 border-blue-500/30",
-              queued: "text-amber-400 bg-amber-500/10 border-amber-500/30",
-              preprocessing: "text-cyan-400 bg-cyan-500/10 border-cyan-500/30",
-              inferring: "text-purple-400 bg-purple-500/10 border-purple-500/30",
-            };
-
-            const statusClass =
-              statusColors[survey.status] || "text-text-secondary bg-bg-elevated border-border-subtle";
-
-            return (
-              <div
-                key={survey.id}
-                className="p-5 bg-bg-surface border border-border-subtle rounded-2xl space-y-4 hover:border-accent/40 transition-all flex flex-col justify-between shadow-md"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <span
-                      className={`px-2.5 py-0.5 rounded-full text-xs font-mono font-medium border capitalize ${statusClass}`}
-                    >
-                      {survey.status}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (confirm(`Delete survey record ${survey.source_filename}?`)) {
-                          deleteMutation.mutate(survey.id);
-                        }
-                      }}
-                      className="text-text-muted hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
-                      title="Delete survey"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-sm text-text-primary truncate" title={survey.source_filename}>
-                      {survey.source_filename}
-                    </h3>
-                    <p className="font-mono text-[11px] text-text-muted mt-0.5 truncate">
-                      ID: {survey.id}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 text-xs font-mono text-text-secondary pt-2 border-t border-border-subtle/50">
-                    <span className="flex items-center gap-1.5">
-                      <HardDrive className="w-3.5 h-3.5 text-text-muted" />
-                      {(survey.file_size_bytes / (1024 * 1024)).toFixed(2)} MB
-                    </span>
-                    <span className="flex items-center gap-1.5 justify-end uppercase font-semibold text-accent">
-                      <Layers className="w-3.5 h-3.5" />
-                      {survey.file_type}
-                    </span>
-                    <span className="flex items-center gap-1.5 col-span-2 text-text-muted">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {new Date(survey.created_at).toLocaleDateString()} at{" "}
-                      {new Date(survey.created_at).toLocaleTimeString()}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="pt-3 border-t border-border-subtle flex items-center justify-between">
-                  <span className="text-xs font-mono text-text-secondary">
-                    <strong className="text-text-primary font-bold">
-                      {(survey as any).detection_count ?? 0}
-                    </strong>{" "}
-                    detections
-                  </span>
-
-                  <Link
-                    to={`/surveys/${survey.id}`}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-accent/10 hover:bg-accent text-accent hover:text-white rounded-lg text-xs font-semibold transition-all"
+        <div className="bg-bg-surface border border-border-subtle rounded-2xl shadow-card overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-bg-elevated text-text-secondary uppercase tracking-wider font-mono text-[11px]">
+                <tr>
+                  <th className="py-3 px-4 font-semibold">Survey Filename</th>
+                  <th className="py-3 px-4 font-semibold">Format</th>
+                  <th className="py-3 px-4 font-semibold">File Size</th>
+                  <th className="py-3 px-4 font-semibold">Detections</th>
+                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th
+                    className="py-3 px-4 font-semibold cursor-pointer hover:text-text-primary"
+                    onClick={() => {
+                      if (sortField === "created_at") {
+                        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                      } else {
+                        setSortField("created_at");
+                        setSortOrder("desc");
+                      }
+                    }}
                   >
-                    Inspect
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+                    <span className="flex items-center gap-1">
+                      Uploaded <ArrowUpDown className="w-3 h-3" />
+                    </span>
+                  </th>
+                  <th className="py-3 px-4 text-right font-semibold">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border-subtle">
+                {filteredSurveys.map((survey) => {
+                  const detectionCount = (survey as any).detection_count || 0;
+                  return (
+                    <tr
+                      key={survey.id}
+                      onClick={() => navigate(`/surveys/${survey.id}`)}
+                      className="hover:bg-bg-elevated/40 transition-colors cursor-pointer group"
+                    >
+                      <td className="py-3.5 px-4 font-bold text-text-primary">
+                        <div className="flex items-center gap-2">
+                          <span className="truncate max-w-xs">{survey.source_filename}</span>
+                          <span className="text-[10px] text-text-muted font-mono font-normal">
+                            #{survey.id.slice(0, 8)}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-4 font-mono uppercase text-accent font-semibold">
+                        {survey.file_type}
+                      </td>
+                      <td className="py-3.5 px-4 font-mono text-text-secondary">
+                        {(survey.file_size_bytes / (1024 * 1024)).toFixed(2)} MB
+                      </td>
+                      <td className="py-3.5 px-4 font-mono font-bold text-text-primary">
+                        {detectionCount}
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase ${
+                            survey.status === "complete"
+                              ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                              : survey.status === "failed"
+                              ? "bg-rose-50 text-rose-700 border border-rose-200"
+                              : "bg-sky-50 text-sky-700 border border-sky-200"
+                          }`}
+                        >
+                          {survey.status}
+                        </span>
+                      </td>
+                      <td className="py-3.5 px-4 font-mono text-text-muted text-[11px]">
+                        {new Date(survey.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="py-3.5 px-4 text-right">
+                        <div
+                          className="flex items-center justify-end gap-2"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Link
+                            to={`/surveys/${survey.id}`}
+                            className="p-1.5 text-text-secondary hover:text-accent rounded-lg hover:bg-bg-elevated transition-all"
+                            title="Inspect Survey"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  `Delete survey session "${survey.source_filename}" and all associated detections?`
+                                )
+                              ) {
+                                deleteMutation.mutate(survey.id);
+                              }
+                            }}
+                            className="p-1.5 text-text-muted hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-all cursor-pointer"
+                            title="Delete Survey"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

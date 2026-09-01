@@ -21,7 +21,7 @@ async def job_progress_ws(
     redis = None
     pubsub = None
     try:
-        redis = aioredis.from_url(settings.CELERY_BROKER_URL)
+        redis = aioredis.from_url(settings.celery_broker, protocol=2)
         pubsub = redis.pubsub()
         channel = f"job_progress:{job_id}"
         await pubsub.subscribe(channel)

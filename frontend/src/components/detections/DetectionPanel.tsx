@@ -19,25 +19,27 @@ export const DetectionPanel: React.FC<DetectionPanelProps> = ({ detections }) =>
   });
 
   return (
-    <div className="flex flex-col h-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden shadow-lg">
+    <div className="flex flex-col h-full bg-bg-surface border border-border-subtle rounded-2xl overflow-hidden shadow-card">
       {/* Header */}
-      <div className="p-4 border-b border-border-subtle flex items-center justify-between bg-bg-surface">
+      <div className="p-3.5 px-4 border-b border-border-subtle flex items-center justify-between bg-slate-50/70">
         <div className="flex items-center gap-2">
           <Target className="w-4 h-4 text-accent" />
-          <h3 className="text-sm font-semibold text-text-primary">Detected Targets</h3>
+          <h3 className="text-xs font-bold text-text-primary uppercase tracking-wider font-mono">
+            Detected Targets
+          </h3>
         </div>
-        <span className="px-2.5 py-0.5 rounded-full bg-bg-elevated text-xs font-mono font-medium text-text-secondary">
+        <span className="px-2.5 py-0.5 rounded-full bg-bg-surface border border-border-subtle text-xs font-mono font-bold text-text-primary shadow-xs">
           {filteredDetections.length} of {detections.length}
         </span>
       </div>
 
       {/* Detections List */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
         {filteredDetections.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-center p-4 text-text-muted space-y-2">
-            <SearchX className="w-8 h-8 stroke-1 text-text-muted" />
-            <p className="text-sm font-medium text-text-secondary">No detections matching filters</p>
-            <p className="text-xs max-w-xs">
+            <SearchX className="w-8 h-8 stroke-1 text-slate-400" />
+            <p className="text-xs font-semibold text-text-secondary">No detections matching filters</p>
+            <p className="text-[11px] max-w-xs text-text-muted leading-relaxed">
               Adjust minimum confidence or toggle filtered anomalies to inspect targets.
             </p>
           </div>
@@ -50,3 +52,5 @@ export const DetectionPanel: React.FC<DetectionPanelProps> = ({ detections }) =>
     </div>
   );
 };
+
+export default DetectionPanel;

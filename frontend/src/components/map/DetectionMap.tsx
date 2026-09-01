@@ -42,15 +42,15 @@ export const DetectionMap: React.FC<DetectionMapProps> = ({ detections }) => {
 
   if (georeferenced.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full bg-bg-surface border border-border-subtle rounded-2xl p-8 text-center text-text-muted space-y-3 shadow-lg">
-        <div className="p-3 bg-bg-elevated rounded-full text-cyan-400">
+      <div className="flex flex-col items-center justify-center h-full bg-bg-surface border border-border-subtle rounded-2xl p-8 text-center text-text-muted space-y-3 shadow-card">
+        <div className="p-3 bg-slate-100 rounded-full text-sky-600 border border-border-subtle">
           <MapPinOff className="w-8 h-8" />
         </div>
-        <p className="text-sm font-medium text-text-secondary">
+        <p className="text-sm font-semibold text-text-primary">
           No Georeferenced Coordinates Available
         </p>
-        <p className="text-xs max-w-sm">
-          Acoustic survey targets will be mapped here once processed with valid WGS84 navigation metadata.
+        <p className="text-xs max-w-sm text-text-muted">
+          Acoustic survey targets will appear on this GIS map once processed with valid WGS84 navigation metadata.
         </p>
       </div>
     );
@@ -63,7 +63,7 @@ export const DetectionMap: React.FC<DetectionMapProps> = ({ detections }) => {
     georeferenced.reduce((acc, d) => acc + (d.longitude || 0), 0) / georeferenced.length;
 
   return (
-    <div className="h-full w-full rounded-2xl overflow-hidden border border-border-subtle shadow-lg relative z-0">
+    <div className="h-full w-full rounded-2xl overflow-hidden border border-border-subtle shadow-card relative z-0">
       <MapContainer
         center={[avgLat, avgLon]}
         zoom={14}
@@ -82,10 +82,10 @@ export const DetectionMap: React.FC<DetectionMapProps> = ({ detections }) => {
           if (lat === undefined || lat === null || lon === undefined || lon === null) return null;
           const meta = getClassColor(det.class_name);
 
-          // Create custom colored circle marker
+          // Create custom colored circle marker without neon glow
           const customIcon = L.divIcon({
             className: "custom-pin",
-            html: `<div style="background-color: ${meta.color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 8px ${meta.color};"></div>`,
+            html: `<div style="background-color: ${meta.color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.35);"></div>`,
             iconSize: [14, 14],
             iconAnchor: [7, 7],
           });
@@ -99,15 +99,15 @@ export const DetectionMap: React.FC<DetectionMapProps> = ({ detections }) => {
                 click: () => setSelectedDetection(det),
               }}
             >
-              <Popup className="dark-popup">
+              <Popup>
                 <div className="p-1 space-y-1 font-sans text-xs">
-                  <p className="font-semibold text-sm" style={{ color: meta.color }}>
+                  <p className="font-bold text-xs" style={{ color: meta.text }}>
                     {meta.label}
                   </p>
-                  <p className="font-mono text-[11px] text-gray-300">
-                    Conf: {formatConfidence(det.confidence_calibrated || det.confidence)}
+                  <p className="font-mono text-[11px] text-slate-700">
+                    Confidence: {formatConfidence(det.confidence_calibrated || det.confidence)}
                   </p>
-                  <p className="font-mono text-[10px] text-gray-400">
+                  <p className="font-mono text-[10px] text-slate-500">
                     {lat.toFixed(5)}°, {lon.toFixed(5)}°
                   </p>
                 </div>
@@ -119,3 +119,5 @@ export const DetectionMap: React.FC<DetectionMapProps> = ({ detections }) => {
     </div>
   );
 };
+
+export default DetectionMap;

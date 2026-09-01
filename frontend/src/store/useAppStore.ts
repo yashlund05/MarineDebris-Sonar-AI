@@ -31,6 +31,18 @@ interface AppState {
   showOverlay: boolean;
   setShowOverlay: (show: boolean) => void;
 
+  // Specific Layer Toggles
+  showDetections: boolean;
+  setShowDetections: (val: boolean) => void;
+  showSegmentation: boolean;
+  setShowSegmentation: (val: boolean) => void;
+  showClassification: boolean;
+  setShowClassification: (val: boolean) => void;
+  showConfidence: boolean;
+  setShowConfidence: (val: boolean) => void;
+  showGeolocation: boolean;
+  setShowGeolocation: (val: boolean) => void;
+
   // Detail Modal
   isDetectionModalOpen: boolean;
   setDetectionModalOpen: (open: boolean) => void;
@@ -62,6 +74,21 @@ export const useAppStore = create<AppState>((set) => ({
 
   showOverlay: true,
   setShowOverlay: (show) => set({ showOverlay: show }),
+
+  showDetections: true,
+  setShowDetections: (val) => set({ showDetections: val }),
+
+  showSegmentation: true,
+  setShowSegmentation: (val) => set({ showSegmentation: val }),
+
+  showClassification: true,
+  setShowClassification: (val) => set({ showClassification: val }),
+
+  showConfidence: true,
+  setShowConfidence: (val) => set({ showConfidence: val }),
+
+  showGeolocation: false,
+  setShowGeolocation: (val) => set({ showGeolocation: val }),
 
   isDetectionModalOpen: false,
   setDetectionModalOpen: (open) => set({ isDetectionModalOpen: open }),

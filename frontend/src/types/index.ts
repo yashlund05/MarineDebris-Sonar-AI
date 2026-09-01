@@ -26,7 +26,7 @@ export type DetectionClass =
   | "natural_feature";
 
 export type ReportFormat = "json" | "csv" | "geojson";
-export type ModelTask = "detection" | "segmentation" | "edge_detection";
+export type ModelTask = "detection" | "segmentation" | "edge_detection" | "classification";
 
 export interface Survey {
   id: string;
@@ -90,6 +90,22 @@ export interface BoundingBox {
   h: number;
 }
 
+export interface DetectionSegmentation {
+  status: "available" | "unavailable" | "failed";
+  confidence?: number;
+  mask_area?: number;
+  mask_rle?: string;
+  mask_geometry?: Record<string, unknown>;
+}
+
+export interface DetectionClassification {
+  status: "available" | "unavailable" | "failed";
+  model?: string;
+  class_name?: string;
+  confidence?: number;
+  agreement?: boolean;
+}
+
 export interface Detection {
   id: string;
   survey_id: string;
@@ -102,6 +118,22 @@ export interface Detection {
   bbox_y: number;
   bbox_w: number;
   bbox_h: number;
+  bbox?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  segmentation?: DetectionSegmentation;
+  classification?: DetectionClassification;
+  geolocation?: {
+    latitude?: number;
+    longitude?: number;
+  };
+  dimensions?: {
+    length_m?: number;
+    width_m?: number;
+  };
   mask_rle?: string;
   estimated_length_m?: number;
   estimated_width_m?: number;
@@ -113,6 +145,7 @@ export interface Detection {
   is_filtered: boolean;
   filtered_reason?: string;
   source_tile_path?: string;
+  source_tile_url?: string;
   extra_metadata?: Record<string, unknown>;
   created_at: string;
 }
@@ -131,10 +164,21 @@ export interface Report {
 export interface ModelRegistryItem {
   id: string;
   model_name: string;
+  name?: string;
   version: string;
   task: ModelTask;
   architecture?: string;
+  framework?: string;
   training_dataset?: string;
+  dataset_version?: string;
+  status?: string;
+  runtime_status?: string;
+  device?: string;
+  is_loaded?: boolean;
+  weights_path?: string;
+  supported_classes?: string[];
+  unsupported_classes?: string[];
+  metrics?: Record<string, unknown>;
   map50?: number;
   map50_95?: number;
   dice_score?: number;

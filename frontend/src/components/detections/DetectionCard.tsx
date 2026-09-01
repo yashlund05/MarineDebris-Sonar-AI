@@ -16,10 +16,10 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ detection }) => {
   return (
     <div
       onClick={() => setSelectedDetection(detection)}
-      className={`p-3.5 rounded-xl border transition-all cursor-pointer space-y-2 ${
+      className={`p-3 rounded-xl border transition-all cursor-pointer space-y-2 ${
         isSelected
-          ? "bg-accent/10 border-accent shadow-md ring-1 ring-accent/50"
-          : "bg-bg-surface border-border-subtle hover:border-accent/40 hover:bg-bg-elevated/40"
+          ? "bg-sky-50/80 border-accent shadow-sm ring-1 ring-accent"
+          : "bg-bg-surface border-border-subtle hover:border-border-default hover:bg-bg-elevated/40"
       }`}
     >
       <div className="flex items-start justify-between gap-2">
@@ -30,9 +30,9 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ detection }) => {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-2 text-xs font-mono text-text-secondary pt-1">
+      <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-text-secondary pt-0.5">
         <div className="flex items-center gap-1.5">
-          <MapPin className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+          <MapPin className="w-3.5 h-3.5 text-sky-600 flex-shrink-0" />
           {detection.geotagging_available &&
           detection.latitude !== undefined &&
           detection.latitude !== null &&
@@ -47,7 +47,7 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ detection }) => {
         </div>
 
         <div className="flex items-center gap-1.5 justify-end">
-          <Ruler className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+          <Ruler className="w-3.5 h-3.5 text-amber-700 flex-shrink-0" />
           {detection.estimated_length_m !== undefined && detection.estimated_length_m !== null ? (
             <span>
               {detection.estimated_length_m.toFixed(1)}m × {detection.estimated_width_m?.toFixed(1) || "?"}m
@@ -61,7 +61,7 @@ export const DetectionCard: React.FC<DetectionCardProps> = ({ detection }) => {
       </div>
 
       {detection.is_filtered && (
-        <div className="flex items-center gap-1.5 text-[11px] text-red-400 bg-red-950/30 px-2 py-0.5 rounded border border-red-500/20">
+        <div className="flex items-center gap-1.5 text-[10px] text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
           <AlertTriangle className="w-3 h-3 flex-shrink-0" />
           <span className="truncate">Filtered: {detection.filtered_reason || "Anomaly"}</span>
         </div>

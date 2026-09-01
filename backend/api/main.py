@@ -23,7 +23,7 @@ from contextlib import asynccontextmanager
 from backend.config import get_settings
 from backend.exceptions import AppException
 from backend.logging_config import get_logger, setup_logging
-from backend.database.session import async_engine
+from backend.database.session import get_async_engine
 from backend.database.models import Base
 
 settings = get_settings()
@@ -39,19 +39,27 @@ async def lifespan(app: FastAPI):
     os.makedirs(settings.storage_root_path, exist_ok=True)
     os.makedirs("./data", exist_ok=True)
 
-    # Initialize database tables automatically if not already present
-    try:
-        async with async_engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-        logger.info("Database tables initialized successfully.")
-    except Exception as e:
-        logger.warning("Database table auto-creation skipped or deferred: %s", str(e))
+    # Initialize database tables automatically only if permitted (development / SQLite standalone)
+    # Production PostgreSQL deployments must use Alembic migrations (alembic upgrade head)
+    should_auto_create = settings.AUTO_CREATE_TABLES or (
+        settings.ENVIRONMENT == "development" and "sqlite" in settings.async_database_url
+    )
+    if should_auto_create:
+        try:
+            engine = get_async_engine()
+            async with engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+            logger.info("Database tables initialized successfully via AUTO_CREATE_TABLES.")
+        except Exception as e:
+            logger.warning("Database table auto-creation skipped or deferred: %s", str(e))
+    else:
+        logger.info("AUTO_CREATE_TABLES disabled. Schema migrations managed by Alembic.")
 
     yield
 
     # Clean up on shutdown
     try:
-        await async_engine.dispose()
+        await get_async_engine().dispose()
     except Exception:
         pass
 

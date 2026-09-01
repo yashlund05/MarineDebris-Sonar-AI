@@ -125,3 +125,15 @@ def convert_coco_to_yolo(
         "canonical_classes": CANONICAL_CLASSES,
         "output_directory": str(out_path),
     }
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Convert COCO JSON annotations to YOLO format")
+    parser.add_argument("--coco-path", required=True, help="Path to COCO JSON annotation file")
+    parser.add_argument("--output-dir", required=True, help="Target directory for YOLO .txt label files")
+    args = parser.parse_args()
+
+    stats = convert_coco_to_yolo(args.coco_path, args.output_dir)
+    print(f"Conversion complete: {stats['converted_labels']} labels generated in {stats['output_directory']}")

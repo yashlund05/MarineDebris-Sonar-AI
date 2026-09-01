@@ -96,3 +96,30 @@ async def test_model_registry(async_db: AsyncSession):
     await async_db.refresh(model)
     assert model.id is not None
     assert model.is_active is True
+
+
+def test_auto_create_tables_gating():
+    """Verify that production mode disables automatic DDL execution (Alembic compliance)."""
+    from backend.config import Settings
+
+    # Production configuration: AUTO_CREATE_TABLES is False
+    prod_settings = Settings(
+        ENVIRONMENT="production",
+        AUTO_CREATE_TABLES=False,
+        DATABASE_URL="postgresql+asyncpg://postgres:postgres@localhost:5432/marine_debris_sonar",
+    )
+    should_auto_create_prod = prod_settings.AUTO_CREATE_TABLES or (
+        prod_settings.ENVIRONMENT == "development" and "sqlite" in prod_settings.async_database_url
+    )
+    assert should_auto_create_prod is False
+
+    # Development standalone configuration: AUTO_CREATE_TABLES is enabled
+    dev_settings = Settings(
+        ENVIRONMENT="development",
+        AUTO_CREATE_TABLES=False,
+        DATABASE_URL="sqlite+aiosqlite:///./data/marine_debris_sonar.db",
+    )
+    should_auto_create_dev = dev_settings.AUTO_CREATE_TABLES or (
+        dev_settings.ENVIRONMENT == "development" and "sqlite" in dev_settings.async_database_url
+    )
+    assert should_auto_create_dev is True

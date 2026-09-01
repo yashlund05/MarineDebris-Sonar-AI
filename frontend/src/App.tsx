@@ -6,6 +6,7 @@ import { UploadPage } from "./pages/UploadPage";
 import { SurveyListPage } from "./pages/SurveyListPage";
 import { SurveyDetailPage } from "./pages/SurveyDetailPage";
 import { ModelsPage } from "./pages/ModelsPage";
+import { DatasetPage } from "./pages/DatasetPage";
 
 export const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ export const App: React.FC = () => {
           <Route path="surveys" element={<SurveyListPage />} />
           <Route path="surveys/:id" element={<SurveyDetailPage />} />
           <Route path="models" element={<ModelsPage />} />
+          <Route path="dataset" element={<DatasetPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
