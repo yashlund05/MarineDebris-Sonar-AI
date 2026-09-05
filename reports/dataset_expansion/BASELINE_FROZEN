@@ -1,0 +1,2 @@
+BASELINE_DATASET_FROZEN = TRUE
+DO NOT MODIFY datasets/sonar_debris_v2_clean/ OR models/detection/sonar_yolov8_fls_trained.pt

@@ -1,0 +1,565 @@
+{
+  "total_images_scanned": 580,
+  "missed_debris_count": 59,
+  "low_confidence_count": 23,
+  "tiny_missed_count": 1,
+  "background_false_alarm_count": 15,
+  "missed_debris_samples": [
+    {
+      "image": "marine-debris-aris3k-1.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 49.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-103.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 118.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-251.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 50.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-260.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 45.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-263.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 74.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-264.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 49.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-267.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 62.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-282.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 34.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-284.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 97.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-298.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 398.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-298.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 172.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-30.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 97.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-30.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 45.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-31.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 85.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-317.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 134.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-318.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 92.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-328.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 41.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-333.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 100.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-333.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 76.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-333.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 112.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-333.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 126.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-340.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 80.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-341.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 72.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-364.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 102.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-367.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 82.7,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-372.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 201.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-389.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 45.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "small"
+    },
+    {
+      "image": "marine-debris-aris3k-393.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 72.0,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-397.png",
+      "split": "train",
+      "gt_class": 1,
+      "max_dim_px": 73.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    },
+    {
+      "image": "marine-debris-aris3k-40.png",
+      "split": "train",
+      "gt_class": 4,
+      "max_dim_px": 73.3,
+      "category": "MISSED_DEBRIS_FALSE_NEGATIVE",
+      "scale": "medium"
+    }
+  ],
+  "low_confidence_samples": [
+    {
+      "image": "marine-debris-aris3k-176.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.3082,
+      "iou": 0.909,
+      "max_dim_px": 120.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-196.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.3732,
+      "iou": 0.795,
+      "max_dim_px": 70.7,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-197.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.3906,
+      "iou": 0.864,
+      "max_dim_px": 76.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-260.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.2724,
+      "iou": 0.757,
+      "max_dim_px": 73.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-270.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.2574,
+      "iou": 0.759,
+      "max_dim_px": 54.7,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-281.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.2653,
+      "iou": 0.81,
+      "max_dim_px": 41.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-289.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.2915,
+      "iou": 0.705,
+      "max_dim_px": 37.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-332.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.2555,
+      "iou": 0.831,
+      "max_dim_px": 45.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-339.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.382,
+      "iou": 0.667,
+      "max_dim_px": 78.7,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-357.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.2691,
+      "iou": 0.79,
+      "max_dim_px": 68.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-367.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.3423,
+      "iou": 0.556,
+      "max_dim_px": 173.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-39.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.3979,
+      "iou": 0.903,
+      "max_dim_px": 72.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-403.png",
+      "split": "train",
+      "gt_class": 4,
+      "confidence": 0.3399,
+      "iou": 0.489,
+      "max_dim_px": 81.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-50.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.3087,
+      "iou": 0.701,
+      "max_dim_px": 85.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-81.png",
+      "split": "train",
+      "gt_class": 1,
+      "confidence": 0.3575,
+      "iou": 0.936,
+      "max_dim_px": 41.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-422.png",
+      "split": "val",
+      "gt_class": 4,
+      "confidence": 0.3585,
+      "iou": 0.873,
+      "max_dim_px": 108.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-431.png",
+      "split": "val",
+      "gt_class": 1,
+      "confidence": 0.2916,
+      "iou": 0.806,
+      "max_dim_px": 72.0,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-452.png",
+      "split": "val",
+      "gt_class": 4,
+      "confidence": 0.3143,
+      "iou": 0.896,
+      "max_dim_px": 109.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-457.png",
+      "split": "val",
+      "gt_class": 1,
+      "confidence": 0.3033,
+      "iou": 0.652,
+      "max_dim_px": 38.7,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-477.png",
+      "split": "val",
+      "gt_class": 4,
+      "confidence": 0.2516,
+      "iou": 0.454,
+      "max_dim_px": 141.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-486.png",
+      "split": "val",
+      "gt_class": 1,
+      "confidence": 0.2916,
+      "iou": 0.506,
+      "max_dim_px": 45.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-493.png",
+      "split": "val",
+      "gt_class": 1,
+      "confidence": 0.3328,
+      "iou": 0.856,
+      "max_dim_px": 53.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    },
+    {
+      "image": "marine-debris-aris3k-517.png",
+      "split": "val",
+      "gt_class": 1,
+      "confidence": 0.3006,
+      "iou": 0.649,
+      "max_dim_px": 61.3,
+      "category": "LOW_CONFIDENCE_TRUE_POSITIVE"
+    }
+  ],
+  "background_false_alarms": [
+    {
+      "image": "2016-06-22_143000-frame00009.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.4147,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-122.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.9489,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-145.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.8016,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-153.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.722,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-159.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.5888,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-219.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.8061,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-232.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.7058,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-294.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.6472,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-299.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.3741,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-43.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.4777,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-60.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.6885,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-73.png",
+      "split": "train",
+      "pred_class": 1,
+      "confidence": 0.3788,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-445.png",
+      "split": "val",
+      "pred_class": 1,
+      "confidence": 0.9773,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-458.png",
+      "split": "val",
+      "pred_class": 1,
+      "confidence": 0.7343,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    },
+    {
+      "image": "marine-debris-aris3k-463.png",
+      "split": "val",
+      "pred_class": 1,
+      "confidence": 0.7716,
+      "category": "BACKGROUND_CLUTTER_FALSE_ALARM"
+    }
+  ]
+}

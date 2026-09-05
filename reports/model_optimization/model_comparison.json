@@ -1,0 +1,91 @@
+{
+  "promotion_criteria": {
+    "max_legacy_map50_regression": 0.015,
+    "max_legacy_f1_regression": 0.02,
+    "min_v3_map50_gain": 0.005,
+    "max_hard_negative_far": 0.05,
+    "max_cpu_latency_ms": 125.0
+  },
+  "models": [
+    {
+      "model_name": "sonar_yolov8_fls_trained.pt",
+      "dataset": "V2 Baseline (Watertank FLS)",
+      "legacy_mAP50": 0.7772,
+      "legacy_f1": 0.8669,
+      "v3_mAP50": 0.8588,
+      "v3_f1": 0.9016,
+      "hard_negative_far": 0.2143,
+      "cross_domain_mAP": 0.338,
+      "latency_ms": 41.97,
+      "fps": 23.8,
+      "parameters": "3.01M",
+      "seeds": "42, 123, 2026",
+      "status": "CONTROL",
+      "promotion_verdict": "ACTIVE PRODUCTION"
+    },
+    {
+      "model_name": "yolov8_fls_v3_candidate.pt",
+      "dataset": "Dataset V3-A (Expanded Real FLS)",
+      "legacy_mAP50": 0.6898,
+      "legacy_f1": 0.7969,
+      "v3_mAP50": 0.6513,
+      "v3_f1": 0.776,
+      "hard_negative_far": 0.1429,
+      "cross_domain_mAP": 0.255,
+      "latency_ms": 41.5,
+      "fps": 24.1,
+      "parameters": "3.01M",
+      "seeds": "42",
+      "status": "REGRESSION",
+      "promotion_verdict": "REJECTED (LEGACY REGRESSION)"
+    },
+    {
+      "model_name": "exp_c_balanced_v2_v3",
+      "dataset": "V3 Balanced (40% V2, 50% V3+, 10% Neg)",
+      "legacy_mAP50": 0.771,
+      "legacy_f1": 0.862,
+      "v3_mAP50": 0.861,
+      "v3_f1": 0.895,
+      "hard_negative_far": 0.082,
+      "cross_domain_mAP": 0.341,
+      "latency_ms": 42.1,
+      "fps": 23.8,
+      "parameters": "3.01M",
+      "seeds": "42",
+      "status": "HIGH_FALSE_ALARM",
+      "promotion_verdict": "REJECTED (EXCESSIVE FALSE ALARMS)"
+    },
+    {
+      "model_name": "exp_d_hard_neg_15pct",
+      "dataset": "V3 Hard-Negative (15% Negatives)",
+      "legacy_mAP50": 0.742,
+      "legacy_f1": 0.821,
+      "v3_mAP50": 0.835,
+      "v3_f1": 0.854,
+      "hard_negative_far": 0.038,
+      "cross_domain_mAP": 0.312,
+      "latency_ms": 42.0,
+      "fps": 23.8,
+      "parameters": "3.01M",
+      "seeds": "42",
+      "status": "REGRESSION",
+      "promotion_verdict": "REJECTED (LEGACY REGRESSION)"
+    },
+    {
+      "model_name": "exp_f_hires_768",
+      "dataset": "V3 High-Resolution (768x768)",
+      "legacy_mAP50": 0.781,
+      "legacy_f1": 0.869,
+      "v3_mAP50": 0.864,
+      "v3_f1": 0.902,
+      "hard_negative_far": 0.198,
+      "cross_domain_mAP": 0.345,
+      "latency_ms": 62.4,
+      "fps": 16.0,
+      "parameters": "3.01M",
+      "seeds": "42",
+      "status": "HIGH_FALSE_ALARM",
+      "promotion_verdict": "REJECTED (EXCESSIVE FALSE ALARMS)"
+    }
+  ]
+}

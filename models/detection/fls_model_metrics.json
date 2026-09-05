@@ -3,28 +3,35 @@
   "sensor": "ARIS Explorer 3000 (3.0 MHz High-Frequency Sonar)",
   "resolution": "0.08m range resolution",
   "held_out_test_images": 37,
-  "precision": 0.7726,
-  "recall": 0.6767,
-  "mAP50": 0.8072,
-  "mAP50_95": 0.5519,
+  "precision": 0.9325,
+  "recall": 0.9015,
+  "f1": 0.9167,
+  "mAP50": 0.8921,
+  "mAP50_95": 0.6235,
   "per_class": {
     "derelict_fishing_gear": {
-      "mAP50_95": 0.5519
+      "mAP50_95": 0.7349,
+      "mAP50": 0.9292,
+      "precision": 0.8649,
+      "recall": 0.9536,
+      "f1": 0.9071
     },
     "general_marine_debris": {
-      "mAP50_95": 0.6466
-    },
-    "shipwreck": {
-      "mAP50_95": 0.5519
-    },
-    "pipe_or_cylinder": {
-      "mAP50_95": 0.5519
-    },
-    "other_man_made_target": {
-      "mAP50_95": 0.4572
+      "mAP50_95": 0.5121,
+      "mAP50": 0.855,
+      "precision": 1.0,
+      "recall": 0.8494,
+      "f1": 0.9186
     }
   },
-  "weights_file": "models\\detection\\sonar_yolov8m_ghostpot_v1.pt",
+  "latency_ms": {
+    "preprocess": 1.46,
+    "inference": 84.44,
+    "postprocess": 1.07,
+    "total": 86.97
+  },
+  "weights_file": "models/detection/sonar_yolov8_fls_trained.pt",
   "status": "READY",
-  "validated_at": "2026-09-01T15:39:04.690234+00:00"
+  "validated_at": "2026-09-03T18:57:25.410824+00:00",
+  "checkpoint_experiment": "exp01_sonar_aug_adamw_640"
 }

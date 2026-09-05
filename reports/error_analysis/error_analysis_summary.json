@@ -1,0 +1,131 @@
+{
+  "model_path": "ml/experiments/exp01_sonar_aug_adamw_640/train_run/weights/best.pt",
+  "split": "val",
+  "confidence_threshold": 0.3,
+  "iou_threshold": 0.45,
+  "counts": {
+    "total_ground_truth": 51,
+    "total_predictions": 46,
+    "true_positives": 43,
+    "false_positives": 1,
+    "false_negatives": 7,
+    "localization_errors": 2
+  },
+  "false_positive_breakdown": {
+    "acoustic_clutter_or_shadow": 1
+  },
+  "false_negative_breakdown": {
+    "tiny_object": 0,
+    "low_contrast_debris": 7
+  },
+  "sample_false_positives": [
+    {
+      "image": "marine-debris-aris3k-55.png",
+      "class": "general_marine_debris",
+      "conf": 0.555027961730957,
+      "bbox": [
+        0.4898,
+        0.5304,
+        0.1076,
+        0.1111
+      ],
+      "category": "acoustic_clutter_or_shadow"
+    }
+  ],
+  "sample_false_negatives": [
+    {
+      "image": "marine-debris-aris3k-30.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.6766,
+        0.6427,
+        0.0688,
+        0.1521
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-30.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.3161,
+        0.6271,
+        0.0479,
+        0.0708
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-31.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.4734,
+        0.5646,
+        0.0833,
+        0.1333
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-40.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.5161,
+        0.5656,
+        0.0896,
+        0.1146
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-50.png",
+      "class": "general_marine_debris",
+      "bbox": [
+        0.3964,
+        0.7562,
+        0.0833,
+        0.1333
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-61.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.2828,
+        0.1781,
+        0.1313,
+        0.2313
+      ],
+      "category": "low_contrast_debris"
+    },
+    {
+      "image": "marine-debris-aris3k-62.png",
+      "class": "other_man_made_target",
+      "bbox": [
+        0.3995,
+        0.5344,
+        0.1729,
+        0.0854
+      ],
+      "category": "low_contrast_debris"
+    }
+  ],
+  "sample_localization_errors": [
+    {
+      "image": "marine-debris-aris3k-30.png",
+      "type": "boundary_imprecision",
+      "predicted_class": "other_man_made_target",
+      "conf": 0.4525017738342285,
+      "iou": 0.427
+    },
+    {
+      "image": "marine-debris-aris3k-6.png",
+      "type": "class_confusion",
+      "predicted_class": "general_marine_debris",
+      "gt_class": "other_man_made_target",
+      "conf": 0.9414294362068176,
+      "iou": 0.831
+    }
+  ]
+}

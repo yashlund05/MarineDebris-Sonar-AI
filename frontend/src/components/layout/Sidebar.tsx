@@ -10,6 +10,7 @@ import {
   Activity,
   Waves,
   HardDrive,
+  BarChart2,
 } from "lucide-react";
 import { systemApi } from "../../api/client";
 
@@ -32,6 +33,7 @@ export const Sidebar: React.FC = () => {
 
   const intelligenceNav = [
     { to: "/models", label: "Model Center", icon: Cpu },
+    { to: "/models/evaluation", label: "Model Evaluation", icon: BarChart2 },
     { to: "/dataset", label: "Dataset Explorer", icon: Layers },
   ];
 

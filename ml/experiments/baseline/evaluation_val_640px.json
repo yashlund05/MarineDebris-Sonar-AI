@@ -1,0 +1,147 @@
+{
+  "timestamp": "2026-09-03T18:29:37.095469+00:00",
+  "model_path": "models\\detection\\sonar_yolov8_fls_trained.pt",
+  "dataset_yaml": "datasets\\sonar_debris\\data.yaml",
+  "split": "val",
+  "parameters": 3011823,
+  "input_resolution": [
+    640,
+    640
+  ],
+  "device": "cpu",
+  "environment": {
+    "os": "Windows",
+    "python": "3.14.6",
+    "pytorch": "2.13.0+cpu",
+    "cuda_available": false
+  },
+  "overall_metrics": {
+    "precision": 0.8081,
+    "recall": 0.6477,
+    "f1": 0.7191,
+    "mAP50": 0.8048,
+    "mAP50_95": 0.5018
+  },
+  "per_class_metrics": {
+    "derelict_fishing_gear": {
+      "class_id": 0,
+      "precision": 0.8825,
+      "recall": 0.68,
+      "f1": 0.7681,
+      "mAP50": 0.8711,
+      "mAP50_95": 0.5778
+    },
+    "general_marine_debris": {
+      "class_id": 1,
+      "precision": 0.7337,
+      "recall": 0.6154,
+      "f1": 0.6694,
+      "mAP50": 0.7384,
+      "mAP50_95": 0.4258
+    }
+  },
+  "latency_ms": {
+    "preprocess": 1.8,
+    "inference": 45.51,
+    "postprocess": 4.31,
+    "total": 51.61
+  },
+  "confidence_threshold_sweeps": [
+    {
+      "confidence_threshold": 0.1,
+      "precision": 0.9027,
+      "recall": 0.5285,
+      "f1": 0.6667,
+      "mAP50": 0.5148,
+      "mAP50_95": 0.3529
+    },
+    {
+      "confidence_threshold": 0.15,
+      "precision": 0.9615,
+      "recall": 0.4308,
+      "f1": 0.595,
+      "mAP50": 0.4269,
+      "mAP50_95": 0.2925
+    },
+    {
+      "confidence_threshold": 0.2,
+      "precision": 0.9615,
+      "recall": 0.3508,
+      "f1": 0.514,
+      "mAP50": 0.3469,
+      "mAP50_95": 0.2347
+    },
+    {
+      "confidence_threshold": 0.25,
+      "precision": 1.0,
+      "recall": 0.2931,
+      "f1": 0.4533,
+      "mAP50": 0.29,
+      "mAP50_95": 0.2052
+    },
+    {
+      "confidence_threshold": 0.3,
+      "precision": 1.0,
+      "recall": 0.2738,
+      "f1": 0.43,
+      "mAP50": 0.27,
+      "mAP50_95": 0.1952
+    },
+    {
+      "confidence_threshold": 0.35,
+      "precision": 1.0,
+      "recall": 0.2154,
+      "f1": 0.3544,
+      "mAP50": 0.215,
+      "mAP50_95": 0.1588
+    },
+    {
+      "confidence_threshold": 0.4,
+      "precision": 1.0,
+      "recall": 0.1569,
+      "f1": 0.2713,
+      "mAP50": 0.155,
+      "mAP50_95": 0.1164
+    },
+    {
+      "confidence_threshold": 0.45,
+      "precision": 1.0,
+      "recall": 0.0777,
+      "f1": 0.1442,
+      "mAP50": 0.075,
+      "mAP50_95": 0.0511
+    },
+    {
+      "confidence_threshold": 0.5,
+      "precision": 1.0,
+      "recall": 0.0585,
+      "f1": 0.1105,
+      "mAP50": 0.055,
+      "mAP50_95": 0.0391
+    },
+    {
+      "confidence_threshold": 0.6,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mAP50": 0.0,
+      "mAP50_95": 0.0
+    },
+    {
+      "confidence_threshold": 0.7,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mAP50": 0.0,
+      "mAP50_95": 0.0
+    },
+    {
+      "confidence_threshold": 0.8,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "mAP50": 0.0,
+      "mAP50_95": 0.0
+    }
+  ]
+}

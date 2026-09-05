@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-09-05T14:05:40.050221+00:00",
+  "status": "REPRODUCED_AND_VERIFIED",
+  "model": {
+    "path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\models\\detection\\sonar_yolov8_fls_trained.pt",
+    "sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+    "expected_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+    "architecture": "YOLOv8n",
+    "parameters": 3006623
+  },
+  "dataset": {
+    "name": "sonar_debris_v2_clean",
+    "split": "test",
+    "image_count": 37,
+    "annotation_count": 54
+  },
+  "canonical_benchmark_protocol": {
+    "confidence_threshold": 0.001,
+    "iou_threshold": 0.7,
+    "image_size": 640,
+    "results": {
+      "precision": 0.9325,
+      "recall": 0.9015,
+      "f1": 0.9167,
+      "mAP50": 0.8921,
+      "mAP50_95": 0.6235
+    },
+    "historical_frozen_target": {
+      "precision": 0.9325,
+      "recall": 0.9015,
+      "f1": 0.9167,
+      "mAP50": 0.8921,
+      "mAP50_95": 0.6235
+    },
+    "match": true
+  },
+  "operational_point_protocol": {
+    "confidence_threshold": 0.25,
+    "iou_threshold": 0.45,
+    "image_size": 640,
+    "results": {
+      "precision": 0.9556,
+      "recall": 0.7933,
+      "f1": 0.8669,
+      "mAP50": 0.7772,
+      "mAP50_95": 0.5451
+    },
+    "note": "Operational threshold for real-time AUV survey deployment. Truncates low-confidence predictions prior to PR integration."
+  }
+}

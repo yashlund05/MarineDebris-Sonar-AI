@@ -1,0 +1,68 @@
+{
+  "baseline_version": "v2.0.0-clean",
+  "freeze_timestamp": "2026-09-03T19:11:36.195304+00:00",
+  "baseline_dataset_frozen": true,
+  "dataset_root": "datasets/sonar_debris_v2_clean",
+  "total_real_images": 238,
+  "total_annotations": 371,
+  "splits": {
+    "train": {
+      "images": 166,
+      "annotations": 266
+    },
+    "val": {
+      "images": 35,
+      "annotations": 51
+    },
+    "test": {
+      "images": 37,
+      "annotations": 54
+    }
+  },
+  "classes": {
+    "0": "derelict_fishing_gear",
+    "1": "general_marine_debris",
+    "2": "shipwreck",
+    "3": "pipe_or_cylinder",
+    "4": "other_man_made_target"
+  },
+  "active_ground_truth_classes": {
+    "general_marine_debris": 267,
+    "other_man_made_target": 104
+  },
+  "promoted_production_model": {
+    "path": "models\\detection\\sonar_yolov8_fls_trained.pt",
+    "sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+    "architecture": "YOLOv8n (73 layers, 3,006,623 parameters)",
+    "input_resolution": [
+      640,
+      640,
+      3
+    ]
+  },
+  "production_benchmarks": {
+    "validation_split": {
+      "precision": 0.8955,
+      "recall": 0.8338,
+      "f1": 0.8635,
+      "mAP50": 0.8987,
+      "mAP50_95": 0.6089
+    },
+    "legacy_control_test_split": {
+      "images": 37,
+      "annotations": 54,
+      "precision": 0.9325,
+      "recall": 0.9015,
+      "f1": 0.9167,
+      "mAP50": 0.8921,
+      "mAP50_95": 0.6235
+    },
+    "latency_cpu_benchmark_ms": {
+      "preprocessing_mean": 3.45,
+      "inference_mean": 105.33,
+      "pipeline_mean": 108.81,
+      "fps": 9.19
+    }
+  },
+  "v2_manifest_sha256": "f2f428178b73db7527a22c1bab64dc3dc141a369a213eddd5a8bce538e6f2e21"
+}

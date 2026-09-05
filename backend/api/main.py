@@ -10,7 +10,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from backend.api.routers import (
+    datasets,
     detections,
+    inference,
     jobs,
     models,
     reports,
@@ -178,6 +180,7 @@ def create_app() -> FastAPI:
         )
 
     # Include API Routers
+    app.include_router(datasets.router, prefix=settings.API_V1_STR)
     app.include_router(system.router, prefix=settings.API_V1_STR)
     app.include_router(surveys.router, prefix=settings.API_V1_STR)
     app.include_router(jobs.router, prefix=settings.API_V1_STR)
@@ -185,6 +188,7 @@ def create_app() -> FastAPI:
     app.include_router(detections.router, prefix=settings.API_V1_STR)
     app.include_router(reports.router, prefix=settings.API_V1_STR)
     app.include_router(models.router, prefix=settings.API_V1_STR)
+    app.include_router(inference.router, prefix=settings.API_V1_STR)
 
     # Convenience root health redirect / root endpoint
     @app.get("/health", tags=["System & Health"])

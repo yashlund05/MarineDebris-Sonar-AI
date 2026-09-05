@@ -50,7 +50,7 @@ out/
 # Machine Learning, Datasets & Model Weights
 data/*
 !data/test_sonar_images/
-datasets/
+/datasets/
 raw_data/
 processed_data/
 checkpoints/
@@ -72,6 +72,7 @@ logs/
 *.log
 tmp/
 temp/
+scratch/
 *.swp
 *.swo
 *~

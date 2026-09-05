@@ -1,0 +1,605 @@
+{
+  "marine-debris-aris3k-64.png": [
+    {
+      "image_id": "marine-debris-aris3k-64.png",
+      "class": 4,
+      "class_name": "other_man_made_target",
+      "confidence": 0.7942,
+      "x1": 347.82,
+      "y1": 176.54,
+      "x2": 468.3,
+      "y2": 389.39
+    },
+    {
+      "image_id": "marine-debris-aris3k-64.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7167,
+      "x1": 234.95,
+      "y1": 446.26,
+      "x2": 290.29,
+      "y2": 521.28
+    }
+  ],
+  "marine-debris-aris3k-65.png": [
+    {
+      "image_id": "marine-debris-aris3k-65.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9311,
+      "x1": 287.65,
+      "y1": 422.0,
+      "x2": 342.28,
+      "y2": 513.79
+    }
+  ],
+  "marine-debris-aris3k-66.png": [
+    {
+      "image_id": "marine-debris-aris3k-66.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9407,
+      "x1": 258.61,
+      "y1": 195.51,
+      "x2": 355.58,
+      "y2": 254.91
+    },
+    {
+      "image_id": "marine-debris-aris3k-66.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9097,
+      "x1": 244.78,
+      "y1": 314.6,
+      "x2": 324.88,
+      "y2": 388.5
+    }
+  ],
+  "marine-debris-aris3k-67.png": [
+    {
+      "image_id": "marine-debris-aris3k-67.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9248,
+      "x1": 321.95,
+      "y1": 248.0,
+      "x2": 358.46,
+      "y2": 408.2
+    }
+  ],
+  "marine-debris-aris3k-68.png": [
+    {
+      "image_id": "marine-debris-aris3k-68.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8241,
+      "x1": 384.35,
+      "y1": 309.91,
+      "x2": 414.08,
+      "y2": 344.83
+    },
+    {
+      "image_id": "marine-debris-aris3k-68.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.3295,
+      "x1": 389.87,
+      "y1": 166.37,
+      "x2": 441.05,
+      "y2": 287.13
+    }
+  ],
+  "marine-debris-aris3k-69.png": [
+    {
+      "image_id": "marine-debris-aris3k-69.png",
+      "class": 4,
+      "class_name": "other_man_made_target",
+      "confidence": 0.8637,
+      "x1": 266.18,
+      "y1": 221.29,
+      "x2": 345.33,
+      "y2": 285.87
+    }
+  ],
+  "marine-debris-aris3k-7.png": [
+    {
+      "image_id": "marine-debris-aris3k-7.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8294,
+      "x1": 375.8,
+      "y1": 203.38,
+      "x2": 434.18,
+      "y2": 334.03
+    }
+  ],
+  "marine-debris-aris3k-70.png": [
+    {
+      "image_id": "marine-debris-aris3k-70.png",
+      "class": 4,
+      "class_name": "other_man_made_target",
+      "confidence": 0.862,
+      "x1": 195.28,
+      "y1": 64.53,
+      "x2": 496.76,
+      "y2": 369.3
+    }
+  ],
+  "marine-debris-aris3k-71.png": [
+    {
+      "image_id": "marine-debris-aris3k-71.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.6366,
+      "x1": 290.07,
+      "y1": 166.47,
+      "x2": 339.49,
+      "y2": 223.92
+    }
+  ],
+  "marine-debris-aris3k-72.png": [
+    {
+      "image_id": "marine-debris-aris3k-72.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9567,
+      "x1": 267.78,
+      "y1": 360.75,
+      "x2": 354.54,
+      "y2": 439.81
+    },
+    {
+      "image_id": "marine-debris-aris3k-72.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9154,
+      "x1": 263.73,
+      "y1": 236.28,
+      "x2": 347.21,
+      "y2": 307.12
+    }
+  ],
+  "marine-debris-aris3k-74.png": [
+    {
+      "image_id": "marine-debris-aris3k-74.png",
+      "class": 4,
+      "class_name": "other_man_made_target",
+      "confidence": 0.9386,
+      "x1": 198.65,
+      "y1": 332.81,
+      "x2": 396.17,
+      "y2": 477.76
+    }
+  ],
+  "marine-debris-aris3k-75.png": [
+    {
+      "image_id": "marine-debris-aris3k-75.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8131,
+      "x1": 230.35,
+      "y1": 349.58,
+      "x2": 296.96,
+      "y2": 437.85
+    },
+    {
+      "image_id": "marine-debris-aris3k-75.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7525,
+      "x1": 275.07,
+      "y1": 167.74,
+      "x2": 331.52,
+      "y2": 249.26
+    }
+  ],
+  "marine-debris-aris3k-76.png": [
+    {
+      "image_id": "marine-debris-aris3k-76.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9252,
+      "x1": 242.76,
+      "y1": 314.98,
+      "x2": 325.47,
+      "y2": 388.95
+    },
+    {
+      "image_id": "marine-debris-aris3k-76.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8079,
+      "x1": 258.24,
+      "y1": 196.56,
+      "x2": 354.95,
+      "y2": 255.74
+    }
+  ],
+  "marine-debris-aris3k-77.png": [],
+  "marine-debris-aris3k-78.png": [
+    {
+      "image_id": "marine-debris-aris3k-78.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8514,
+      "x1": 260.63,
+      "y1": 271.97,
+      "x2": 354.91,
+      "y2": 330.97
+    }
+  ],
+  "marine-debris-aris3k-79.png": [
+    {
+      "image_id": "marine-debris-aris3k-79.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9195,
+      "x1": 243.84,
+      "y1": 314.26,
+      "x2": 324.6,
+      "y2": 388.04
+    },
+    {
+      "image_id": "marine-debris-aris3k-79.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9088,
+      "x1": 258.48,
+      "y1": 196.11,
+      "x2": 355.81,
+      "y2": 255.88
+    }
+  ],
+  "marine-debris-aris3k-8.png": [
+    {
+      "image_id": "marine-debris-aris3k-8.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7424,
+      "x1": 306.57,
+      "y1": 257.91,
+      "x2": 346.12,
+      "y2": 405.24
+    },
+    {
+      "image_id": "marine-debris-aris3k-8.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.2588,
+      "x1": 309.72,
+      "y1": 364.69,
+      "x2": 340.02,
+      "y2": 407.19
+    }
+  ],
+  "marine-debris-aris3k-80.png": [
+    {
+      "image_id": "marine-debris-aris3k-80.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9472,
+      "x1": 343.43,
+      "y1": 396.03,
+      "x2": 420.35,
+      "y2": 471.82
+    },
+    {
+      "image_id": "marine-debris-aris3k-80.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8801,
+      "x1": 295.0,
+      "y1": 266.61,
+      "x2": 328.08,
+      "y2": 307.25
+    }
+  ],
+  "marine-debris-aris3k-81.png": [
+    {
+      "image_id": "marine-debris-aris3k-81.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.944,
+      "x1": 339.06,
+      "y1": 378.71,
+      "x2": 420.99,
+      "y2": 452.36
+    }
+  ],
+  "marine-debris-aris3k-82.png": [
+    {
+      "image_id": "marine-debris-aris3k-82.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9554,
+      "x1": 241.2,
+      "y1": 306.34,
+      "x2": 322.73,
+      "y2": 380.38
+    },
+    {
+      "image_id": "marine-debris-aris3k-82.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7966,
+      "x1": 257.13,
+      "y1": 188.87,
+      "x2": 353.31,
+      "y2": 248.18
+    }
+  ],
+  "marine-debris-aris3k-83.png": [
+    {
+      "image_id": "marine-debris-aris3k-83.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.6858,
+      "x1": 276.75,
+      "y1": 174.16,
+      "x2": 335.35,
+      "y2": 237.74
+    }
+  ],
+  "marine-debris-aris3k-84.png": [
+    {
+      "image_id": "marine-debris-aris3k-84.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9191,
+      "x1": 280.83,
+      "y1": 191.04,
+      "x2": 381.57,
+      "y2": 250.05
+    },
+    {
+      "image_id": "marine-debris-aris3k-84.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9053,
+      "x1": 259.12,
+      "y1": 308.54,
+      "x2": 340.87,
+      "y2": 383.0
+    }
+  ],
+  "marine-debris-aris3k-85.png": [
+    {
+      "image_id": "marine-debris-aris3k-85.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9455,
+      "x1": 332.03,
+      "y1": 396.01,
+      "x2": 417.29,
+      "y2": 470.75
+    },
+    {
+      "image_id": "marine-debris-aris3k-85.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8884,
+      "x1": 282.34,
+      "y1": 269.18,
+      "x2": 316.69,
+      "y2": 310.46
+    }
+  ],
+  "marine-debris-aris3k-86.png": [
+    {
+      "image_id": "marine-debris-aris3k-86.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.4774,
+      "x1": 277.55,
+      "y1": 305.43,
+      "x2": 334.04,
+      "y2": 358.47
+    }
+  ],
+  "marine-debris-aris3k-87.png": [
+    {
+      "image_id": "marine-debris-aris3k-87.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9525,
+      "x1": 358.4,
+      "y1": 402.33,
+      "x2": 425.22,
+      "y2": 475.24
+    },
+    {
+      "image_id": "marine-debris-aris3k-87.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.684,
+      "x1": 315.72,
+      "y1": 268.35,
+      "x2": 351.65,
+      "y2": 310.25
+    }
+  ],
+  "marine-debris-aris3k-88.png": [
+    {
+      "image_id": "marine-debris-aris3k-88.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.956,
+      "x1": 274.59,
+      "y1": 327.91,
+      "x2": 355.08,
+      "y2": 403.47
+    },
+    {
+      "image_id": "marine-debris-aris3k-88.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8629,
+      "x1": 296.37,
+      "y1": 213.79,
+      "x2": 392.86,
+      "y2": 272.18
+    }
+  ],
+  "marine-debris-aris3k-89.png": [
+    {
+      "image_id": "marine-debris-aris3k-89.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7095,
+      "x1": 250.97,
+      "y1": 292.77,
+      "x2": 307.19,
+      "y2": 349.86
+    }
+  ],
+  "marine-debris-aris3k-9.png": [
+    {
+      "image_id": "marine-debris-aris3k-9.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8355,
+      "x1": 325.96,
+      "y1": 418.69,
+      "x2": 377.14,
+      "y2": 452.34
+    },
+    {
+      "image_id": "marine-debris-aris3k-9.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7654,
+      "x1": 326.18,
+      "y1": 400.43,
+      "x2": 376.77,
+      "y2": 453.16
+    }
+  ],
+  "marine-debris-aris3k-90.png": [
+    {
+      "image_id": "marine-debris-aris3k-90.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.9088,
+      "x1": 360.51,
+      "y1": 201.3,
+      "x2": 414.22,
+      "y2": 330.47
+    }
+  ],
+  "marine-debris-aris3k-91.png": [
+    {
+      "image_id": "marine-debris-aris3k-91.png",
+      "class": 4,
+      "class_name": "other_man_made_target",
+      "confidence": 0.9007,
+      "x1": 310.64,
+      "y1": 233.03,
+      "x2": 387.69,
+      "y2": 299.27
+    }
+  ],
+  "marine-debris-aris3k-92.png": [
+    {
+      "image_id": "marine-debris-aris3k-92.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.3284,
+      "x1": 245.83,
+      "y1": 400.93,
+      "x2": 289.82,
+      "y2": 516.84
+    }
+  ],
+  "marine-debris-aris3k-93.png": [
+    {
+      "image_id": "marine-debris-aris3k-93.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8696,
+      "x1": 227.04,
+      "y1": 392.93,
+      "x2": 287.97,
+      "y2": 475.94
+    }
+  ],
+  "marine-debris-aris3k-94.png": [
+    {
+      "image_id": "marine-debris-aris3k-94.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.7818,
+      "x1": 234.71,
+      "y1": 347.95,
+      "x2": 300.07,
+      "y2": 433.35
+    }
+  ],
+  "marine-debris-aris3k-95.png": [
+    {
+      "image_id": "marine-debris-aris3k-95.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8973,
+      "x1": 307.82,
+      "y1": 282.54,
+      "x2": 352.39,
+      "y2": 400.65
+    }
+  ],
+  "marine-debris-aris3k-96.png": [
+    {
+      "image_id": "marine-debris-aris3k-96.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.8478,
+      "x1": 320.66,
+      "y1": 274.37,
+      "x2": 367.22,
+      "y2": 392.93
+    }
+  ],
+  "marine-debris-aris3k-97.png": [
+    {
+      "image_id": "marine-debris-aris3k-97.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.932,
+      "x1": 243.48,
+      "y1": 314.92,
+      "x2": 325.17,
+      "y2": 388.52
+    },
+    {
+      "image_id": "marine-debris-aris3k-97.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.829,
+      "x1": 258.07,
+      "y1": 196.41,
+      "x2": 355.24,
+      "y2": 255.65
+    }
+  ],
+  "marine-debris-aris3k-98.png": [
+    {
+      "image_id": "marine-debris-aris3k-98.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.941,
+      "x1": 330.16,
+      "y1": 358.36,
+      "x2": 417.86,
+      "y2": 436.11
+    },
+    {
+      "image_id": "marine-debris-aris3k-98.png",
+      "class": 1,
+      "class_name": "general_marine_debris",
+      "confidence": 0.5772,
+      "x1": 339.96,
+      "y1": 239.63,
+      "x2": 426.38,
+      "y2": 301.02
+    }
+  ]
+}

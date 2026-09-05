@@ -1,0 +1,33 @@
+experiment_id: P3_E6_SEED_123
+experiment_name: Phase 3 E6 Independent Seed 123
+experiment_family: E2_NAIVE_MIX
+dataset_version: v3.0
+dataset_variant: fls_multiseed
+dataset_manifest_sha256: canonical_v3_manifest
+base_checkpoint: C:\Users\ARYAN - AYUSH\OneDrive\Desktop\Marine sonar\models\detection\sonar_yolov8_fls_trained.pt
+base_checkpoint_sha256: e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7
+output_dir: C:\Users\ARYAN - AYUSH\OneDrive\Desktop\Marine sonar\models\detection\experiments\phase3\E6_MULTISEED\seed_123
+architecture: YOLOv8n
+model_size: 3.01M
+imgsz: 640
+seed: 123
+epochs: 10
+batch_size: 16
+workers: 2
+optimizer: AdamW
+initial_learning_rate: 0.001
+final_learning_rate: 0.01
+weight_decay: 0.0005
+early_stopping_patience: 4
+sampling_strategy: uniform
+sampling_weights:
+  v2_legacy: 0.35
+  v3_positive: 0.53
+  v3_negative: 0.12
+hard_negative_ratio: 0.12
+hard_positive_ratio: 0.0
+hard_positive_boost: 1.0
+dry_run: false
+device: cpu
+augmentations: {}
+environment: {}

@@ -1,0 +1,15 @@
+# MarineDebris-Sonar-AI: Production & Baseline Protection Lock
+# CRITICAL RULE: Under no circumstances may the legacy benchmark dataset or production model weights be modified or overwritten.
+
+BASELINE_DATASET_FROZEN = TRUE
+PRODUCTION_MODEL_FROZEN = TRUE
+
+FROZEN_BASELINE_PATH = datasets/sonar_debris_v2_clean
+FROZEN_BASELINE_IMAGES_TEST = 37
+FROZEN_BASELINE_ANNOTATIONS_TEST = 54
+
+FROZEN_PRODUCTION_MODEL_PATH = models/detection/sonar_yolov8_fls_trained.pt
+FROZEN_PRODUCTION_MODEL_SHA256 = e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7
+
+VERIFIED_DATE = 2026-09-04
+GOVERNANCE = STRICT_NO_OVERWRITE

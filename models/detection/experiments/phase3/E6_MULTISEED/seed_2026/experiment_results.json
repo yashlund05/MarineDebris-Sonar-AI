@@ -1,0 +1,155 @@
+{
+  "experiment_id": "P3_E6_SEED_2026",
+  "experiment_name": "Phase 3 E6 Independent Seed 2026",
+  "experiment_family": "E2_NAIVE_MIX",
+  "seed": 2026,
+  "checkpoint_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\models\\detection\\experiments\\phase3\\E6_MULTISEED\\seed_2026\\weights\\best.pt",
+  "checkpoint_sha256": "68f14cce77eeb4f66fdec8bf7bed951e183668b77e2220d424d2c580902c43fa",
+  "benchmark_a": {
+    "precision": 0.8826,
+    "recall": 1.0,
+    "f1": 0.9376,
+    "mAP50": 0.9827,
+    "mAP50_95": 0.7526
+  },
+  "benchmark_b": {
+    "precision": 0.958,
+    "recall": 0.9627,
+    "f1": 0.9604,
+    "mAP50": 0.9742,
+    "mAP50_95": 0.6934
+  },
+  "benchmark_c": {
+    "total_negative_images": 84,
+    "flagged_negative_images": 10,
+    "total_false_positive_boxes": 10,
+    "negative_image_FAR": 0.119,
+    "fps_per_negative_image": 0.119,
+    "fps_per_flagged_image": 1.0,
+    "max_fps_in_single_negative_image": 1,
+    "quarry_false_positives": 10,
+    "wall_false_positives": 0
+  },
+  "benchmark_d": {
+    "precision": 0.3833,
+    "recall": 0.3756,
+    "f1": 0.3794,
+    "mAP50": 0.3815,
+    "mAP50_95": 0.2711
+  },
+  "subgroup_analysis": {
+    "total_gt_boxes": 127,
+    "total_true_positives": 120,
+    "overall_recall": 0.9449,
+    "subgroups": {
+      "small_lt_40px": {
+        "total_gt": 8,
+        "detected": 7,
+        "recall": 0.875,
+        "mean_tp_confidence": 0.7385
+      },
+      "medium_40_100px": {
+        "total_gt": 89,
+        "detected": 87,
+        "recall": 0.9775,
+        "mean_tp_confidence": 0.8317
+      },
+      "large_gt_100px": {
+        "total_gt": 30,
+        "detected": 26,
+        "recall": 0.8667,
+        "mean_tp_confidence": 0.8582
+      },
+      "far_range_gt_3_5m": {
+        "total_gt": 27,
+        "detected": 24,
+        "recall": 0.8889,
+        "mean_tp_confidence": 0.8163
+      },
+      "mid_range_2_to_3_5m": {
+        "total_gt": 78,
+        "detected": 76,
+        "recall": 0.9744,
+        "mean_tp_confidence": 0.8485
+      },
+      "near_range_lt_2m": {
+        "total_gt": 22,
+        "detected": 20,
+        "recall": 0.9091,
+        "mean_tp_confidence": 0.7881
+      },
+      "faint_low_contrast": {
+        "total_gt": 102,
+        "detected": 96,
+        "recall": 0.9412,
+        "mean_tp_confidence": 0.8491
+      },
+      "normal_contrast": {
+        "total_gt": 25,
+        "detected": 24,
+        "recall": 0.96,
+        "mean_tp_confidence": 0.7639
+      }
+    }
+  },
+  "latency": {
+    "model_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\models\\detection\\experiments\\phase3\\E6_MULTISEED\\seed_2026\\weights\\best.pt",
+    "device": "cpu",
+    "imgsz": 640,
+    "warmup_runs": 10,
+    "timed_runs": 50,
+    "latency_mean_ms": 119.99,
+    "latency_std_ms": 29.73,
+    "latency_p50_ms": 107.53,
+    "latency_p95_ms": 195.13,
+    "latency_min_ms": 101.61,
+    "latency_max_ms": 235.62,
+    "fps": 8.33,
+    "budget_ms": 125.0,
+    "meets_budget": false
+  },
+  "promotion_gate": {
+    "status": "REJECTED",
+    "overall_pass": false,
+    "promotion_eligible": false,
+    "checks": [
+      {
+        "name": "V2 Legacy mAP50 Absolute Regression",
+        "required": ">= 88.21% (Base: 89.21% - 1.0% abs)",
+        "observed": "98.27% (Delta: 9.06%)",
+        "passed": true
+      },
+      {
+        "name": "V2 Legacy Recall Absolute Regression",
+        "required": ">= 88.15% (Base: 90.15% - 2.0% abs)",
+        "observed": "100.0% (Delta: 9.85%)",
+        "passed": true
+      },
+      {
+        "name": "V3 Generalization mAP50",
+        "required": ">= 89.92% (Base: 91.92%)",
+        "observed": "97.42% (Delta: 5.5%)",
+        "passed": true
+      },
+      {
+        "name": "Negative Image False Alarm Rate (FAR)",
+        "required": "<= 21.43% (18/84 frames)",
+        "observed": "11.9% (10/84 frames)",
+        "passed": true
+      },
+      {
+        "name": "Total False Positive Box Count",
+        "required": "<= 18 boxes",
+        "observed": "10 boxes",
+        "passed": true
+      },
+      {
+        "name": "CPU Latency Budget (P95)",
+        "required": "<= 125.0 ms",
+        "observed": "195.13 ms (FPS: 8.33)",
+        "passed": false
+      }
+    ],
+    "recommendation": "Candidate model failed one or more gating criteria. Production weights remain active."
+  }
+}

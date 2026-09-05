@@ -12,7 +12,6 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { modelsApi } from "../api/models";
-import { ModelRegistryItem } from "../types";
 import { TableSkeleton } from "../components/ui/Skeleton";
 
 export const ModelsPage: React.FC = () => {
@@ -226,7 +225,7 @@ export const ModelsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-subtle font-mono">
-                {models.map((m: ModelRegistryItem) => {
+                {models.map((m: any) => {
                   const isReady = m.status === "READY" || m.runtime_status === "READY";
                   return (
                     <tr key={m.id} className="hover:bg-bg-elevated/40 transition-colors">

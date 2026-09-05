@@ -1,0 +1,58 @@
+{
+  "experiment_id": "exp03_tuned_loss_640",
+  "timestamp": "2026-09-03T19:03:47.687289+00:00",
+  "training_duration_seconds": 754.5,
+  "base_model": "yolov8n.pt",
+  "data_yaml": "datasets/sonar_debris_v2_clean/data.yaml",
+  "hyperparameters": {
+    "epochs": 20,
+    "batch": 16,
+    "imgsz": 640,
+    "lr0": 0.0015,
+    "lrf": 0.01,
+    "optimizer": "AdamW",
+    "weight_decay": 0.0005,
+    "warmup_epochs": 3.0,
+    "box": 7.5,
+    "cls": 0.5,
+    "dfl": 1.5,
+    "hsv_h": 0.0,
+    "hsv_s": 0.0,
+    "hsv_v": 0.15,
+    "degrees": 5.0,
+    "mosaic": 0.2,
+    "seed": 42
+  },
+  "best_weights": "ml\\experiments\\exp03_tuned_loss_640\\train_run\\weights\\best.pt",
+  "validation_metrics": {
+    "precision": 0.7666,
+    "recall": 0.7886,
+    "f1": 0.7775,
+    "mAP50": 0.832,
+    "mAP50_95": 0.5643
+  },
+  "per_class_metrics": {
+    "derelict_fishing_gear": {
+      "class_id": 0,
+      "precision": 0.8089,
+      "recall": 0.8465,
+      "f1": 0.8272,
+      "mAP50": 0.8658,
+      "mAP50_95": 0.5851
+    },
+    "general_marine_debris": {
+      "class_id": 1,
+      "precision": 0.7244,
+      "recall": 0.7308,
+      "f1": 0.7276,
+      "mAP50": 0.7982,
+      "mAP50_95": 0.5436
+    }
+  },
+  "latency_ms": {
+    "preprocess": 1.57,
+    "inference": 110.76,
+    "postprocess": 0.72,
+    "total": 113.06
+  }
+}
