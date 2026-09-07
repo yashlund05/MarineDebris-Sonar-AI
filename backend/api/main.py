@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from backend.api.routers import (
     datasets,
     detections,
+    enhancement,
     inference,
     jobs,
     models,
@@ -189,6 +190,7 @@ def create_app() -> FastAPI:
     app.include_router(reports.router, prefix=settings.API_V1_STR)
     app.include_router(models.router, prefix=settings.API_V1_STR)
     app.include_router(inference.router, prefix=settings.API_V1_STR)
+    app.include_router(enhancement.router, prefix=settings.API_V1_STR)
 
     # Convenience root health redirect / root endpoint
     @app.get("/health", tags=["System & Health"])

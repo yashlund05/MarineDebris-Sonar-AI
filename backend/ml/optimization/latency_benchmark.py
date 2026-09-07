@@ -48,31 +48,34 @@ class LatencyBenchmarker:
         # Create synthetic dummy acoustic image (640x640x3 uint8)
         dummy_img = np.random.randint(20, 180, (self.imgsz, self.imgsz, 3), dtype=np.uint8)
 
-        # Warmup runs
-        for _ in range(self.warmup_runs):
-            _ = model.predict(
-                dummy_img,
-                imgsz=self.imgsz,
-                conf=OPERATIONAL_MISSION_CONF,
-                iou=OPERATIONAL_MISSION_IOU,
-                device="cpu",
-                verbose=False,
-            )
+        import torch
 
-        # Timed runs
-        timings_ms = []
-        for _ in range(self.timed_runs):
-            t0 = time.perf_counter()
-            _ = model.predict(
-                dummy_img,
-                imgsz=self.imgsz,
-                conf=OPERATIONAL_MISSION_CONF,
-                iou=OPERATIONAL_MISSION_IOU,
-                device="cpu",
-                verbose=False,
-            )
-            t1 = time.perf_counter()
-            timings_ms.append((t1 - t0) * 1000.0)
+        # Warmup runs
+        with torch.inference_mode():
+            for _ in range(self.warmup_runs):
+                _ = model.predict(
+                    dummy_img,
+                    imgsz=self.imgsz,
+                    conf=OPERATIONAL_MISSION_CONF,
+                    iou=OPERATIONAL_MISSION_IOU,
+                    device="cpu",
+                    verbose=False,
+                )
+
+            # Timed runs
+            timings_ms = []
+            for _ in range(self.timed_runs):
+                t0 = time.perf_counter()
+                _ = model.predict(
+                    dummy_img,
+                    imgsz=self.imgsz,
+                    conf=OPERATIONAL_MISSION_CONF,
+                    iou=OPERATIONAL_MISSION_IOU,
+                    device="cpu",
+                    verbose=False,
+                )
+                t1 = time.perf_counter()
+                timings_ms.append((t1 - t0) * 1000.0)
 
         timings_arr = np.array(timings_ms)
         mean_ms = float(np.mean(timings_arr))

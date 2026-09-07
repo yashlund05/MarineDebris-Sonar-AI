@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-09-06T19:33:59Z",
+  "checkpoint": "sonar_yolov8_fls_trained.pt",
+  "checkpoint_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+  "dataset": "sonar_debris_v3",
+  "split": "val",
+  "samples_count": 100,
+  "results": {
+    "identity": {
+      "name": "Raw Baseline (Control)",
+      "mean_latency_ms": 0.26,
+      "total_gt": 136,
+      "total_pred": 127,
+      "true_positives": 119,
+      "false_positives": 8,
+      "false_negatives": 17,
+      "precision": 0.937,
+      "recall": 0.875,
+      "f1_score": 0.9049
+    },
+    "clahe_enhance": {
+      "name": "Adaptive CLAHE",
+      "mean_latency_ms": 15.16,
+      "total_gt": 136,
+      "total_pred": 73,
+      "true_positives": 67,
+      "false_positives": 6,
+      "false_negatives": 69,
+      "precision": 0.9178,
+      "recall": 0.4926,
+      "f1_score": 0.6411
+    },
+    "bilateral_clahe": {
+      "name": "Bilateral + CLAHE (Balanced)",
+      "mean_latency_ms": 17.64,
+      "total_gt": 136,
+      "total_pred": 108,
+      "true_positives": 92,
+      "false_positives": 16,
+      "false_negatives": 44,
+      "precision": 0.8519,
+      "recall": 0.6765,
+      "f1_score": 0.7541
+    },
+    "median_clahe": {
+      "name": "Median + CLAHE (Low SNR)",
+      "mean_latency_ms": 15.6,
+      "total_gt": 136,
+      "total_pred": 91,
+      "true_positives": 75,
+      "false_positives": 16,
+      "false_negatives": 61,
+      "precision": 0.8242,
+      "recall": 0.5515,
+      "f1_score": 0.6608
+    },
+    "unsharp_clahe": {
+      "name": "Unsharp + CLAHE (High Contrast)",
+      "mean_latency_ms": 24.35,
+      "total_gt": 136,
+      "total_pred": 64,
+      "true_positives": 60,
+      "false_positives": 4,
+      "false_negatives": 76,
+      "precision": 0.9375,
+      "recall": 0.4412,
+      "f1_score": 0.6
+    }
+  }
+}

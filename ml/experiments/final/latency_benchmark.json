@@ -9,18 +9,18 @@
   "cpu_threads": 8,
   "stages": {
     "preprocessing": {
-      "mean_ms": 3.59,
-      "median_ms": 3.12,
-      "p95_ms": 6.38,
-      "min_ms": 2.19,
-      "max_ms": 7.17
+      "mean_ms": 2.99,
+      "median_ms": 2.44,
+      "p95_ms": 5.16,
+      "min_ms": 2.02,
+      "max_ms": 5.83
     },
     "inference": {
-      "mean_ms": 41.22,
-      "median_ms": 41.61,
-      "p95_ms": 42.75,
-      "min_ms": 38.6,
-      "max_ms": 42.78
+      "mean_ms": 41.31,
+      "median_ms": 41.47,
+      "p95_ms": 42.32,
+      "min_ms": 40.13,
+      "max_ms": 42.52
     },
     "postprocessing": {
       "mean_ms": 0.01,
@@ -30,12 +30,12 @@
       "max_ms": 0.01
     },
     "total_pipeline": {
-      "mean_ms": 44.82,
-      "median_ms": 43.84,
-      "p95_ms": 49.01,
-      "min_ms": 40.8,
-      "max_ms": 49.78
+      "mean_ms": 44.31,
+      "median_ms": 43.93,
+      "p95_ms": 46.85,
+      "min_ms": 42.17,
+      "max_ms": 47.39
     }
   },
-  "throughput_fps": 22.31
+  "throughput_fps": 22.57
 }

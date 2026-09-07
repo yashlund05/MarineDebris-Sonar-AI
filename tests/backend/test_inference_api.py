@@ -1,4 +1,4 @@
-﻿import io
+import io
 import pytest
 import numpy as np
 import cv2
@@ -59,3 +59,25 @@ async def test_inference_predict_invalid_image():
         files = {"file": ("corrupt.txt", io.BytesIO(b"not an image"), "text/plain")}
         response = await ac.post("/api/v1/inference/predict", files=files)
         assert response.status_code == 400
+
+@pytest.mark.asyncio
+async def test_inference_health():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/v1/inference/health")
+        assert response.status_code == 200
+        res = response.json()
+        assert res["success"] is True
+        assert res["data"]["production_weights_found"] is True
+        assert res["data"]["production_sha256"] == "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7"
+
+@pytest.mark.asyncio
+async def test_inference_model():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/v1/inference/model?model_id=production_fls_yolov8n")
+        assert response.status_code == 200
+        res = response.json()
+        assert res["success"] is True
+        assert res["data"]["model_id"] == "production_fls_yolov8n"
+

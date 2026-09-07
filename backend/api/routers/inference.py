@@ -1,4 +1,4 @@
-﻿import io
+import io
 import os
 import time
 import hashlib
@@ -195,3 +195,48 @@ async def predict_sonar_frame(
             "timestamp": datetime.now(timezone.utc).isoformat(),
         },
     }
+
+
+@router.get("/health")
+async def get_inference_health(request: Request):
+    """Inspect status and readiness of inference runtime."""
+    prod_exists = os.path.exists(PROD_MODEL_PATH)
+    return {
+        "success": True,
+        "data": {
+            "status": "ready" if prod_exists else "degraded",
+            "device": "cpu",
+            "loaded_models": list(_LOADED_MODELS.keys()),
+            "production_weights_found": prod_exists,
+            "production_sha256": PROD_SHA256,
+        },
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
+
+@router.get("/model")
+async def get_inference_model_info(
+    request: Request,
+    model_id: Optional[str] = "production_fls_yolov8n",
+):
+    """Retrieve active inference model metadata and operating parameters."""
+    eval_service = get_model_evaluation_service()
+    model_meta = eval_service.get_model_detail(model_id)
+    if not model_meta:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Inference model '{model_id}' not found in registry",
+        )
+
+    return {
+        "success": True,
+        "data": model_meta,
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
