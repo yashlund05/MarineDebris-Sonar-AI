@@ -17,7 +17,9 @@
       "original_url": "https://github.com/mvaldenegro/marine-debris-fls-datasets",
       "doi": "10.5281/zenodo.15101686",
       "institution": "Heriot-Watt University Ocean Systems Lab / University of Groningen",
-      "authors": ["Dr. Matias Valdenegro-Toro"],
+      "authors": [
+        "Dr. Matias Valdenegro-Toro"
+      ],
       "publication": "Marine Debris Detection and Segmentation with Forward-Looking Sonar (IEEE/OES AUV 2020)",
       "peer_reviewed": true,
       "dataset_type": "peer_reviewed_dataset",
@@ -54,7 +56,9 @@
       "original_url": "https://github.com/mvaldenegro/marine-debris-fls-datasets/tree/master/md_fls_dataset/data/quarry-fullsize",
       "doi": "10.5281/zenodo.15101686",
       "institution": "University of Groningen / Heriot-Watt University",
-      "authors": ["Dr. Matias Valdenegro-Toro"],
+      "authors": [
+        "Dr. Matias Valdenegro-Toro"
+      ],
       "publication": "Marine Debris Forward-Looking Sonar Datasets Repository",
       "peer_reviewed": true,
       "dataset_type": "peer_reviewed_dataset",
@@ -91,7 +95,9 @@
       "original_url": "https://github.com/mvaldenegro/marine-debris-fls-datasets/tree/master/md_fls_dataset/data/turntable-cropped",
       "doi": "10.5281/zenodo.15101686",
       "institution": "University of Groningen",
-      "authors": ["Dr. Matias Valdenegro-Toro"],
+      "authors": [
+        "Dr. Matias Valdenegro-Toro"
+      ],
       "publication": "Marine Debris Forward-Looking Sonar Datasets Repository",
       "peer_reviewed": true,
       "dataset_type": "peer_reviewed_dataset",
@@ -128,7 +134,9 @@
       "original_url": "https://github.com/mvaldenegro/seabed-objects-ksec-dataset",
       "doi": "10.5281/zenodo.3824587",
       "institution": "Marine Technology / KSEC",
-      "authors": ["Valdenegro-Toro et al."],
+      "authors": [
+        "Valdenegro-Toro et al."
+      ],
       "publication": "Published research dataset",
       "peer_reviewed": true,
       "dataset_type": "published_dataset",
@@ -165,7 +173,10 @@
       "original_url": "local:data/demo",
       "doi": null,
       "institution": "MarineDebris-Sonar-AI Project",
-      "authors": ["Ayush Vishwakarma", "Yash Lund"],
+      "authors": [
+        "Ayush Vishwakarma",
+        "Yash Lund"
+      ],
       "publication": "Internal demonstrator",
       "peer_reviewed": false,
       "dataset_type": "repository_dataset",
@@ -202,7 +213,9 @@
       "original_url": "https://conservancy.umn.edu/handle/11299/214366",
       "doi": "10.13020/g981-6712",
       "institution": "University of Minnesota",
-      "authors": ["Hong et al."],
+      "authors": [
+        "Hong et al."
+      ],
       "publication": "TrashCan: A benchmark dataset for underwater object detection",
       "peer_reviewed": true,
       "dataset_type": "peer_reviewed_dataset",
@@ -239,7 +252,9 @@
       "original_url": "https://www.google.com/search?q=sonar+images",
       "doi": null,
       "institution": "Unknown",
-      "authors": ["Unknown"],
+      "authors": [
+        "Unknown"
+      ],
       "publication": null,
       "peer_reviewed": false,
       "dataset_type": "public_dataset",
@@ -269,6 +284,168 @@
       "category": "REJECTED",
       "selection_status": "REJECTED",
       "rejection_reason": "Zero verifiable provenance, unknown sensor geometry, missing annotations, and unclear licensing violates scientific integrity rules."
+    },
+    {
+      "candidate_id": "nksid_fishing_net",
+      "name": "NanKai Sonar Image Dataset (NKSID) \u2014 Fishing Nets",
+      "original_url": "https://github.com/Jorwnpay/NK-Sonar-Image-Dataset",
+      "doi": null,
+      "institution": "Nankai University, College of Artificial Intelligence",
+      "authors": [
+        "Wenpei Jiao",
+        "Jianlei Zhang",
+        "Chunyan Zhang"
+      ],
+      "publication": "Open-set recognition with long-tail sonar images (Elsevier ESWA 2024)",
+      "peer_reviewed": true,
+      "dataset_type": "peer_reviewed_dataset",
+      "year": 2024,
+      "license": "MIT License",
+      "license_verified": true,
+      "citation_requirements": "Cite Jiao et al. ESWA 2024",
+      "sonar_type": "Forward-Looking Sonar (FLS)",
+      "sonar_model": "Oculus M750d Multi-beam Sonar",
+      "sonar_frequency": "1.2 MHz / 750 kHz",
+      "image_count": 20,
+      "annotation_count": 20,
+      "annotation_format": "YOLO format (Letterboxed 640x640)",
+      "sequence_information": "ROV acoustic captures at 5-10m depth in Bohai Bay",
+      "geographic_information": "Bohai Bay (39N, 118E)",
+      "capture_environment": "Real coastal open-water ROV survey",
+      "scores": {
+        "authenticity": 20,
+        "marine_debris_relevance": 19,
+        "sonar_compatibility": 20,
+        "annotation_quality": 13,
+        "diversity": 5,
+        "licensing_provenance": 10,
+        "useful_scale": 4,
+        "total": 91
+      },
+      "category": "CANONICAL_EXPANSION",
+      "selection_status": "APPROVED_AND_INTEGRATED",
+      "rejection_reason": null
+    },
+    {
+      "candidate_id": "klsg_wreck",
+      "name": "SeabedObjects-KLSG / TGRS BETL \u2014 Sidescan Sonar Shipwrecks",
+      "original_url": "https://github.com/Jorwnpay/TGRS_BETL",
+      "doi": null,
+      "institution": "Hohai University / Ocean University of China",
+      "authors": [
+        "Guanying Huo",
+        "Zhengxian Yang",
+        "Wenpei Jiao"
+      ],
+      "publication": "Underwater object classification in sidescan sonar images (IEEE TGRS 2020/2022)",
+      "peer_reviewed": true,
+      "dataset_type": "peer_reviewed_dataset",
+      "year": 2022,
+      "license": "MIT License",
+      "license_verified": true,
+      "citation_requirements": "Cite Huo et al. TGRS 2020 and Jiao et al. TGRS 2022",
+      "sonar_type": "Side-Scan Sonar (SSS)",
+      "sonar_model": "Klein 3000 Side-Scan Sonar Towfish",
+      "sonar_frequency": "455 kHz / 900 kHz",
+      "image_count": 385,
+      "annotation_count": 385,
+      "annotation_format": "YOLO format (Letterboxed 640x640)",
+      "sequence_information": "Towfish tracklines across natural seabed",
+      "geographic_information": "Marine seabed survey sites",
+      "capture_environment": "Real-world seabed surveys with natural sediment",
+      "scores": {
+        "authenticity": 20,
+        "marine_debris_relevance": 15,
+        "sonar_compatibility": 13,
+        "annotation_quality": 14,
+        "diversity": 8,
+        "licensing_provenance": 10,
+        "useful_scale": 8,
+        "total": 88
+      },
+      "category": "CANONICAL_EXPANSION",
+      "selection_status": "APPROVED_AND_INTEGRATED",
+      "rejection_reason": null
+    },
+    {
+      "candidate_id": "nksid_cylinder",
+      "name": "NanKai Sonar Image Dataset (NKSID) \u2014 Cylinders & Pipelines",
+      "original_url": "https://github.com/Jorwnpay/NK-Sonar-Image-Dataset",
+      "doi": null,
+      "institution": "Nankai University",
+      "authors": [
+        "Wenpei Jiao",
+        "Jianlei Zhang",
+        "Chunyan Zhang"
+      ],
+      "publication": "Open-set recognition with long-tail sonar images (Elsevier ESWA 2024)",
+      "peer_reviewed": true,
+      "dataset_type": "peer_reviewed_dataset",
+      "year": 2024,
+      "license": "MIT License",
+      "license_verified": true,
+      "citation_requirements": "Cite Jiao et al. ESWA 2024",
+      "sonar_type": "Forward-Looking Sonar (FLS)",
+      "sonar_model": "Oculus M750d Multi-beam Sonar",
+      "sonar_frequency": "1.2 MHz / 750 kHz",
+      "image_count": 515,
+      "annotation_count": 515,
+      "annotation_format": "YOLO format (Letterboxed 640x640)",
+      "sequence_information": "ROV acoustic observations across varying ranges (2-15m)",
+      "geographic_information": "Bohai Bay (39N, 118E)",
+      "capture_environment": "Real coastal open-water ROV survey",
+      "scores": {
+        "authenticity": 20,
+        "marine_debris_relevance": 18,
+        "sonar_compatibility": 20,
+        "annotation_quality": 14,
+        "diversity": 8,
+        "licensing_provenance": 10,
+        "useful_scale": 8,
+        "total": 90
+      },
+      "category": "CANONICAL_EXPANSION",
+      "selection_status": "APPROVED_AND_INTEGRATED",
+      "rejection_reason": null
+    },
+    {
+      "candidate_id": "ping_sss_crab_pot",
+      "name": "Ghost Pot Side-Scan Sonar Detection Dataset",
+      "original_url": "https://huggingface.co/datasets/PINGEcosystem/sss-crab-pot-detection-ds",
+      "doi": "10.57967/hf/8397",
+      "institution": "PING Ecosystem / University of Delaware",
+      "authors": [
+        "Cameron S. Bodine et al."
+      ],
+      "publication": "GhostVision: Democratizing Derelict Gear Detection (MDPI JMSE 2026)",
+      "peer_reviewed": true,
+      "dataset_type": "peer_reviewed_dataset",
+      "year": 2026,
+      "license": "Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)",
+      "license_verified": true,
+      "citation_requirements": "Cite Bodine et al. JMSE 2026 and DOI 10.57967/hf/8397",
+      "sonar_type": "Side-Scan Sonar (SSS)",
+      "sonar_model": "Humminbird MEGA Imaging (455/800 kHz)",
+      "sonar_frequency": "455/800 kHz",
+      "image_count": 6674,
+      "annotation_count": 6674,
+      "annotation_format": "Bounding box coordinates (HuggingFace ImageFolder)",
+      "sequence_information": "Survey tracklines across Delaware Bays",
+      "geographic_information": "Delaware Inland Bays and Delaware Bay",
+      "capture_environment": "Shallow coastal marine water",
+      "scores": {
+        "authenticity": 20,
+        "marine_debris_relevance": 20,
+        "sonar_compatibility": 14,
+        "annotation_quality": 15,
+        "diversity": 9,
+        "licensing_provenance": 10,
+        "useful_scale": 10,
+        "total": 82
+      },
+      "category": "AUXILIARY_RESTRICTED",
+      "selection_status": "AUDITED_RESTRICTED_ACCESS",
+      "rejection_reason": "Dataset is hosted behind Hugging Face gated repository access; automated direct download blocked by HTTP 401 GatedRepoError."
     }
   ]
 }

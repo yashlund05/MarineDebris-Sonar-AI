@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppLayout } from "./components/layout/AppLayout";
 import { DashboardPage } from "./pages/DashboardPage";
@@ -8,6 +8,7 @@ import { SurveyDetailPage } from "./pages/SurveyDetailPage";
 import { ModelsPage } from "./pages/ModelsPage";
 import { ModelEvaluationPage } from "./pages/ModelEvaluationPage";
 import { DatasetPage } from "./pages/DatasetPage";
+import { SonarEnhancementPage } from "./pages/SonarEnhancementPage";
 
 export const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ export const App: React.FC = () => {
           <Route path="models" element={<ModelsPage />} />
           <Route path="models/evaluation" element={<ModelEvaluationPage />} />
           <Route path="dataset" element={<DatasetPage />} />
+          <Route path="enhancement" element={<SonarEnhancementPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

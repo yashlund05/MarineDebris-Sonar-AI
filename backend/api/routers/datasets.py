@@ -17,6 +17,18 @@ async def list_datasets(request: Request, service: DatasetService = Depends(get_
         }
     }
 
+@router.get("/datasets/canonical-status")
+async def get_canonical_status(request: Request, service: DatasetService = Depends(get_dataset_service)):
+    data = service.get_canonical_status()
+    return {
+        "success": True,
+        "data": data,
+        "meta": {
+            "request_id": getattr(request.state, "request_id", ""),
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    }
+
 @router.get("/datasets/{version}")
 async def get_dataset_detail(version: str, request: Request, service: DatasetService = Depends(get_dataset_service)):
     data = service.get_dataset_detail(version)

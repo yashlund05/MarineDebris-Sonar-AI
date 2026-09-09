@@ -17,6 +17,7 @@ from backend.api.routers import (
     jobs,
     models,
     reports,
+    sonar_enhancement,
     surveys,
     system,
     ws,
@@ -191,6 +192,7 @@ def create_app() -> FastAPI:
     app.include_router(models.router, prefix=settings.API_V1_STR)
     app.include_router(inference.router, prefix=settings.API_V1_STR)
     app.include_router(enhancement.router, prefix=settings.API_V1_STR)
+    app.include_router(sonar_enhancement.router, prefix=f"{settings.API_V1_STR}/sonar")
 
     # Convenience root health redirect / root endpoint
     @app.get("/health", tags=["System & Health"])

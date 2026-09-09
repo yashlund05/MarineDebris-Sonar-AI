@@ -28,18 +28,24 @@ export const BenchmarkSummary: React.FC<Props> = ({ benchmarks }) => {
 
   const canonical = data.find(b => b.type === "CANONICAL");
   const operational = data.find(b => b.type === "OPERATIONAL");
+  const canonicalEval = data.find(b => b.type === "CANONICAL_EVALUATION");
 
   return (
     <div className="p-6 bg-bg-surface border border-border-subtle rounded-2xl shadow-card space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold flex items-center text-text-primary">
-          <Target className="w-5 h-5 mr-2 text-accent" />
-          Benchmark Performance
-        </h2>
+        <div>
+          <h2 className="text-lg font-semibold flex items-center text-text-primary">
+            <Target className="w-5 h-5 mr-2 text-accent" />
+            Benchmark Performance
+          </h2>
+          <p className="text-xs text-text-secondary mt-0.5">
+            Objective verification on frozen detector (conf=0.001 canonical vs conf=0.25 operational)
+          </p>
+        </div>
         <ConfidenceStateBadge state={confidence} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className={clsx("grid grid-cols-1 gap-6", canonicalEval ? "lg:grid-cols-3" : "lg:grid-cols-2")}>
         {canonical && (
           <BenchmarkCard 
             title="CANONICAL BENCHMARK"
@@ -56,16 +62,29 @@ export const BenchmarkSummary: React.FC<Props> = ({ benchmarks }) => {
             colorTheme="emerald"
           />
         )}
+        {canonicalEval && (
+          <BenchmarkCard 
+            title="CANONICAL EVAL (BENCHMARK 5)"
+            subtitle="External FLS/SSS Classes (0, 2, 3)"
+            data={canonicalEval}
+            colorTheme="purple"
+          />
+        )}
       </div>
     </div>
   );
 };
 
-const BenchmarkCard = ({ title, subtitle, data, colorTheme }: { title: string; subtitle: string; data: BenchmarkData; colorTheme: "sky" | "emerald" }) => {
-  const bgClass = colorTheme === "sky" ? "bg-sky-50 border-sky-200" : "bg-emerald-50 border-emerald-200";
-  const textClass = colorTheme === "sky" ? "text-sky-900" : "text-emerald-900";
-  const accentClass = colorTheme === "sky" ? "text-sky-600" : "text-emerald-600";
-  const headerBgClass = colorTheme === "sky" ? "bg-sky-100/50" : "bg-emerald-100/50";
+const BenchmarkCard = ({ title, subtitle, data, colorTheme }: { title: string; subtitle: string; data: BenchmarkData; colorTheme: "sky" | "emerald" | "purple" }) => {
+  const bgClass = colorTheme === "sky" 
+    ? "bg-sky-50 border-sky-200" 
+    : colorTheme === "emerald"
+    ? "bg-emerald-50 border-emerald-200"
+    : "bg-purple-50 border-purple-200";
+  const textClass = colorTheme === "sky" ? "text-sky-900" : colorTheme === "emerald" ? "text-emerald-900" : "text-purple-900";
+  const accentClass = colorTheme === "sky" ? "text-sky-600" : colorTheme === "emerald" ? "text-emerald-600" : "text-purple-600";
+  const headerBgClass = colorTheme === "sky" ? "bg-sky-100/50" : colorTheme === "emerald" ? "bg-emerald-100/50" : "bg-purple-100/50";
+
 
   return (
     <div className={clsx("rounded-xl border overflow-hidden", bgClass)}>

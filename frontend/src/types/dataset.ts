@@ -138,6 +138,30 @@ export interface LimitationData {
   generalization_note: string;
 }
 
+export interface CanonicalClassAudit {
+  class_id: number;
+  class_name: string;
+  description: string;
+  benchmark_status: "ESTABLISHED" | "PROVISIONAL" | "INSUFFICIENT_DATA" | "NOT_FOUND" | "RESTRICTED" | string;
+  model_status: string;
+  sample_count: number;
+  sensor: string;
+  modality: string;
+  source_dataset: string;
+  license: string;
+  secondary_source?: string;
+  ap50: number;
+  operational_recall: number;
+  recommendation: string;
+}
+
+export interface CanonicalAuditData {
+  timestamp: string;
+  production_model: Record<string, any>;
+  canonical_classes: CanonicalClassAudit[];
+  benchmark_5_summary?: Record<string, any>;
+}
+
 export interface DatasetSummary {
   version_id: string;
   overview: Confident<OverviewData>;
@@ -154,4 +178,6 @@ export interface DatasetSummary {
   variants: Confident<VariantInfo[]>;
   lineage: Confident<LineageData>;
   limitations: Confident<LimitationData>;
+  canonical_audit?: Confident<CanonicalAuditData>;
 }
+

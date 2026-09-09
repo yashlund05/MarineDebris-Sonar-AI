@@ -26,4 +26,9 @@ export const datasetApi = {
     const res = await apiClient.get(`/datasets/${version}/manifest`);
     return res.data;
   },
+  getCanonicalStatus: async () => {
+    const res = await apiClient.get<ApiResponse<any>>("/datasets/canonical-status");
+    return res.data.data;
+  },
 };
+

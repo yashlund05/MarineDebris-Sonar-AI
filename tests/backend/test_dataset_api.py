@@ -63,3 +63,20 @@ async def test_dataset_not_found_handled_gracefully(client):
     data = response.json()["data"]
     assert data["overview"]["confidence"] == "NOT_AVAILABLE"
 
+@pytest.mark.asyncio
+async def test_get_canonical_status(client):
+    response = await client.get(f"{api_prefix}/datasets/canonical-status")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "canonical_classes" in data["data"]
+    classes = data["data"]["canonical_classes"]
+    assert len(classes) == 5
+    class_names = [c["class_name"] for c in classes]
+    assert "derelict_fishing_gear" in class_names
+    assert "shipwreck" in class_names
+    assert "pipe_or_cylinder" in class_names
+    assert "general_marine_debris" in class_names
+    assert "other_man_made_target" in class_names
+
+

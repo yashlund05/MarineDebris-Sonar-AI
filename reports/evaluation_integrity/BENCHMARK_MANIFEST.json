@@ -67,6 +67,98 @@
       "total_annotations": 136,
       "mAP50": 0.338,
       "mAP50_95": 0.24
+    },
+    "benchmark_5_canonical_evaluation": {
+      "benchmark_name": "benchmark_5_canonical_evaluation",
+      "evaluation_timestamp": "2026-09-08T07:45:12Z",
+      "production_model_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+      "dataset_name": "canonical_evaluation_benchmark",
+      "dataset_version": "1.0.0",
+      "total_evaluation_images": 198,
+      "total_evaluation_annotations": 198,
+      "modality_breakdown": {
+        "FLS": 98,
+        "SSS": 100
+      },
+      "classes_evaluated": [
+        "derelict_fishing_gear",
+        "shipwreck",
+        "pipe_or_cylinder"
+      ],
+      "canonical_benchmark_metrics": {
+        "mAP50": 0.0,
+        "mAP50_95": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "confidence_threshold": 0.001,
+        "iou_threshold": 0.7
+      },
+      "operational_point_metrics_conf_0_25": {
+        "mAP50": 0.0,
+        "mAP50_95": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "confidence_threshold": 0.25,
+        "iou_threshold": 0.45
+      },
+      "per_class_audit": {
+        "derelict_fishing_gear": {
+          "class_id": 0,
+          "dataset_source": "NKSID (NanKai Sonar Image Dataset)",
+          "sensor": "Oculus M750d FLS (1.2 MHz)",
+          "modality": "FLS",
+          "samples": 20,
+          "status": "PROVISIONAL",
+          "model_performance_status": "MODEL_PERFORMANCE_NOT_ESTABLISHED",
+          "canonical_recall": 0.0,
+          "operational_recall": 0.0,
+          "note": "Acoustic FLS test samples integrated. Model has never been trained on ghost nets; 0 detections at conf=0.25."
+        },
+        "shipwreck": {
+          "class_id": 2,
+          "dataset_source": "KLSG (Sidescan Sonar Dataset)",
+          "sensor": "Klein 3000 Towfish SSS (455/900 kHz)",
+          "modality": "SSS",
+          "samples": 100,
+          "status": "PROVISIONAL",
+          "model_performance_status": "CROSS_DOMAIN_GAP_UNESTABLISHED",
+          "canonical_recall": 0.0,
+          "operational_recall": 0.0,
+          "note": "Side-Scan Sonar (SSS) geometry differs fundamentally from Forward-Looking Sonar (FLS); requires cross-modality fine-tuning."
+        },
+        "pipe_or_cylinder": {
+          "class_id": 3,
+          "dataset_source": "Turntable FLS (ARIS 3000) + NKSID (Oculus FLS)",
+          "sensor": "ARIS Explorer 3000 (3.0 MHz) / Oculus M750d (1.2 MHz)",
+          "modality": "FLS",
+          "samples": 78,
+          "status": "PROVISIONAL",
+          "model_performance_status": "MODEL_PERFORMANCE_NOT_ESTABLISHED",
+          "canonical_recall": 0.0,
+          "operational_recall": 0.0,
+          "note": "Acoustically identical FLS sensor imagery; weights require fine-tuning to activate class 3 head."
+        }
+      },
+      "confusion_analysis": {
+        "conf_0_001_dominant_activations": {
+          "0_derelict_fishing_gear": 0,
+          "1_general_marine_debris": 22596,
+          "2_shipwreck": 0,
+          "3_pipe_or_cylinder": 0,
+          "4_other_man_made_target": 13499
+        },
+        "conf_0_25_dominant_activations": {
+          "0_derelict_fishing_gear": 0,
+          "1_general_marine_debris": 15,
+          "2_shipwreck": 0,
+          "3_pipe_or_cylinder": 0,
+          "4_other_man_made_target": 30
+        },
+        "findings": "Novel acoustic targets activate general_marine_debris and other_man_made_target at floor conf=0.001 with 0 activations at operational conf=0.25, confirming zero-shot absence."
+      }
     }
-  }
+  },
+  "last_updated": "2026-09-08T07:45:12Z"
 }

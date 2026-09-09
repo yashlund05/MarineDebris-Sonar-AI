@@ -73,7 +73,11 @@ export const DatasetPage: React.FC = () => {
             <IntegrityAudit integrity={summaryData.integrity} />
           </div>
           
-          <ClassDistributionComponent distribution={summaryData.class_distribution} taxonomy={summaryData.taxonomy} />
+          <ClassDistributionComponent 
+            distribution={summaryData.class_distribution} 
+            taxonomy={summaryData.taxonomy} 
+            canonicalAudit={summaryData.canonical_audit} 
+          />
           <TaxonomyPanel taxonomy={summaryData.taxonomy} />
           <ScaleDistributionComponent scale_distribution={summaryData.scale_distribution} />
           <HardNegativePanel hard_negatives={summaryData.hard_negatives} />

@@ -32,6 +32,7 @@ export const Sidebar: React.FC = () => {
   ];
 
   const intelligenceNav = [
+    { to: "/enhancement", label: "Sonar Enhancement", icon: Waves },
     { to: "/models", label: "Model Center", icon: Cpu },
     { to: "/models/evaluation", label: "Model Evaluation", icon: BarChart2 },
     { to: "/dataset", label: "Dataset Explorer", icon: Layers },
