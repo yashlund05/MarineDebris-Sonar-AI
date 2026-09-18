@@ -10,25 +10,25 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          primary: "#F8FAFC",   // Crisp cool light slate
-          surface: "#FFFFFF",   // Pure white panels
-          elevated: "#F1F5F9",  // Subtle cool gray for nested blocks
-          subtle: "#E2E8F0",
+          primary: "#F2EFE7",
+          surface: "#FFFCF6",
+          elevated: "#E7ECE8",
+          subtle: "#D7D6CC",
         },
         border: {
-          subtle: "#E2E8F0",    // Subtle clean border
-          default: "#CBD5E1",   // Standard card border
-          strong: "#94A3B8",
+          subtle: "#D7D6CC",
+          default: "#B9C5C1",
+          strong: "#728985",
         },
         text: {
-          primary: "#0F172A",   // Deep navy slate
-          secondary: "#475569", // Professional secondary
-          muted: "#64748B",     // Accessible tertiary
+          primary: "#19313A",
+          secondary: "#4F696B",
+          muted: "#718384",
         },
         accent: {
-          DEFAULT: "#0284C7",   // Maritime ocean blue
-          hover: "#0369A1",
-          subtle: "#E0F2FE",
+          DEFAULT: "#C8523B",
+          hover: "#AA4332",
+          subtle: "#F7E1DA",
         },
         sonar: {
           navy: "#0F172A",

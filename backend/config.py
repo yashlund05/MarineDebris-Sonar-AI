@@ -90,9 +90,11 @@ class Settings(BaseSettings):
     DEVICE: str = "cuda"  # "cuda" or "cpu"
 
     # Model paths — ARCHITECTURAL_BLUEPRINT.md §9, §10
-    DETECTION_MODEL_PATH: str = "models/detection/sonar_yolov8m_ghostpot_v1.pt"
+    # This default is intentionally aligned with the immutable production checkpoint
+    # verified by backend.ml.evaluation.evaluation_contract.
+    DETECTION_MODEL_PATH: str = "models/detection/sonar_yolov8_fls_trained.pt"
     SEGMENTATION_MODEL_PATH: str = "models/segmentation/unet_shipwreck_v1.pt"
-    DEFAULT_DETECTION_MODEL: str = "sonar_yolov8m_ghostpot_v1"
+    DEFAULT_DETECTION_MODEL: str = "production_fls_yolov8n"
     DEFAULT_DETECTION_MODEL_VERSION: str = "1.0.0"
 
     # Preprocessing version tag

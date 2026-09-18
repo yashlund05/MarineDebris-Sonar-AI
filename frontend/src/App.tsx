@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppLayout } from "./components/layout/AppLayout";
-import { DashboardPage } from "./pages/DashboardPage";
+import { CommandCenterPage } from "./pages/CommandCenterPage";
 import { UploadPage } from "./pages/UploadPage";
 import { SurveyListPage } from "./pages/SurveyListPage";
 import { SurveyDetailPage } from "./pages/SurveyDetailPage";
@@ -15,7 +15,7 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppLayout />}>
-          <Route index element={<DashboardPage />} />
+          <Route index element={<CommandCenterPage />} />
           <Route path="upload" element={<UploadPage />} />
           <Route path="surveys" element={<SurveyListPage />} />
           <Route path="surveys/:id" element={<SurveyDetailPage />} />
