@@ -1,0 +1,65 @@
+{
+  "RAW_BASELINE": {
+    "stage": "RAW_BASELINE",
+    "precision": 0.9444,
+    "recall": 0.8947,
+    "f1": 0.9189,
+    "latency_ms": 271.76
+  },
+  "RAW_PLUS_CLAHE_1.2": {
+    "stage": "RAW_PLUS_CLAHE_1.2",
+    "precision": 0.9333,
+    "recall": 0.7368,
+    "f1": 0.8235,
+    "latency_ms": 147.61
+  },
+  "RAW_PLUS_CLAHE_1.8": {
+    "stage": "RAW_PLUS_CLAHE_1.8",
+    "precision": 0.9565,
+    "recall": 0.5789,
+    "f1": 0.7213,
+    "latency_ms": 133.7
+  },
+  "RAW_PLUS_CLAHE_3.0": {
+    "stage": "RAW_PLUS_CLAHE_3.0",
+    "precision": 0.8421,
+    "recall": 0.4211,
+    "f1": 0.5614,
+    "latency_ms": 122.71
+  },
+  "RAW_PLUS_LEE_K3": {
+    "stage": "RAW_PLUS_LEE_K3",
+    "precision": 0.9444,
+    "recall": 0.8947,
+    "f1": 0.9189,
+    "latency_ms": 154.93
+  },
+  "RAW_PLUS_LEE_K5": {
+    "stage": "RAW_PLUS_LEE_K5",
+    "precision": 0.9444,
+    "recall": 0.8947,
+    "f1": 0.9189,
+    "latency_ms": 154.97
+  },
+  "RAW_PLUS_STRIPE_NOTCH": {
+    "stage": "RAW_PLUS_STRIPE_NOTCH",
+    "precision": 0.9143,
+    "recall": 0.8421,
+    "f1": 0.8767,
+    "latency_ms": 177.6
+  },
+  "RAW_PLUS_GAMMA_0.85": {
+    "stage": "RAW_PLUS_GAMMA_0.85",
+    "precision": 0.9459,
+    "recall": 0.9211,
+    "f1": 0.9333,
+    "latency_ms": 118.69
+  },
+  "RAW_PLUS_GAMMA_1.15": {
+    "stage": "RAW_PLUS_GAMMA_1.15",
+    "precision": 0.9189,
+    "recall": 0.8947,
+    "f1": 0.9067,
+    "latency_ms": 125.33
+  }
+}

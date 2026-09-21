@@ -1,0 +1,35 @@
+{
+  "checkpoint_path": "models\\detection\\sonar_yolov8_fls_trained.pt",
+  "benchmark_a_legacy_v2": {
+    "precision": 0.9325,
+    "recall": 0.9015,
+    "f1": 0.9167,
+    "mAP50": 0.8921,
+    "mAP50_95": 0.6235
+  },
+  "benchmark_b_v3_held_out": {
+    "precision": 0.9092,
+    "recall": 0.9024,
+    "f1": 0.9058,
+    "mAP50": 0.9192,
+    "mAP50_95": 0.6402
+  },
+  "benchmark_c_hard_negatives": {
+    "total_negative_images": 84,
+    "flagged_negative_images": 18,
+    "total_false_positive_boxes": 18,
+    "negative_image_FAR": 0.2143,
+    "fps_per_negative_image": 0.2143,
+    "fps_per_flagged_image": 1.0,
+    "max_fps_in_single_negative_image": 1,
+    "quarry_false_positives": 18,
+    "wall_false_positives": 0
+  },
+  "benchmark_d_cross_domain": {
+    "precision": 0.3638,
+    "recall": 0.3536,
+    "f1": 0.3586,
+    "mAP50": 0.3598,
+    "mAP50_95": 0.2504
+  }
+}

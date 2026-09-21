@@ -1,0 +1,51 @@
+{
+  "checkpoint_path": "models\\detection\\experiments\\yolov8_fls_v3_candidate.pt",
+  "benchmark_a_legacy_v2": {
+    "precision": 0.891,
+    "recall": 0.7789,
+    "f1": 0.8312,
+    "mAP50": 0.8768,
+    "mAP50_95": 0.6361
+  },
+  "benchmark_b_v3_held_out": {
+    "precision": 0.8962,
+    "recall": 0.7539,
+    "f1": 0.8189,
+    "mAP50": 0.8506,
+    "mAP50_95": 0.5391
+  },
+  "benchmark_c_hard_negatives": {
+    "total_negative_images": 84,
+    "flagged_negative_images": 12,
+    "total_false_positive_boxes": 13,
+    "negative_image_FAR": 0.1429,
+    "fps_per_negative_image": 0.1548,
+    "fps_per_flagged_image": 1.0833,
+    "max_fps_in_single_negative_image": 2,
+    "quarry_false_positives": 13,
+    "wall_false_positives": 0
+  },
+  "benchmark_d_cross_domain": {
+    "precision": 0.3574,
+    "recall": 0.2954,
+    "f1": 0.3234,
+    "mAP50": 0.333,
+    "mAP50_95": 0.2106
+  },
+  "latency": {
+    "model_path": "models\\detection\\experiments\\yolov8_fls_v3_candidate.pt",
+    "device": "cpu",
+    "imgsz": 640,
+    "warmup_runs": 5,
+    "timed_runs": 15,
+    "latency_mean_ms": 83.88,
+    "latency_std_ms": 13.04,
+    "latency_p50_ms": 79.39,
+    "latency_p95_ms": 112.63,
+    "latency_min_ms": 75.68,
+    "latency_max_ms": 123.72,
+    "fps": 11.92,
+    "budget_ms": 125.0,
+    "meets_budget": true
+  }
+}

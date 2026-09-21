@@ -201,3 +201,22 @@ class PromotionGate:
                 else "Candidate model failed one or more gating criteria. Production weights remain active."
             ),
         )
+
+    def evaluate_checkpoint(self, checkpoint_path: Path) -> PromotionResult:
+        """Runs full benchmarks, latency measurement, and evaluates against promotion criteria."""
+        from backend.ml.optimization.benchmark_suite import BenchmarkSuite
+        from backend.ml.optimization.latency_benchmark import LatencyBenchmarker
+
+        checkpoint_path = Path(checkpoint_path)
+        suite = BenchmarkSuite()
+        bench_results = suite.run_complete_suite(checkpoint_path)
+
+        lb = LatencyBenchmarker(warmup_runs=5, timed_runs=20)
+        lat_results = lb.benchmark(checkpoint_path)
+
+        return self.evaluate_candidate(
+            bench_a=bench_results["benchmark_a_legacy_v2"],
+            bench_b=bench_results["benchmark_b_v3_held_out"],
+            bench_c=bench_results["benchmark_c_hard_negatives"],
+            latency=lat_results,
+        )

@@ -109,3 +109,35 @@ Every enhancement candidate is evaluated through multi-dimensional gates and cla
 | **HUMAN-INSPECTION ONLY** | Improves contrast for human inspection but alters YOLO feature distributions. | Restricted to operator GUI. |
 | **EXPERIMENTAL** | Incomplete benchmark or mixed acoustic fidelity metrics. | Research sandbox only. |
 | **REJECTED** | Introduces false contours, edge blurring ($\text{EPI} < 0.5$), or increases false alarms on hard negatives. | Quarantined. |
+
+---
+
+## 6. Modular Multi-Stage Pipeline & Operational Profiles
+
+### 6.1 Architectural Decoupling & Context Propagation
+The modular subsystem models sonar processing as an ordered chain of `SonarEnhancementStage` instances managed by `SonarEnhancementPipeline`. State, provenance, and diagnostic masks are propagated through a `SonarEnhancementContext`:
+
+- `validity_mask`: Boolean mask isolating sensor-dead columns, extreme acoustic saturation, or water column mute regions.
+- `modified_mask`: Boolean mask indicating which pixels were materially altered by the pipeline.
+- `provenance`: Immutable record tracing input artifact ID, modality (FLS vs SSS), signal representation, applied/skipped stages, timestamp, and host device.
+
+### 6.2 Pipeline Stages
+1. **`StripeNoiseNotchStage`**: 2D-FFT directional spectrum analysis with confidence-gated notch attenuation.
+2. **`SpeckleDenoisingStage`**: Adaptive spatial filtering (Lee multiplicative filter, Frost damped filter, or SRAD PDE).
+3. **`AdaptiveContrastStage`**: Parameterized CLAHE with optional gamma correction and controlled unsharp masking.
+4. **`AcousticShadowPreservationStage`**: Non-modifying diagnostic stage measuring shadow area retention and contrast ratios.
+5. **Learned Adapters (`SEGSIDDenoiserAdapter`, `WFCBSNDenoiserAdapter`, `LBDEnhanceAdapter`)**: Standardized adapters with analytical surrogate fallbacks when deep model checkpoints are unavailable.
+
+### 6.3 Standard Operational Profiles
+- **`RAW`**: Identity pass-through baseline.
+- **`MINIMAL`**: Gentle Lee filter ($k=3$), minimal CLAHE ($\text{clip}=1.2$).
+- **`BALANCED`**: Stripe notch, Lee filter ($k=5$), CLAHE ($\text{clip}=1.8$), shadow preservation.
+- **`HUMAN_VISUAL`**: Aggressive CLAHE ($\text{clip}=2.2$), unsharp boost, gamma $0.9$ (restricted to human operators).
+- **`AI_SAFE`**: Conservative speckle reduction, strict shadow validation, zero unsharp masking (guaranteed AI-safe).
+- **`RESEARCH_CUSTOM`**: Fully parametric configuration for controlled ablation studies.
+
+### 6.4 REST API Endpoints
+- `POST /api/v1/enhancement/inspect`: Forensic acoustic inspection of input frames.
+- `POST /api/v1/enhancement/pipeline/process`: Modular pipeline execution with profile selection, mask propagation, and optional YOLO detection.
+- `GET /api/v1/enhancement/metrics/definitions`: Documentation of acoustic formulas, units, and validity conditions.
+

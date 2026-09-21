@@ -194,6 +194,15 @@ def create_app() -> FastAPI:
     app.include_router(enhancement.router, prefix=settings.API_V1_STR)
     app.include_router(sonar_enhancement.router, prefix=f"{settings.API_V1_STR}/sonar")
 
+    # Live Sonar Subsystem Routers
+    from backend.live_sonar.api.routes import router as live_sonar_router
+    from backend.live_sonar.api.websocket import ws_router as live_sonar_ws_router
+
+    app.include_router(live_sonar_router, prefix=settings.API_V1_STR)
+    app.include_router(live_sonar_ws_router)  # /ws/live-sonar/{session_id}
+    app.include_router(live_sonar_ws_router, prefix=settings.API_V1_STR)  # /api/v1/ws/live-sonar/{session_id}
+
+
     # Convenience root health redirect / root endpoint
     @app.get("/health", tags=["System & Health"])
     async def root_health():

@@ -1,0 +1,109 @@
+{
+  "timestamp": "2026-09-19T13:24:07.254235+00:00",
+  "audit_version": "1.0.0",
+  "datasets": {
+    "sonar_debris_v2_clean": {
+      "dataset_root": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\datasets\\sonar_debris_v2_clean",
+      "total_images": 238,
+      "total_annotations": 371,
+      "total_negatives": 0,
+      "splits": {
+        "train": {
+          "images": 166,
+          "annotations": 266,
+          "negatives": 0
+        },
+        "val": {
+          "images": 35,
+          "annotations": 51,
+          "negatives": 0
+        },
+        "test": {
+          "images": 37,
+          "annotations": 54,
+          "negatives": 0
+        }
+      },
+      "class_distribution": {
+        "0": 0,
+        "1": 267,
+        "2": 0,
+        "3": 0,
+        "4": 104
+      },
+      "scale_distribution": {
+        "tiny": 1,
+        "small": 63,
+        "medium": 257,
+        "large": 50
+      },
+      "error_count": 0,
+      "errors": [],
+      "leakage": {
+        "exact_duplicate_count": 0,
+        "exact_leakage_cases": [],
+        "sequence_leakage_count": 0,
+        "sequence_leakage_cases": [],
+        "sequence_counts_per_split": {
+          "train": 166,
+          "val": 35,
+          "test": 37
+        },
+        "leakage_status": "PASS"
+      },
+      "status": "PASS"
+    },
+    "sonar_debris_v3": {
+      "dataset_root": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\datasets\\sonar_debris_v3",
+      "total_images": 660,
+      "total_annotations": 899,
+      "total_negatives": 84,
+      "splits": {
+        "train": {
+          "images": 480,
+          "annotations": 636,
+          "negatives": 75
+        },
+        "val": {
+          "images": 100,
+          "annotations": 136,
+          "negatives": 6
+        },
+        "test": {
+          "images": 80,
+          "annotations": 127,
+          "negatives": 3
+        }
+      },
+      "class_distribution": {
+        "0": 0,
+        "1": 619,
+        "2": 0,
+        "3": 0,
+        "4": 280
+      },
+      "scale_distribution": {
+        "tiny": 2,
+        "small": 160,
+        "medium": 609,
+        "large": 128
+      },
+      "error_count": 0,
+      "errors": [],
+      "leakage": {
+        "exact_duplicate_count": 0,
+        "exact_leakage_cases": [],
+        "sequence_leakage_count": 0,
+        "sequence_leakage_cases": [],
+        "sequence_counts_per_split": {
+          "train": 426,
+          "val": 100,
+          "test": 80
+        },
+        "leakage_status": "PASS"
+      },
+      "status": "PASS"
+    }
+  },
+  "overall_status": "PASS"
+}

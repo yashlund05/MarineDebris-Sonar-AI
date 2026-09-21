@@ -1,0 +1,40 @@
+{
+  "sequence_number": 0,
+  "timestamp_utc": "2026-09-19T06:05:22.368858+00:00",
+  "source_image": "marine-debris-aris3k-64.png",
+  "description": "Acoustic debris (beverage can) and submerged tire target",
+  "sonar_metadata": {
+    "frequency_hz": 3000000.0,
+    "range_m": 15.0,
+    "gain_db": 42.5,
+    "beam_angle_deg": 28.0,
+    "sound_speed_mps": 1500.0,
+    "heading_deg": 184.2,
+    "pitch_deg": -1.5,
+    "roll_deg": 0.8,
+    "depth_m": 12.4
+  },
+  "navigation": {
+    "latitude": 38.812345,
+    "longitude": -75.134567,
+    "heading_deg": 184.2,
+    "depth_m": 12.4,
+    "speed_knots": 2.1
+  },
+  "ground_truth": [
+    {
+      "class_id": 4,
+      "x_center": 0.627604,
+      "y_center": 0.445833,
+      "width": 0.158333,
+      "height": 0.3125
+    },
+    {
+      "class_id": 1,
+      "x_center": 0.411979,
+      "y_center": 0.748958,
+      "width": 0.08125,
+      "height": 0.13125
+    }
+  ]
+}

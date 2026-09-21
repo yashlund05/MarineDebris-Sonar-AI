@@ -1,6 +1,6 @@
 # Sonar Enhancement Method Comparison & Benchmark Report
 
-**Generated**: 2026-09-08 07:49:49 UTC
+**Generated**: 2026-09-19 13:15:04 UTC
 - **Dataset**: V3 (val split, sequence-isolated)
 - **Sample Count**: 2 frames
 - **Insertion Point**: `P0`
@@ -10,8 +10,8 @@
 
 | Method | Mean Latency | P95 Latency | P99 Latency | ENL (Looks) | CNR (Target Contrast) | EPI (Edge Preservation) |
 |---|---|---|---|---|---|---|
-| `identity` | 3.15 ms | 3.46 ms | 3.49 ms | 29.93 | 0.81 | 1.000 |
-| `clahe_enhance` | 8.47 ms | 8.71 ms | 8.73 ms | 0.23 | 0.78 | 2.229 |
+| `identity` | 3.85 ms | 4.86 ms | 4.94 ms | 29.93 | 0.81 | 1.000 |
+| `clahe_enhance` | 10.62 ms | 10.84 ms | 10.86 ms | 0.23 | 0.78 | 2.229 |
 
 ## Metric Validity and Interpretations
 - **ENL (Equivalent Number of Looks)**: Evaluated strictly on homogeneous background ROIs; higher represents reduced speckle variance.

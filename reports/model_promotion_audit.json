@@ -1,0 +1,98 @@
+{
+  "audit_timestamp": "2026-09-19T14:10:00Z",
+  "auditor": "MarineDebris-Sonar-AI Core Evaluation & MLOps Engine",
+  "production_checkpoint": {
+    "path": "models/detection/sonar_yolov8_fls_trained.pt",
+    "sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+    "status": "ACTIVE_PRODUCTION_FROZEN",
+    "action": "PRESERVED_UNMODIFIED"
+  },
+  "evaluated_candidates": [
+    {
+      "candidate_id": "P3_E2_NAIVE_MIX",
+      "model_path": "models/detection/experiments/phase3/P3_E2_NAIVE_MIX/weights/best.pt",
+      "sha256": "8dd5150337576f6c8537c28ab0cc08c13fa190ce9c788efa61429d73530bcbf9",
+      "architecture": "YOLOv8n",
+      "parameters": 3006623,
+      "size_bytes": 6247594,
+      "training_dataset": "detection_real_balanced_mix_v3",
+      "metrics": {
+        "v2_test_map50": 0.9343,
+        "v2_test_recall": 0.9016,
+        "v3_test_map50": 0.9460,
+        "hard_neg_far": 0.1071,
+        "small_target_recall": 1.0000,
+        "cpu_p95_latency_ms": 49.46,
+        "cpu_fps": 23.65
+      },
+      "gate_evaluation": {
+        "gate_1_v2_map50": {"required": ">= 88.21%", "observed": "93.43%", "passed": true},
+        "gate_2_v2_recall": {"required": ">= 88.15%", "observed": "90.16%", "passed": true},
+        "gate_3_v3_map50": {"required": ">= 89.92%", "observed": "94.60%", "passed": true},
+        "gate_4_hard_neg_far": {"required": "<= 21.43%", "observed": "10.71%", "passed": true},
+        "gate_5_hard_neg_fp_boxes": {"required": "<= 18", "observed": "9", "passed": true},
+        "gate_6_latency_p95": {"required": "<= 125.0 ms", "observed": "49.46 ms", "passed": true}
+      },
+      "status": "ELIGIBLE_FOR_PROMOTION",
+      "overall_pass": true,
+      "recommendation": "Top lightweight candidate. Passes all gates with 49ms CPU latency and 50% false alarm reduction."
+    },
+    {
+      "candidate_id": "P3_E6_SEED_42",
+      "model_path": "models/detection/experiments/phase3/E6_MULTISEED/seed_42/weights/best.pt",
+      "sha256": "4726399b336d997bc7e0ed129c5edf89e4d3dd2eceadc754284ff4b7ca73a5f3",
+      "architecture": "YOLOv8n",
+      "parameters": 3006623,
+      "size_bytes": 6248234,
+      "training_dataset": "detection_real_multiseed_v3",
+      "metrics": {
+        "v2_test_map50": 0.9911,
+        "v2_test_recall": 0.9899,
+        "v3_test_map50": 0.9510,
+        "hard_neg_far": 0.1429,
+        "small_target_recall": 1.0000,
+        "cpu_p95_latency_ms": 101.50,
+        "cpu_fps": 10.55
+      },
+      "gate_evaluation": {
+        "gate_1_v2_map50": {"required": ">= 88.21%", "observed": "99.11%", "passed": true},
+        "gate_2_v2_recall": {"required": ">= 88.15%", "observed": "98.99%", "passed": true},
+        "gate_3_v3_map50": {"required": ">= 89.92%", "observed": "95.10%", "passed": true},
+        "gate_4_hard_neg_far": {"required": "<= 21.43%", "observed": "14.29%", "passed": true},
+        "gate_5_hard_neg_fp_boxes": {"required": "<= 18", "observed": "13", "passed": true},
+        "gate_6_latency_p95": {"required": "<= 125.0 ms", "observed": "101.50 ms", "passed": true}
+      },
+      "status": "ELIGIBLE_FOR_PROMOTION",
+      "overall_pass": true,
+      "recommendation": "Top accuracy candidate. Passes all gates with highest mAP (99.11% on V2, 95.10% on V3)."
+    },
+    {
+      "candidate_id": "yolov8_fls_v3_candidate",
+      "model_path": "models/detection/experiments/yolov8_fls_v3_candidate.pt",
+      "sha256": "6147d77863a2ad53a0eaf14c4f87e64e8bbe5ed979452f4863faf6c23c5e8385",
+      "metrics": {
+        "v2_test_map50": 0.8768,
+        "v2_test_recall": 0.7789,
+        "v3_test_map50": 0.8506,
+        "hard_neg_far": 0.1429,
+        "cpu_p95_latency_ms": 112.63
+      },
+      "gate_evaluation": {
+        "gate_1_v2_map50": {"required": ">= 88.21%", "observed": "87.68%", "passed": false},
+        "gate_2_v2_recall": {"required": ">= 88.15%", "observed": "77.89%", "passed": false},
+        "gate_3_v3_map50": {"required": ">= 89.92%", "observed": "85.06%", "passed": false},
+        "gate_4_hard_neg_far": {"required": "<= 21.43%", "observed": "14.29%", "passed": true},
+        "gate_5_hard_neg_fp_boxes": {"required": "<= 18", "observed": "13", "passed": true},
+        "gate_6_latency_p95": {"required": "<= 125.0 ms", "observed": "112.63 ms", "passed": true}
+      },
+      "status": "REJECTED",
+      "overall_pass": false,
+      "recommendation": "Failed Gates 1, 2, and 3 due to legacy recall regression (-12.26%). Rejection confirmed."
+    }
+  ],
+  "governance_decision": {
+    "promoted_to_production": false,
+    "rationale": "Automated promotion is strictly disabled by policy. Production weights remain frozen. Candidates are staged for human-in-the-loop operational sign-off.",
+    "rollback_model": "models/detection/sonar_yolov8_fls_trained.pt"
+  }
+}

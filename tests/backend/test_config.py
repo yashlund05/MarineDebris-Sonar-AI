@@ -13,7 +13,7 @@ def test_default_settings():
     assert settings.NMS_IOU_THRESHOLD == 0.45
     assert settings.TILE_SIZE == 640
     assert settings.TILE_OVERLAP == 0.2
-    assert settings.DEFAULT_DETECTION_MODEL == "sonar_yolov8m_ghostpot_v1"
+    assert settings.DEFAULT_DETECTION_MODEL == "production_fls_yolov8n"
 
 
 def test_database_url_generation():

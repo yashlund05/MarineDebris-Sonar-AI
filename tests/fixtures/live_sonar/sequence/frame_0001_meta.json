@@ -1,0 +1,40 @@
+{
+  "sequence_number": 1,
+  "timestamp_utc": "2026-09-19T06:05:22.370715+00:00",
+  "source_image": "marine-debris-aris3k-66.png",
+  "description": "Dual submerged marine debris targets on gravel seabed",
+  "sonar_metadata": {
+    "frequency_hz": 3000000.0,
+    "range_m": 15.0,
+    "gain_db": 42.5,
+    "beam_angle_deg": 28.0,
+    "sound_speed_mps": 1500.0,
+    "heading_deg": 184.2,
+    "pitch_deg": -1.5,
+    "roll_deg": 0.8,
+    "depth_m": 12.4
+  },
+  "navigation": {
+    "latitude": 38.812345,
+    "longitude": -75.134567,
+    "heading_deg": 184.2,
+    "depth_m": 12.4,
+    "speed_knots": 2.1
+  },
+  "ground_truth": [
+    {
+      "class_id": 1,
+      "x_center": 0.478646,
+      "y_center": 0.351042,
+      "width": 0.139583,
+      "height": 0.089583
+    },
+    {
+      "class_id": 1,
+      "x_center": 0.447396,
+      "y_center": 0.55,
+      "width": 0.11875,
+      "height": 0.1125
+    }
+  ]
+}

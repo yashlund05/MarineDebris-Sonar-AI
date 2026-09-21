@@ -1,4 +1,4 @@
-﻿import logging
+import logging
 import time
 from dataclasses import dataclass
 from typing import List, Any, Union, Optional
@@ -62,10 +62,10 @@ def detect_tiles(tiles: list, model: Any = None, conf_threshold: float = 0.35, d
         for i, result in enumerate(results):
             tile_detections = []
             orig_tile = tiles[i] if i < len(tiles) else None
-            t_row = getattr(orig_tile, "tile_row", 0) if orig_tile else 0
-            t_col = getattr(orig_tile, "tile_col", 0) if orig_tile else 0
+            t_row = getattr(orig_tile, "tile_row", 0) if orig_tile is not None else 0
+            t_col = getattr(orig_tile, "tile_col", 0) if orig_tile is not None else 0
 
-            if result.boxes:
+            if result.boxes is not None and len(result.boxes) > 0:
                 for box in result.boxes:
                     cls_id = int(box.cls[0].item())
                     conf = float(box.conf[0].item())

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { LayoutDashboard, UploadCloud, Cpu, Layers, Activity, Waves, HardDrive, BarChart2, MapPinned, FlaskConical } from "lucide-react";
+import { LayoutDashboard, UploadCloud, Cpu, Layers, Activity, Waves, HardDrive, BarChart2, MapPinned, FlaskConical, Radio } from "lucide-react";
 import { systemApi } from "../../api/client";
 
 export const Sidebar: React.FC = () => {
@@ -17,6 +17,7 @@ export const Sidebar: React.FC = () => {
 
   const workspaceNav = [
     { to: "/", label: "Command center", icon: LayoutDashboard },
+    { to: "/live-sonar", label: "Live Sonar AI", icon: Radio },
     { to: "/surveys", label: "Expeditions", icon: MapPinned },
     { to: "/upload", label: "Start an expedition", icon: UploadCloud },
   ];

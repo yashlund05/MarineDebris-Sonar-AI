@@ -450,3 +450,201 @@ async def detect_on_improved_image(payload: DetectImprovedRequest, db: AsyncSess
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class InspectRequest(BaseModel):
+    dataset_version: Optional[str] = "v3"
+    split: Optional[str] = "val"
+    image_name: Optional[str] = None
+    survey_id: Optional[str] = None
+    image_data_url: Optional[str] = None
+
+
+class PipelineProcessRequest(BaseModel):
+    dataset_version: Optional[str] = "v3"
+    split: Optional[str] = "val"
+    image_name: Optional[str] = None
+    survey_id: Optional[str] = None
+    image_data_url: Optional[str] = None
+    profile: Optional[str] = "BALANCED"
+    mode: Optional[str] = "AI_SAFE"
+    palette: Optional[str] = "amber"
+    custom_parameters: Optional[Dict[str, Any]] = None
+    run_detection: Optional[bool] = False
+    conf_threshold: Optional[float] = 0.25
+
+
+@router.post("/inspect")
+async def inspect_image_endpoint(payload: InspectRequest):
+    """
+    Performs forensic inspection of sonar input:
+    Extracts dynamic range, bit depth, dead columns, saturation ratio, and detects FLS vs SSS.
+    """
+    try:
+        from backend.enhancement.inspection import inspect_sonar_input
+
+        if payload.image_data_url:
+            raw_img = _decode_png_base64(payload.image_data_url)
+        elif payload.image_name:
+            safe_name = Path(payload.image_name).name
+            samples = loader.get_development_samples(
+                dataset_version=payload.dataset_version or "v3",
+                split=payload.split or "val",
+            )
+            matched = next((s for s in samples if s["image_name"] == safe_name), None)
+            if not matched:
+                raise HTTPException(status_code=404, detail="Image not found")
+            raw_img = loader.load_image_float32(matched["image_path"])
+        else:
+            sample = loader.get_smoke_test_sample()
+            raw_img = loader.load_image_float32(sample["image_path"])
+
+        report = inspect_sonar_input(raw_img)
+        return {
+            "success": True,
+            "report": report.to_dict(),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/pipeline/process")
+async def process_modular_pipeline(payload: PipelineProcessRequest):
+    """
+    Executes the modular 9-stage Sonar Enhancement Pipeline.
+    Supports HUMAN_DISPLAY and AI_SAFE modes with mask propagation and comprehensive metrics.
+    """
+    try:
+        from backend.enhancement.pipeline_base import (
+            SonarEnhancementContext,
+            ProcessingMode,
+            Modality,
+            SignalRepresentation,
+            SonarEnhancementProvenance,
+        )
+        from backend.enhancement.inspection import inspect_sonar_input
+        from backend.enhancement.profiles import build_pipeline_for_profile
+        from backend.enhancement.quality_metrics import evaluate_enhancement_quality
+
+        # 1. Resolve raw input image
+        artifact_id = payload.image_name or "uploaded_image"
+        if payload.image_data_url:
+            raw_img = _decode_png_base64(payload.image_data_url)
+            artifact_id = f"upload_{uuid.uuid4().hex[:8]}"
+        elif payload.image_name:
+            safe_name = Path(payload.image_name).name
+            samples = loader.get_development_samples(
+                dataset_version=payload.dataset_version or "v3",
+                split=payload.split or "val",
+            )
+            matched = next((s for s in samples if s["image_name"] == safe_name), None)
+            if not matched:
+                raise HTTPException(status_code=404, detail="Image not found")
+            raw_img = loader.load_image_float32(matched["image_path"])
+        else:
+            sample = loader.get_smoke_test_sample()
+            raw_img = loader.load_image_float32(sample["image_path"])
+
+        # 2. Inspect input
+        inspection = inspect_sonar_input(raw_img)
+
+        # 3. Setup context and pipeline
+        mode = ProcessingMode.HUMAN_DISPLAY if (payload.mode and "HUMAN" in payload.mode.upper()) else ProcessingMode.AI_SAFE
+        profile_name = payload.profile or "BALANCED"
+        pipeline = build_pipeline_for_profile(profile_name, mode=mode, custom_params=payload.custom_parameters)
+
+        context = SonarEnhancementContext(
+            artifact_id=artifact_id,
+            modality=inspection.modality,
+            representation=inspection.detected_representation,
+            mode=mode,
+            metadata={"raw_image": raw_img},
+            provenance=SonarEnhancementProvenance(
+                source_artifact_id=artifact_id,
+                modality=inspection.modality,
+                input_representation=inspection.detected_representation,
+                output_representation=SignalRepresentation.NORMALIZED_FLOAT,
+                timestamp_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            ),
+        )
+
+        # 4. Execute pipeline
+        result = pipeline.execute(raw_img, context)
+
+        # 5. Format display image with palette
+        palette_enum = PaletteType(payload.palette or "amber")
+        display_rgb = apply_palette(result.canonical_image, palette_enum)
+        raw_display_rgb = apply_palette(raw_img, palette_enum)
+
+        # 6. Evaluate comprehensive metrics
+        quality_metrics = evaluate_enhancement_quality(raw_img, result.canonical_image)
+
+        # 7. Encode masks
+        validity_mask_u8 = (result.validity_mask.astype(np.uint8) * 255) if result.validity_mask is not None else None
+        modified_mask_u8 = (result.modified_mask.astype(np.uint8) * 255) if result.modified_mask is not None else None
+
+        # 8. Optional YOLO detection
+        detections_res = None
+        if payload.run_detection:
+            from backend.ml.detector.yolo_detector import YOLOv8Detector
+            detector = YOLOv8Detector()
+            conf = payload.conf_threshold or 0.25
+            raw_dets = detector.predict([raw_img], conf_threshold=conf)
+            enh_dets = detector.predict([result.canonical_image], conf_threshold=conf)
+            detections_res = {
+                "raw_count": len(raw_dets[0]) if raw_dets else 0,
+                "enhanced_count": len(enh_dets[0]) if enh_dets else 0,
+                "raw_detections": [
+                    {"class_name": d.class_name, "confidence": d.confidence, "bbox": [d.bbox_x, d.bbox_y, d.bbox_w, d.bbox_h]}
+                    for d in (raw_dets[0] if raw_dets else [])
+                ],
+                "enhanced_detections": [
+                    {"class_name": d.class_name, "confidence": d.confidence, "bbox": [d.bbox_x, d.bbox_y, d.bbox_w, d.bbox_h]}
+                    for d in (enh_dets[0] if enh_dets else [])
+                ],
+            }
+
+        return {
+            "success": True,
+            "artifact_id": artifact_id,
+            "profile": profile_name,
+            "mode": mode.value,
+            "palette": palette_enum.value,
+            "is_ai_safe": result.is_ai_safe,
+            "raw_image_url": _encode_png_base64(raw_display_rgb),
+            "raw_grayscale_url": _encode_png_base64((raw_img * 255).astype(np.uint8)),
+            "enhanced_image_url": _encode_png_base64(display_rgb),
+            "enhanced_canonical_url": _encode_png_base64((result.canonical_image * 255).astype(np.uint8)),
+            "validity_mask_url": _encode_png_base64(validity_mask_u8) if validity_mask_u8 is not None else None,
+            "modified_mask_url": _encode_png_base64(modified_mask_u8) if modified_mask_u8 is not None else None,
+            "applied_stages": result.applied_stages,
+            "skipped_stages": result.skipped_stages,
+            "warnings": result.warnings,
+            "stage_metrics": result.metrics,
+            "quality_metrics": quality_metrics,
+            "inspection": inspection.to_dict(),
+            "execution_time_ms": result.execution_time_ms,
+            "detections": detections_res,
+            "provenance": {
+                "source_artifact_id": result.provenance.source_artifact_id if result.provenance else artifact_id,
+                "modality": result.provenance.modality.value if result.provenance else inspection.modality.value,
+                "applied_stages": result.applied_stages,
+                "skipped_stages": result.skipped_stages,
+                "execution_time_ms": result.execution_time_ms,
+                "software_version": "1.0.0",
+                "device": "cpu",
+            },
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/metrics/definitions")
+async def get_metrics_definitions():
+    """Returns documentation of all acoustic and safety metrics."""
+    from backend.enhancement.metric_definitions import METRIC_DEFINITIONS
+    return {
+        "success": True,
+        "metrics": METRIC_DEFINITIONS,
+    }
+

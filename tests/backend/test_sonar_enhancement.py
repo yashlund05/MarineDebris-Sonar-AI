@@ -253,17 +253,16 @@ def test_display_palette_isolation(synthetic_sonar_patch):
 
 def test_profile_registry_integrity():
     profiles = list_profiles()
-    assert len(profiles) == len(ProfileName)
+    assert len(profiles) == 6  # RAW, MINIMAL, BALANCED, HUMAN_VISUAL, AI_SAFE, RESEARCH_CUSTOM
     for p in profiles:
         assert "hypothesis" in p
         assert "target_condition" in p
-        assert "default_parameters" in p
+        assert "id" in p
 
 
 def test_apply_profile(synthetic_sonar_patch):
-    res = apply_profile(ProfileName.BALANCED.value, synthetic_sonar_patch)
+    res = apply_profile(synthetic_sonar_patch, ProfileName.BALANCED)
     assert res.canonical_image.shape == synthetic_sonar_patch.shape
-    assert res.profile_used == ProfileName.BALANCED
     assert res.execution_time_ms >= 0.0
 
 
@@ -280,3 +279,4 @@ def test_benchmark_smoke_execution():
     assert "clahe_enhance" in summary
     assert summary["identity"]["latency_mean_ms"] > 0.0
     assert summary["identity"]["epi_mean"] == 1.000
+

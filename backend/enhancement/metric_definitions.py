@@ -415,3 +415,135 @@ def compute_epi(
         formula=formula_str,
         metadata={"laplacian_sum_orig": round(sum_orig, 4), "laplacian_sum_enh": round(sum_enh, 4)}
     )
+
+
+# =====================================================================
+# Metric Definitions Registry (for /metrics/definitions endpoint)
+# =====================================================================
+
+METRIC_DEFINITIONS: Dict[str, Dict[str, Any]] = {
+    "ENL": {
+        "name": "Equivalent Number of Looks",
+        "formula": "ENL = (mu_ROI^2) / (sigma_ROI^2)",
+        "unit": "looks",
+        "domain": "Speckle Statistics",
+        "description": (
+            "Measures speckle reduction quality on homogeneous background regions. "
+            "Higher ENL indicates smoother background with lower multiplicative speckle variance."
+        ),
+        "validity_conditions": [
+            "ROI must be from a homogeneous background region (water column or flat seabed).",
+            "ROI must contain at least 64 pixels.",
+            "ROI standard deviation must be > 0 (non-constant).",
+            "ROI mean intensity must be > 0 (not pure acoustic shadow/mute).",
+        ],
+        "interpretation": {
+            "higher_is_better": True,
+            "typical_range": "1.0 - 200.0",
+            "excellent": "> 50.0",
+            "poor": "< 5.0",
+        },
+        "reference": "Oliver, C., & Quegan, S. (2004). Understanding Synthetic Aperture Radar Images.",
+    },
+    "CNR": {
+        "name": "Contrast-to-Noise Ratio",
+        "formula": "CNR = |mu_target - mu_background| / sqrt(sigma_target^2 + sigma_background^2)",
+        "unit": "ratio",
+        "domain": "Target Visibility",
+        "description": (
+            "Measures how prominently acoustic debris targets stand out above seabed or "
+            "reverberation noise. Evaluated on eroded target interior vs surrounding background ring."
+        ),
+        "validity_conditions": [
+            "Target and background pixel sets must each contain >= 16 pixels.",
+            "Pooled variance (sigma_t^2 + sigma_b^2) must be > 0.",
+            "Requires a bounding box (normalized xywh) or explicit pixel arrays.",
+        ],
+        "interpretation": {
+            "higher_is_better": True,
+            "typical_range": "0.5 - 10.0",
+            "excellent": "> 5.0",
+            "poor": "< 1.0",
+        },
+        "reference": "Rose, A. (1948). The sensitivity performance of the human eye on an absolute scale.",
+    },
+    "EPI": {
+        "name": "Edge Preservation Index",
+        "formula": "EPI = sum(|Laplacian(I_enhanced)|) / sum(|Laplacian(I_original)|)",
+        "unit": "ratio",
+        "domain": "Structural Integrity",
+        "description": (
+            "Measures preservation of edges and acoustic shadow boundaries after enhancement. "
+            "Uses normalized high-pass Laplacian energy ratio. Identity operation yields exactly 1.0."
+        ),
+        "validity_conditions": [
+            "Original and enhanced images must have identical dimensions.",
+            "Original image must have non-zero Laplacian gradient energy (not flat constant).",
+        ],
+        "interpretation": {
+            "target_value": 1.0,
+            "approximately_1": "Target boundaries preserved without blurring.",
+            "much_greater_than_1": "High-frequency noise amplification or ringing artifacts.",
+            "much_less_than_1": "Severe edge blurring / loss of acoustic shadow contours.",
+            "ai_safe_range": "0.85 - 1.15",
+        },
+        "reference": "Sattar, F., et al. (1997). Image enhancement based on a nonlinear multiscale method. IEEE TIP.",
+    },
+    "SPECKLE_INDEX": {
+        "name": "Speckle Index (Coefficient of Variation)",
+        "formula": "SI = sigma / mu on full image or ROI",
+        "unit": "ratio",
+        "domain": "Speckle Statistics",
+        "description": (
+            "Coefficient of variation measuring relative speckle noise level. "
+            "Lower values indicate better speckle suppression."
+        ),
+        "validity_conditions": [
+            "Image mean intensity must be > 0.",
+        ],
+        "interpretation": {
+            "higher_is_better": False,
+            "typical_range": "0.05 - 1.0",
+            "excellent": "< 0.15",
+            "poor": "> 0.5",
+        },
+        "reference": "Goodman, J.W. (2007). Speckle Phenomena in Optics.",
+    },
+    "SSIM": {
+        "name": "Structural Similarity Index",
+        "formula": "SSIM(I_orig, I_enh) — Wang et al. luminance, contrast, and structure comparison",
+        "unit": "index",
+        "domain": "Structural Integrity",
+        "description": (
+            "Measures structural similarity between original and enhanced images. "
+            "Validates that enhancement preserves essential image structures."
+        ),
+        "validity_conditions": [
+            "Original and enhanced images must have identical dimensions.",
+            "Images must be 2D single-channel.",
+        ],
+        "interpretation": {
+            "target_value": 1.0,
+            "range": "0.0 - 1.0",
+            "ai_safe_minimum": 0.80,
+            "description": "Values close to 1.0 indicate minimal structural distortion.",
+        },
+        "reference": "Wang, Z., et al. (2004). Image quality assessment: From error visibility to structural similarity. IEEE TIP.",
+    },
+    "MODIFIED_PIXEL_RATIO": {
+        "name": "Modified Pixel Ratio",
+        "formula": "MPR = count(|I_enh - I_orig| > threshold) / total_pixels",
+        "unit": "ratio",
+        "domain": "Provenance & Safety",
+        "description": (
+            "Fraction of pixels that were materially modified by the enhancement pipeline. "
+            "Used to verify that enhancement does not over-process or leave the image unchanged."
+        ),
+        "validity_conditions": [
+            "Threshold must be > 0 (typically 0.01 for float32 images).",
+        ],
+        "interpretation": {
+            "description": "0.0 means no change (identity). Values > 0.95 may indicate excessive modification.",
+        },
+    },
+}

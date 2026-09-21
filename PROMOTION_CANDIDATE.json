@@ -1,0 +1,31 @@
+{
+  "candidate_model_path": "models/detection/experiments/phase3/P3_E2_NAIVE_MIX/weights/best.pt",
+  "candidate_sha256": "8dd5150337576f6c8537c28ab0cc08c13fa190ce9c788efa61429d73530bcbf9",
+  "experiment_id": "P3_E2_NAIVE_MIX",
+  "dataset_version": "detection_real_balanced_mix_v3",
+  "architecture": "YOLOv8n",
+  "parameters": 3006623,
+  "size_bytes": 6247594,
+  "promotion_status": "ELIGIBLE_FOR_PROMOTION",
+  "production_deployed": false,
+  "rollback_model_path": "models/detection/sonar_yolov8_fls_trained.pt",
+  "rollback_model_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+  "metrics_summary": {
+    "v2_test_map50": 0.9343,
+    "v2_test_recall": 0.9016,
+    "v3_test_map50": 0.9460,
+    "hard_neg_far": 0.1071,
+    "small_target_recall_8_subset": 1.0000,
+    "cpu_p95_latency_ms": 49.46,
+    "cpu_throughput_fps": 23.65
+  },
+  "gate_compliance": {
+    "gate_1_v2_map50_non_regression": "PASS (Delta: +4.22%)",
+    "gate_2_v2_recall_non_regression": "PASS (Delta: +0.01%)",
+    "gate_3_v3_held_out_generalization": "PASS (Delta: +2.68%)",
+    "gate_4_hard_negative_far_reduction": "PASS (10.71% vs baseline 21.43%)",
+    "gate_5_hard_negative_box_cap": "PASS (9 boxes vs baseline 18 boxes)",
+    "gate_6_edge_cpu_latency_sla": "PASS (49.46 ms vs budget 125.0 ms)"
+  },
+  "sign_off_required": "Human-in-the-loop operational approval required before updating models/detection/sonar_yolov8_fls_trained.pt"
+}

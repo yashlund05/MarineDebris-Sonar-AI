@@ -438,3 +438,119 @@ class ModelRegistry(Base):
         UniqueConstraint("model_name", "version", "task", name="uq_model_version"),
         Index("idx_model_registry_task_active", "task", "is_active"),
     )
+
+
+class LiveSonarSessionRecord(Base):
+    """Database entity representing a continuous live sonar streaming session."""
+
+    __tablename__ = "live_sonar_sessions"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    name: Mapped[str] = mapped_column(String(256), nullable=False, default="")
+    source_type: Mapped[str] = mapped_column(String(32), nullable=False, default="replay")
+    source_uri: Mapped[str] = mapped_column(String(1024), nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="CONNECTING")
+    preprocessing_profile: Mapped[str] = mapped_column(String(32), nullable=False, default="REALTIME")
+    target_fps: Mapped[float] = mapped_column(Float, nullable=False, default=15.0)
+    inference_fps: Mapped[float] = mapped_column(Float, nullable=False, default=10.0)
+    frames_received: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    frames_processed: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    frames_dropped: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_detections: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    confirmed_targets: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    started_at: Mapped[Optional[datetime]] = mapped_column(nullable=True)
+    ended_at: Mapped[Optional[datetime]] = mapped_column(nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        nullable=False,
+        default=datetime.utcnow,
+        server_default=text("now()"),
+    )
+
+    # Relationships
+    tracks: Mapped[List["LiveTrackRecord"]] = relationship(
+        "LiveTrackRecord", back_populates="session", cascade="all, delete-orphan"
+    )
+    events: Mapped[List["LiveDetectionEventRecord"]] = relationship(
+        "LiveDetectionEventRecord", back_populates="session", cascade="all, delete-orphan"
+    )
+    evidence: Mapped[List["LiveEvidenceRecord"]] = relationship(
+        "LiveEvidenceRecord", back_populates="session", cascade="all, delete-orphan"
+    )
+
+
+class LiveTrackRecord(Base):
+    """Database entity representing a temporally confirmed target track."""
+
+    __tablename__ = "live_sonar_tracks"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    session_id: Mapped[str] = mapped_column(
+        String(64), ForeignKey("live_sonar_sessions.id", ondelete="CASCADE"), nullable=False
+    )
+    track_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    class_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    confidence: Mapped[float] = mapped_column(Float, nullable=False)
+    status: Mapped[str] = mapped_column(String(32), nullable=False, default="TENTATIVE")
+    frames_seen: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    first_seen_utc: Mapped[datetime] = mapped_column(nullable=False)
+    last_seen_utc: Mapped[datetime] = mapped_column(nullable=False)
+    bbox_x: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_y: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_w: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_h: Mapped[int] = mapped_column(Integer, nullable=False)
+    latitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    depth_m: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    acoustic_shadow: Mapped[str] = mapped_column(String(32), nullable=False, default="unavailable")
+    trajectory: Mapped[Optional[List[Any]]] = mapped_column(JsonType, nullable=True)
+
+    session: Mapped["LiveSonarSessionRecord"] = relationship("LiveSonarSessionRecord", back_populates="tracks")
+
+
+class LiveDetectionEventRecord(Base):
+    """Individual live frame detection event."""
+
+    __tablename__ = "live_detection_events"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    session_id: Mapped[str] = mapped_column(
+        String(64), ForeignKey("live_sonar_sessions.id", ondelete="CASCADE"), nullable=False
+    )
+    frame_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    track_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    timestamp_utc: Mapped[datetime] = mapped_column(nullable=False)
+    class_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    confidence: Mapped[float] = mapped_column(Float, nullable=False)
+    bbox_x: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_y: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_w: Mapped[int] = mapped_column(Integer, nullable=False)
+    bbox_h: Mapped[int] = mapped_column(Integer, nullable=False)
+    is_confirmed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    acoustic_shadow: Mapped[str] = mapped_column(String(32), nullable=False, default="unavailable")
+    latitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    processing_latency_ms: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+    model_version: Mapped[str] = mapped_column(String(64), nullable=False, default="1.0.0")
+
+    session: Mapped["LiveSonarSessionRecord"] = relationship("LiveSonarSessionRecord", back_populates="events")
+
+
+class LiveEvidenceRecord(Base):
+    """Forensic evidence snapshot captured for a confirmed track."""
+
+    __tablename__ = "live_sonar_evidence"
+
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    session_id: Mapped[str] = mapped_column(
+        String(64), ForeignKey("live_sonar_sessions.id", ondelete="CASCADE"), nullable=False
+    )
+    track_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    frame_id: Mapped[str] = mapped_column(String(64), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(nullable=False, default=datetime.utcnow)
+    raw_crop_path: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+    enhanced_crop_path: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+    annotated_crop_path: Mapped[Optional[str]] = mapped_column(String(1024), nullable=True)
+    metadata_json: Mapped[Optional[Dict[str, Any]]] = mapped_column(JsonType, nullable=True)
+
+    session: Mapped["LiveSonarSessionRecord"] = relationship("LiveSonarSessionRecord", back_populates="evidence")
+

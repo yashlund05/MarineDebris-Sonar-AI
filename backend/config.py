@@ -100,6 +100,24 @@ class Settings(BaseSettings):
     # Preprocessing version tag
     PREPROCESSING_VERSION: str = "v1.0"
 
+    # Live Sonar Streaming — Requirement R1
+    LIVE_SONAR_ENABLED: bool = True
+    LIVE_SONAR_SOURCE_TYPE: str = "replay"
+    LIVE_SONAR_SOURCE_URI: str = "data/test_sonar_images"
+    LIVE_SONAR_TARGET_FPS: float = 15.0
+    LIVE_SONAR_INFERENCE_FPS: float = 10.0
+    LIVE_SONAR_BUFFER_SIZE: int = 60
+    LIVE_SONAR_DROP_POLICY: str = "DROP_OLDEST"
+    LIVE_SONAR_ALLOW_LOCAL: bool = True
+    LIVE_SONAR_NETWORK_ALLOWLIST: list[str] = [
+        "127.0.0.1",
+        "localhost",
+        "192.168.0.0/16",
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.0.2.0/24",
+    ]
+
     @property
     def async_database_url(self) -> str:
         """Return async database connection URL for SQLAlchemy asyncpg."""

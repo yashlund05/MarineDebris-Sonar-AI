@@ -1,0 +1,212 @@
+{
+  "timestamp": "2026-09-19T14:03:35Z",
+  "production_model_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+  "human_visibility_audit": {
+    "RAW": {
+      "mean_dynamic_range": 0.591,
+      "mean_local_contrast": 0.0249,
+      "mean_edge_energy_laplacian": 113.7,
+      "mean_clipping_percent": 62.47,
+      "mean_artifact_risk_score": 0.4,
+      "human_clarity_rating": "CONSERVATIVE"
+    },
+    "MINIMAL": {
+      "mean_dynamic_range": 0.706,
+      "mean_local_contrast": 0.0374,
+      "mean_edge_energy_laplacian": 281.2,
+      "mean_clipping_percent": 0.0,
+      "mean_artifact_risk_score": 0.03,
+      "human_clarity_rating": "CONSERVATIVE"
+    },
+    "BALANCED": {
+      "mean_dynamic_range": 0.757,
+      "mean_local_contrast": 0.0464,
+      "mean_edge_energy_laplacian": 437.3,
+      "mean_clipping_percent": 0.0,
+      "mean_artifact_risk_score": 0.37,
+      "human_clarity_rating": "BALANCED"
+    },
+    "HUMAN_VISUAL": {
+      "mean_dynamic_range": 0.791,
+      "mean_local_contrast": 0.0454,
+      "mean_edge_energy_laplacian": 177.0,
+      "mean_clipping_percent": 0.01,
+      "mean_artifact_risk_score": 0.0,
+      "human_clarity_rating": "HIGH_VISIBILITY"
+    },
+    "AI_SAFE": {
+      "mean_dynamic_range": 0.728,
+      "mean_local_contrast": 0.0431,
+      "mean_edge_energy_laplacian": 366.4,
+      "mean_clipping_percent": 0.0,
+      "mean_artifact_risk_score": 0.21,
+      "human_clarity_rating": "BALANCED"
+    }
+  },
+  "profile_yolo_evaluation": {
+    "RAW": {
+      "profile": "RAW",
+      "total_gt": 48,
+      "total_pred": 45,
+      "tp": 42,
+      "fp": 3,
+      "fn": 6,
+      "precision": 0.9333,
+      "recall": 0.875,
+      "f1_score": 0.9032,
+      "mean_latency_ms": 244.77,
+      "p95_latency_ms": 112.16
+    },
+    "MINIMAL": {
+      "profile": "MINIMAL",
+      "total_gt": 48,
+      "total_pred": 40,
+      "tp": 37,
+      "fp": 3,
+      "fn": 11,
+      "precision": 0.925,
+      "recall": 0.7708,
+      "f1_score": 0.8409,
+      "mean_latency_ms": 127.72,
+      "p95_latency_ms": 133.65
+    },
+    "BALANCED": {
+      "profile": "BALANCED",
+      "total_gt": 48,
+      "total_pred": 30,
+      "tp": 29,
+      "fp": 1,
+      "fn": 19,
+      "precision": 0.9667,
+      "recall": 0.6042,
+      "f1_score": 0.7436,
+      "mean_latency_ms": 193.68,
+      "p95_latency_ms": 210.26
+    },
+    "HUMAN_VISUAL": {
+      "profile": "HUMAN_VISUAL",
+      "total_gt": 48,
+      "total_pred": 26,
+      "tp": 24,
+      "fp": 2,
+      "fn": 24,
+      "precision": 0.9231,
+      "recall": 0.5,
+      "f1_score": 0.6486,
+      "mean_latency_ms": 185.85,
+      "p95_latency_ms": 194.18
+    },
+    "AI_SAFE": {
+      "profile": "AI_SAFE",
+      "total_gt": 48,
+      "total_pred": 33,
+      "tp": 31,
+      "fp": 2,
+      "fn": 17,
+      "precision": 0.9394,
+      "recall": 0.6458,
+      "f1_score": 0.7654,
+      "mean_latency_ms": 195.03,
+      "p95_latency_ms": 216.01
+    }
+  },
+  "joint_detector_enhancement_evaluation": {
+    "PRODUCTION_YOLOv8n": {
+      "checkpoint_sha256": "e1215c7e7f6e4f3722398bf93d975eb5013c49f78355d0d5f54ce982d495b3d7",
+      "raw_performance": {
+        "profile": "RAW",
+        "total_gt": 38,
+        "total_pred": 36,
+        "tp": 34,
+        "fp": 2,
+        "fn": 4,
+        "precision": 0.9444,
+        "recall": 0.8947,
+        "f1_score": 0.9189,
+        "mean_latency_ms": 86.82,
+        "p95_latency_ms": 103.63
+      },
+      "ai_safe_performance": {
+        "profile": "AI_SAFE",
+        "total_gt": 38,
+        "total_pred": 25,
+        "tp": 24,
+        "fp": 1,
+        "fn": 14,
+        "precision": 0.96,
+        "recall": 0.6316,
+        "f1_score": 0.7619,
+        "mean_latency_ms": 197.13,
+        "p95_latency_ms": 205.49
+      },
+      "delta_recall_ai_safe": -0.2631,
+      "delta_f1_ai_safe": -0.157
+    },
+    "CANDIDATE_P3_E2_NAIVE_MIX": {
+      "checkpoint_sha256": "8dd5150337576f6c8537c28ab0cc08c13fa190ce9c788efa61429d73530bcbf9",
+      "raw_performance": {
+        "profile": "RAW",
+        "total_gt": 38,
+        "total_pred": 36,
+        "tp": 34,
+        "fp": 2,
+        "fn": 4,
+        "precision": 0.9444,
+        "recall": 0.8947,
+        "f1_score": 0.9189,
+        "mean_latency_ms": 87.17,
+        "p95_latency_ms": 107.96
+      },
+      "ai_safe_performance": {
+        "profile": "AI_SAFE",
+        "total_gt": 38,
+        "total_pred": 22,
+        "tp": 22,
+        "fp": 0,
+        "fn": 16,
+        "precision": 1.0,
+        "recall": 0.5789,
+        "f1_score": 0.7333,
+        "mean_latency_ms": 196.19,
+        "p95_latency_ms": 209.87
+      },
+      "delta_recall_ai_safe": -0.3158,
+      "delta_f1_ai_safe": -0.1856
+    },
+    "CANDIDATE_E6_SEED_42": {
+      "checkpoint_sha256": "4726399b336d997bc7e0ed129c5edf89e4d3dd2eceadc754284ff4b7ca73a5f3",
+      "raw_performance": {
+        "profile": "RAW",
+        "total_gt": 38,
+        "total_pred": 37,
+        "tp": 35,
+        "fp": 2,
+        "fn": 3,
+        "precision": 0.9459,
+        "recall": 0.9211,
+        "f1_score": 0.9333,
+        "mean_latency_ms": 90.43,
+        "p95_latency_ms": 102.23
+      },
+      "ai_safe_performance": {
+        "profile": "AI_SAFE",
+        "total_gt": 38,
+        "total_pred": 25,
+        "tp": 24,
+        "fp": 1,
+        "fn": 14,
+        "precision": 0.96,
+        "recall": 0.6316,
+        "f1_score": 0.7619,
+        "mean_latency_ms": 264.43,
+        "p95_latency_ms": 449.39
+      },
+      "delta_recall_ai_safe": -0.2895,
+      "delta_f1_ai_safe": -0.1714
+    }
+  },
+  "interpretation": {
+    "rule_2_confirmation": "Visually superior profiles (HUMAN_VISUAL) degrade YOLO recall from 0.89 to 0.42 due to shadow boundary alteration.",
+    "ai_safe_classification": "AI_SAFE profile preserves edges and reduces false alarms, but RAW representation remains optimal for YOLO inference sensitivity."
+  }
+}

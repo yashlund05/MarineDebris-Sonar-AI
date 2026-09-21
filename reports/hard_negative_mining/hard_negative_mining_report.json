@@ -1,0 +1,286 @@
+{
+  "total_images_scanned": 84,
+  "flagged_images_count": 18,
+  "total_false_positives": 18,
+  "false_alarm_rate": 0.2143,
+  "category_counts": {
+    "ACOUSTIC_WALL": 0,
+    "SEDIMENT_REVERBERATION": 1,
+    "WATER_COLUMN_NOISE": 0,
+    "IMAGE_BORDER": 0,
+    "UNCLASSIFIED_CLUTTER": 17
+  },
+  "mined_samples": [
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\2016-06-22_143000-frame00009.png",
+      "image_name": "2016-06-22_143000-frame00009.png",
+      "category": "SEDIMENT_REVERBERATION",
+      "box_xywh": [
+        0.4334208369255066,
+        0.740908145904541,
+        0.08012602478265762,
+        0.15056705474853516
+      ],
+      "confidence": 0.4147,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_2016-06-22_143000-frame00009_box0_SEDIMENT_REVERBERATION.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-122.png",
+      "image_name": "marine-debris-aris3k-122.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.5575450658798218,
+        0.49517735838890076,
+        0.06188812106847763,
+        0.2137680947780609
+      ],
+      "confidence": 0.9489,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-122_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-145.png",
+      "image_name": "marine-debris-aris3k-145.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.4834385812282562,
+        0.5390520095825195,
+        0.08731689304113388,
+        0.08283662796020508
+      ],
+      "confidence": 0.8016,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-145_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-153.png",
+      "image_name": "marine-debris-aris3k-153.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.3827083706855774,
+        0.4599906802177429,
+        0.08457918465137482,
+        0.08512554317712784
+      ],
+      "confidence": 0.722,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-153_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-159.png",
+      "image_name": "marine-debris-aris3k-159.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.4255226254463196,
+        0.403583824634552,
+        0.09025724232196808,
+        0.08941762149333954
+      ],
+      "confidence": 0.5888,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-159_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-219.png",
+      "image_name": "marine-debris-aris3k-219.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.46675267815589905,
+        0.36330097913742065,
+        0.0798308402299881,
+        0.08603310585021973
+      ],
+      "confidence": 0.8061,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-219_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-232.png",
+      "image_name": "marine-debris-aris3k-232.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.4546896815299988,
+        0.3910156190395355,
+        0.0900946632027626,
+        0.08694400638341904
+      ],
+      "confidence": 0.7058,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-232_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-294.png",
+      "image_name": "marine-debris-aris3k-294.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.3797013759613037,
+        0.45394381880760193,
+        0.08788414299488068,
+        0.0849151611328125
+      ],
+      "confidence": 0.6472,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-294_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-299.png",
+      "image_name": "marine-debris-aris3k-299.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.384260356426239,
+        0.4622980058193207,
+        0.08432617038488388,
+        0.08178882300853729
+      ],
+      "confidence": 0.3741,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-299_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-43.png",
+      "image_name": "marine-debris-aris3k-43.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.380139023065567,
+        0.4509654939174652,
+        0.08831024169921875,
+        0.0858163833618164
+      ],
+      "confidence": 0.4777,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-43_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-445.png",
+      "image_name": "marine-debris-aris3k-445.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.5018101930618286,
+        0.5807948708534241,
+        0.05945739895105362,
+        0.23250874876976013
+      ],
+      "confidence": 0.9773,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-445_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-458.png",
+      "image_name": "marine-debris-aris3k-458.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.5219622850418091,
+        0.49412888288497925,
+        0.049448587000370026,
+        0.05367736890912056
+      ],
+      "confidence": 0.7343,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-458_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-463.png",
+      "image_name": "marine-debris-aris3k-463.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.4247051775455475,
+        0.43949976563453674,
+        0.09543733298778534,
+        0.09174630790948868
+      ],
+      "confidence": 0.7716,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-463_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-535.png",
+      "image_name": "marine-debris-aris3k-535.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.3807738721370697,
+        0.45531338453292847,
+        0.08425168693065643,
+        0.0854259505867958
+      ],
+      "confidence": 0.4117,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-535_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-545.png",
+      "image_name": "marine-debris-aris3k-545.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.4757523536682129,
+        0.3352014124393463,
+        0.08565864711999893,
+        0.08568401634693146
+      ],
+      "confidence": 0.7987,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-545_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-584.png",
+      "image_name": "marine-debris-aris3k-584.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.383151113986969,
+        0.4606875479221344,
+        0.08537693321704865,
+        0.07973785698413849
+      ],
+      "confidence": 0.6476,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-584_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-60.png",
+      "image_name": "marine-debris-aris3k-60.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.41781502962112427,
+        0.4714840054512024,
+        0.08800680935382843,
+        0.09200496971607208
+      ],
+      "confidence": 0.6885,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-60_box0_UNCLASSIFIED_CLUTTER.png"
+    },
+    {
+      "image_path": "datasets\\sonar_debris_v3\\hard_negatives\\marine-debris-aris3k-73.png",
+      "image_name": "marine-debris-aris3k-73.png",
+      "category": "UNCLASSIFIED_CLUTTER",
+      "box_xywh": [
+        0.42071494460105896,
+        0.5010685920715332,
+        0.08312787860631943,
+        0.08661098778247833
+      ],
+      "confidence": 0.3788,
+      "predicted_class": 1,
+      "predicted_label": "general_marine_debris",
+      "crop_saved_path": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining\\mined_fp_crops\\fp_marine-debris-aris3k-73_box0_UNCLASSIFIED_CLUTTER.png"
+    }
+  ],
+  "output_dir": "C:\\Users\\ARYAN - AYUSH\\OneDrive\\Desktop\\Marine sonar\\reports\\hard_negative_mining"
+}

@@ -1,0 +1,62 @@
+{
+  "RAW": {
+    "description": "Raw Baseline (Control)",
+    "profile": "RAW",
+    "mode": "AI_SAFE",
+    "total_gt": 19,
+    "total_pred": 19,
+    "tp": 17,
+    "fp": 2,
+    "fn": 2,
+    "precision": 0.8947,
+    "recall": 0.8947,
+    "f1_score": 0.8947,
+    "mean_latency_ms": 1.46,
+    "p95_latency_ms": 1.63
+  },
+  "AI_SAFE": {
+    "description": "AI-Safe Profile",
+    "profile": "AI_SAFE",
+    "mode": "AI_SAFE",
+    "total_gt": 19,
+    "total_pred": 13,
+    "tp": 12,
+    "fp": 1,
+    "fn": 7,
+    "precision": 0.9231,
+    "recall": 0.6316,
+    "f1_score": 0.75,
+    "mean_latency_ms": 78.37,
+    "p95_latency_ms": 133.06
+  },
+  "BALANCED": {
+    "description": "Balanced Profile",
+    "profile": "BALANCED",
+    "mode": "AI_SAFE",
+    "total_gt": 19,
+    "total_pred": 10,
+    "tp": 9,
+    "fp": 1,
+    "fn": 10,
+    "precision": 0.9,
+    "recall": 0.4737,
+    "f1_score": 0.6207,
+    "mean_latency_ms": 63.57,
+    "p95_latency_ms": 72.03
+  },
+  "HUMAN_VISUAL": {
+    "description": "Human Visual Inspection",
+    "profile": "HUMAN_VISUAL",
+    "mode": "HUMAN_DISPLAY",
+    "total_gt": 19,
+    "total_pred": 9,
+    "tp": 8,
+    "fp": 1,
+    "fn": 11,
+    "precision": 0.8889,
+    "recall": 0.4211,
+    "f1_score": 0.5714,
+    "mean_latency_ms": 61.98,
+    "p95_latency_ms": 72.89
+  }
+}

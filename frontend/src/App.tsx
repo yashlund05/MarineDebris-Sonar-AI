@@ -9,6 +9,7 @@ import { ModelsPage } from "./pages/ModelsPage";
 import { ModelEvaluationPage } from "./pages/ModelEvaluationPage";
 import { DatasetPage } from "./pages/DatasetPage";
 import { SonarEnhancementPage } from "./pages/SonarEnhancementPage";
+import { LiveSonarPage } from "./pages/LiveSonarPage";
 
 export const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ export const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<CommandCenterPage />} />
+          <Route path="live-sonar" element={<LiveSonarPage />} />
           <Route path="upload" element={<UploadPage />} />
           <Route path="surveys" element={<SurveyListPage />} />
           <Route path="surveys/:id" element={<SurveyDetailPage />} />
